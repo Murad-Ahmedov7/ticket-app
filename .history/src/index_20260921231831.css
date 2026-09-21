@@ -1,0 +1,52 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+      width: 6px;
+      height: 6px;
+    
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(112, 0, 255, 0.2);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(112, 0, 255, 0.5);
+    }
+
+    .custom-chat-bg {
+      background-color: #f8fafc;
+      background-image: radial-gradient(#e2e8f0 1.2px, transparent 1.2px), radial-gradient(#e2e8f0 1.2px, #f8fafc 1.2px);
+      background-size: 48px 48px;
+      background-position: 0 0, 24px 24px;
+    }
+    .dark .custom-chat-bg {
+      background-color: #0b0f19;
+      background-image: radial-gradient(#1e293b 1.2px, transparent 1.2px), radial-gradient(#1e293b 1.2px, #0b0f19 1.2px);
+      background-size: 48px 48px;
+      background-position: 0 0, 24px 24px;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 0.25; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .animate-pulse-ring {
+      animation: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .audio-waveform-bar {
+      transition: height 0.15s ease, background-color 0.2s;
+    }
+
+    /* Modal Fade in Animation */
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-modal {
+      animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }

@@ -1,0 +1,23 @@
+import { useState } from 'react';
+import Icon from '../common/Icons.jsx';
+
+export default function NewChatModal({ users, onClose, onDirect, onGroup }) {
+  const [tab, setTab] = useState('direct');
+  const [user, setUser] = useState(users[0]?.name || '');
+  const [message, setMessage] = useState('');
+  const [name, setName] = useState('');
+  const [members, setMembers] = useState([]);
+  return <div role="dialog" aria-modal="true" aria-label="Yeni Söhbət / Qrup Yarat" className="fixed inset-0 z-50 flex bg-slate-900/60 backdrop-blur-sm items-center justify-center p-4"><div className="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 dark:border-slate-800 animate-modal">
+    <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800"><h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"><span className="p-1.5 rounded-xl bg-brand-50 text-brand-600 dark:bg-brand-950 dark:text-brand-300"><Icon name="plus" strokeWidth={2.2} /></span>Yeni Söhbət / Qrup Yarat</h3><button onClick={onClose} title="Bağla" className="text-slate-400 hover:text-slate-600"><Icon name="close" className="w-5 h-5" /></button></div>
+    <div className="flex items-center gap-2 mt-4 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-semibold">{[['direct', 'Şəxsi Söhbət'], ['group', 'Yeni Qrup']].map(([id, label]) => <button key={id} onClick={() => setTab(id)} className={`flex-1 py-1.5 rounded-lg transition ${tab === id ? 'bg-white dark:bg-slate-700 text-brand-600 dark:text-brand-300 shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'}`}>{label}</button>)}</div>
+    {tab === 'direct' ? <form onSubmit={e => { e.preventDefault(); onDirect(user, message.trim()); }} className="space-y-3 mt-4 text-xs">
+      <div><label htmlFor="new-chat-user" className="block font-semibold mb-1">İstifadəçi seçin:</label><select id="new-chat-user" required value={user} onChange={e => setUser(e.target.value)} className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500">{users.map(item => <option key={item.id} value={item.name}>{item.name} ({item.company} - {item.position})</option>)}</select></div>
+      <div><label htmlFor="new-chat-message" className="block font-semibold mb-1">İlkin mesaj (istəyə bağlı):</label><input id="new-chat-message" placeholder="Salam..." value={message} onChange={e => setMessage(e.target.value)} className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500" /></div>
+      <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800"><button type="button" onClick={onClose} className="px-3.5 py-1.5 text-slate-500 hover:bg-slate-100 rounded-xl">Ləğv et</button><button type="submit" className="px-4 py-2 font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow">Söhbətə Başla</button></div>
+    </form> : <form onSubmit={e => { e.preventDefault(); onGroup(name.trim(), ['Siz', ...members]); }} className="space-y-3 mt-4 text-xs">
+      <div><label htmlFor="new-chat-group" className="block font-semibold mb-1">Qrupun adı:</label><input id="new-chat-group" required placeholder="Məs: İT Təchizat Qrupu" value={name} onChange={e => setName(e.target.value)} className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500" /></div>
+      <div><label className="block font-semibold mb-1">Qrup iştirakçıları:</label><div className="space-y-1.5 max-h-36 overflow-y-auto p-2 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">{users.map(item => <label key={item.id} className="flex items-center gap-2 p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded-lg cursor-pointer"><input type="checkbox" checked={members.includes(item.name)} onChange={e => setMembers(e.target.checked ? [...members, item.name] : members.filter(name => name !== item.name))} className="rounded text-brand-600" /><span>{item.name}</span></label>)}</div></div>
+      <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800"><button type="button" onClick={onClose} className="px-3.5 py-1.5 text-slate-500 hover:bg-slate-100 rounded-xl">Ləğv et</button><button type="submit" className="px-4 py-2 font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow">Qrup Yarat</button></div>
+    </form>}
+  </div></div>;
+}
