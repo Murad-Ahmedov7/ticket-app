@@ -37,14 +37,14 @@ export default function VoiceNote({ message, playing, onToggle, notify }) {
   }, [playing]);
   const heights = [12, 20, 8, 24, 16, 8, 20, 12, 24, 8, 16];
   return <div className="flex items-center gap-3 py-1">
-    <button onClick={onToggle} title={playing ? 'Səsi dayandır' : 'Səsi oxut'} className={`w-9 h-9 rounded-full ${message.isOutgoing ? 'bg-white text-brand-700 hover:bg-slate-100' : 'bg-brand-600 text-white hover:bg-brand-700'} flex items-center justify-center shrink-0 shadow-md transition active:scale-95`}>
+    <button onClick={onToggle} title={playing ? 'Səsi dayandır' : 'Səsi oxut'} className={`w-9 h-9 rounded-full ${message.isOutgoing ? 'bg-white text-emerald-700 hover:bg-slate-100 dark:bg-emerald-100 dark:text-emerald-900 dark:hover:bg-emerald-200' : 'bg-gradient-to-br from-emerald-500 to-teal-500 text-white hover:brightness-105 dark:from-emerald-600 dark:to-teal-600'} flex items-center justify-center shrink-0 shadow-md transition active:scale-95`}>
       <svg className={`w-4 h-4 ${playing ? '' : 'ml-0.5'}`} fill="currentColor" viewBox="0 0 24 24"><path d={playing ? 'M6 19h4V5H6v14zm8-14v14h4V5h-4z' : 'M8 5v14l11-7z'} /></svg>
     </button>
-    <div className="flex flex-col flex-1 min-w-[170px]">
+    <div className="flex flex-col flex-1 w-[170px] min-w-0">
       <div className="flex items-end gap-1 h-6 cursor-pointer py-1" onClick={() => notify(`Audio zaman xətti: ${message.duration}`)}>
-        {heights.map((height, index) => <span key={index} className={`audio-waveform-bar w-1 rounded-full ${message.isOutgoing ? ['bg-white/90', 'bg-white/80', 'bg-white/70', 'bg-white/90', 'bg-white/80', 'bg-white/60', 'bg-white/85', 'bg-white/70', 'bg-white/90', 'bg-white/50', 'bg-white/75'][index] : ['bg-brand-600', 'bg-brand-500', 'bg-brand-400', 'bg-brand-600', 'bg-brand-500', 'bg-brand-400', 'bg-brand-600', 'bg-brand-400', 'bg-brand-600', 'bg-brand-300', 'bg-brand-400'][index]}`} style={{ height: playing ? Math.floor(Math.sin((step + index) * 0.8) * 10 + 14) : height }} />)}
+        {heights.map((height, index) => <span key={index} className={`audio-waveform-bar w-1 rounded-full ${message.isOutgoing ? ['bg-white/90', 'bg-white/80', 'bg-white/70', 'bg-white/90', 'bg-white/80', 'bg-white/60', 'bg-white/85', 'bg-white/70', 'bg-white/90', 'bg-white/50', 'bg-white/75'][index] : ['bg-emerald-600 dark:bg-emerald-400', 'bg-emerald-500 dark:bg-emerald-300', 'bg-emerald-400', 'bg-emerald-600 dark:bg-emerald-400', 'bg-emerald-500 dark:bg-emerald-300', 'bg-emerald-400', 'bg-emerald-600 dark:bg-emerald-400', 'bg-emerald-400', 'bg-emerald-600 dark:bg-emerald-400', 'bg-emerald-300', 'bg-emerald-400'][index]}`} style={{ height: playing ? Math.floor(Math.sin((step + index) * 0.8) * 10 + 14) : height }} />)}
       </div>
-      <div className={`flex items-center justify-between text-[10px] ${message.isOutgoing ? 'text-white/80' : 'text-slate-400'}`}><span>0:00</span><span>{message.duration}</span></div>
+      <div className={`flex items-center justify-between text-[10px] ${message.isOutgoing ? 'text-white/80' : 'text-emerald-700/80 dark:text-emerald-300/90'}`}><span>0:00</span><span>{message.duration}</span></div>
     </div>
   </div>;
 }

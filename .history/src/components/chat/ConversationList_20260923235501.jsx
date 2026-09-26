@@ -1,0 +1,130 @@
+import { useState } from 'react';
+import Icon from '../common/Icons.jsx';
+
+export default function ConversationList({ conversations, activeChatId, chatCategory, onCategory, onSelect, onDelete, onNewChat }) {
+  const [search, setSearch] = useState('');
+  const list = conversations.filter(c => (chatCategory === 'all' || (chatCategory === 'unread' ? c.unread > 0 : c.type === chatCategory)) && `${c.name} ${c.lastSnippet}`.toLowerCase().includes(search.toLowerCase()));
+  return (
+ <div className="w-80 md:w-96 border-r border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col shrink-0 select-none">
+      {/* BAŞLIQ VƏ FİLTRLƏR */}
+      <div className="p-4 border-b border-slate-100 dark:border-slate-800/80 space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+            Söhbətlər 
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-50 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300 border border-teal-200 dark:border-teal-800/50">
+              4 aktiv
+            </span>
+          </h2>
+          {/* Yeni Söhbət Butonu - Sidebar tonunda */}
+          <button 
+            onClick={onNewChat} 
+            className="w-9 h-9 rounded-xl bg-[#0f3d46] hover:bg-[#134e59] text-white flex items-center justify-center shadow-md shadow-teal-950/20 transition active:scale-95 cursor-pointer" 
+            title="Yeni Söhbət / Əlavə et"
+          >
+            <Icon name="plus" strokeWidth={2.4} />
+          </button>
+        </div>
+
+        {/* AXTARIŞ SAHƏSİ */}
+        <div className="relative">
+          <input 
+            value={search} 
+            onChange={e => setSearch(e.target.value)} 
+            placeholder="Əlaqə və ya mesaj axtarışı..." 
+            className="w-full pl-9 pr-8 py-2 bg-slate-100 dark:bg-slate-800/70 text-xs rounded-xl text-slate-800 dark:text-slate-100 placeholder-slate-400 border border-transparent focus:border-teal-600 focus:bg-white dark:focus:bg-slate-900 focus:outline-none transition shadow-inner" 
+          />
+          <Icon name="search" className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+          {search && (
+            <button 
+              onClick={() => setSearch('')} 
+              title="Axtarışı təmizlə" 
+              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 absolute right-2.5 top-2.5 cursor-pointer"
+            >
+              <Icon name="close" className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+
+        {/* KATEQORİYA TABLARI */}
+        <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400 pt-0.5">
+          {[['all', 'Hamısı'], ['direct', 'Şəxsi'], ['group', 'Qruplar'], ['unread', 'Oxunmamış']].map(([id, label]) => (
+            <button 
+              key={id} 
+              onClick={() => onCategory(id)} 
+              className={`px-2.5 py-1 rounded-lg transition cursor-pointer ${
+                id === chatCategory 
+                  ? 'bg-teal-50 text-teal-800 dark:bg-teal-950/70 dark:text-teal-300 font-bold border border-teal-200/60 dark:border-teal-800/40' 
+                  : 'hover:bg-slate-100 dark:hover:bg-slate-800'
+              } ${id === 'unread' ? 'ml-auto text-teal-600 dark:text-teal-400 font-bold' : ''}`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* SÖHBƏT SİYAHISI */}
+      <div className="flex-1 overflow-y-auto divide-y divide-slate-100/60 dark:divide-slate-800/40 p-2 space-y-1">
+        {!list.length && (
+          <div className="p-6 text-center text-xs text-slate-400">
+            Heç bir söhbət tapılmadı
+          </div>
+        )}
+        {list.map(c => {
+          const active = c.id === activeChatId;
+          return (
+            <div 
+              key={c.id} 
+              onClick={() => onSelect(c.id)} 
+              className={`group flex items-center justify-between p-3 rounded-2xl cursor-pointer transition-all ${
+                active 
+                  ? 'bg-gradient-to-r from-[#0f3d46] to-[#134e59] text-white shadow-md shadow-teal-950/20' 
+                  : 'hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-200'
+              }`}
+            >
+              <div className="flex items-center gap-3 min-w-0 flex-1">
+                <div className="relative shrink-0">
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${c.avatarGradient} flex items-center justify-center text-white font-bold text-sm shadow-sm`}>
+                    {c.type === 'group' ? <Icon name="groups" className="w-5 h-5" /> : c.name.charAt(0).toUpperCase()}
+                  </div>
+                  <span className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 ${active ? 'border-[#0f3d46]' : 'border-white dark:border-slate-900'}`} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between">
+                    <h4 className={`text-xs font-bold truncate ${active ? 'text-white' : 'text-slate-900 dark:text-white'}`}>
+                      {c.name}
+                    </h4>
+                    <span className={`text-[10px] font-medium ml-1 shrink-0 ${active ? 'text-teal-100' : 'text-slate-400'}`}>
+                      {c.time}
+                    </span>
+                  </div>
+                  <p className={`text-[11px] truncate mt-0.5 ${active ? 'text-teal-50' : 'text-slate-500 dark:text-slate-400'}`}>
+                    {c.lastSnippet}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 ml-2">
+                {c.unread > 0 && (
+                  <span className="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-400 text-slate-950 shadow-sm">
+                    {c.unread}
+                  </span>
+                )}
+                <button 
+                  onClick={e => { e.stopPropagation(); onDelete(c.id); }} 
+                  className={`opacity-0 group-hover:opacity-100 p-1.5 rounded-lg transition cursor-pointer ${
+                    active 
+                      ? 'text-teal-200 hover:text-white hover:bg-white/10' 
+                      : 'text-rose-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40'
+                  }`}
+                  title="Söhbəti bağla"
+                >
+                  <Icon name="close" className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

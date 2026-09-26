@@ -1,3 +1,4 @@
+import { createReplySnapshot, getMessageContent } from './utils/messageReply.js';
 import { useCallback, useEffect, useState } from 'react';
 import { initialState } from './data/initialState.js';
 import { loadStore, storeKeys, newMessage, messageTime } from './utils/helpers.js';
@@ -61,6 +62,7 @@ export default function App() {
 
   function selectConversation(id) {
     setActiveChatId(id);
+    setReplyingToMessage(null);
     setStore(previous => ({ ...previous, conversations: previous.conversations.map(c => c.id === id ? { ...c, unread: 0 } : c) }));
   }
 
@@ -77,8 +79,7 @@ export default function App() {
   }
 
   function sendMessage(text) {
-    const replyText = replyingToMessage?.text || (replyingToMessage?.type === 'voice' ? 'Səsli mesaj' : 'Sorğu');
-    const message = newMessage({ text: replyingToMessage ? `↪ Cavab: "${replyText.slice(0, 30)}..."\n${text}` : text, time: messageTime() });
+    const message = newMessage({ text, replyTo: createReplySnapshot(replyingToMessage), time: messageTime() });
     setStore(previous => ({
       ...previous,
       messages: { ...previous.messages, [activeChatId]: [...(previous.messages[activeChatId] || []), message] },
@@ -115,7 +116,7 @@ export default function App() {
   }
 
   function editMessage(id, text) {
-    setStore(previous => ({ ...previous, messages: { ...previous.messages, [activeChatId]: previous.messages[activeChatId].map(message => message.id === id ? { ...message, text: `${text} (redaktə edildi)` } : message) } }));
+    setStore(previous => ({ ...previous, messages: { ...previous.messages, [activeChatId]: previous.messages[activeChatId].map(message => message.id === id ? { ...message, replyTo: getMessageContent(message).replyTo, text: `${text} (redaktə edildi)` } : message) } }));
     closeModal();
     notify('Mesaj redaktə edildi');
   }

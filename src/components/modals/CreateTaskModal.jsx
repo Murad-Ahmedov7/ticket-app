@@ -8,15 +8,67 @@ export default function CreateTaskModal({ defaults = {}, onClose, onSave }) {
   const [time, setTime] = useState('12:00');
   const [assignee, setAssignee] = useState('Emil Xanciqazov');
   const [equipment, setEquipment] = useState('Optik Tester və Kabel');
-  return <div role="dialog" aria-modal="true" aria-label="Tapşırıq Əlavə Et" className="fixed inset-0 z-50 flex bg-slate-900/60 backdrop-blur-sm items-center justify-center p-4"><div className="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-100 dark:border-slate-800 animate-modal">
-    <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800"><h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"><span className="p-1.5 rounded-xl bg-brand-50 text-brand-600 dark:bg-brand-950 dark:text-brand-300"><Icon name="tasks" strokeWidth={2.5} /></span>Tapşırıq Əlavə Et (Halal 16)</h3><button onClick={onClose} title="Bağla" className="text-slate-400 hover:text-slate-600"><Icon name="close" className="w-5 h-5" /></button></div>
-    <form onSubmit={e => { e.preventDefault(); onSave({ title: title.trim(), comment: comment.trim(), date, time, assignee, equipment }); }} className="space-y-3.5 mt-4 text-xs">
-      <div><label htmlFor="task-assignee" className="block font-semibold mb-1 text-slate-700 dark:text-slate-300">İcraçı:</label><select id="task-assignee" required value={assignee} onChange={e => setAssignee(e.target.value)} className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">{['Emil Xanciqazov', 'emil xanjiyev', 'İzzət', 'Emil Mahmudov', 'Sayid Mardaliyev', 'Ali Mensimov', 'Vasif Xudiyev'].map(name => <option key={name}>{name}</option>)}</select></div>
-      <div><label htmlFor="task-title" className="block font-semibold mb-1 text-slate-700 dark:text-slate-300">Tapşırıq adı:</label><input id="task-title" required value={title} onChange={e => setTitle(e.target.value)} placeholder="Tapşırıq adı" className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500" /></div>
-      <div className="grid grid-cols-2 gap-3"><div><label htmlFor="task-date" className="block font-semibold mb-1 text-slate-700 dark:text-slate-300">Dedlayn (Tarix):</label><input id="task-date" type="date" required value={date} onChange={e => setDate(e.target.value)} className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500" /></div><div><label htmlFor="task-time" className="block font-semibold mb-1 text-slate-700 dark:text-slate-300">Saat:</label><input id="task-time" type="time" required value={time} onChange={e => setTime(e.target.value)} className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500" /></div></div>
-      <div><label htmlFor="task-equipment" className="block font-semibold mb-1 text-slate-700 dark:text-slate-300">Avadanlıqlar (Halal 16):</label><select id="task-equipment" value={equipment} onChange={e => setEquipment(e.target.value)} className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">{['Optik Tester və Kabel', 'Server / Router avadanlığı', 'Laptop və Şəbəkə alətləri', 'Heç biri'].map(item => <option key={item}>{item}</option>)}</select></div>
-      <div><label htmlFor="task-comment" className="block font-semibold mb-1 text-slate-700 dark:text-slate-300">Komment / Təsvir:</label><textarea id="task-comment" rows="2" value={comment} onChange={e => setComment(e.target.value)} placeholder="Komment və ya tapşırıq detalları" className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none" /></div>
-      <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800"><button type="button" onClick={onClose} className="px-3.5 py-2 text-xs text-slate-500 hover:bg-slate-100 rounded-xl">Ləğv et</button><button type="submit" className="px-5 py-2 text-xs font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow">Yadda saxla</button></div>
-    </form>
-  </div></div>;
+  return (
+    <div role="dialog" aria-modal="true" aria-label="Tapşırıq Əlavə Et" className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/55 dark:bg-black/65 dark:[color-scheme:dark] p-4 backdrop-blur-sm">
+      <div className="w-full max-w-lg animate-modal rounded-[30px] border border-emerald-200/80 dark:border-emerald-800/60 bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(216,250,233,0.94))] dark:bg-[linear-gradient(180deg,#0f172a,#112f2e)] p-5 shadow-[0_30px_80px_rgba(16,185,129,0.12),inset_0_1px_0_rgba(255,255,255,1)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.24)] backdrop-blur-2xl">
+        <div className="flex items-center justify-between border-b border-emerald-200/80 dark:border-emerald-800/60 pb-3.5">
+          <h3 className="flex items-center gap-2.5 text-base font-bold text-slate-900 dark:text-slate-100">
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 dark:from-emerald-600 to-teal-500 dark:to-teal-600 text-white shadow-[0_10px_20px_rgba(16,185,129,0.25)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.24)]">
+              <Icon name="tasks" strokeWidth={2.5} className="h-4 w-4" />
+            </span>
+            Tapşırıq Əlavə Et (Halal 16)
+          </h3>
+          <button onClick={onClose} title="Bağla" className="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 transition hover:bg-emerald-50 dark:hover:bg-emerald-900/50 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <Icon name="close" className="h-4 w-4" />
+          </button>
+        </div>
+
+        <form onSubmit={e => { e.preventDefault(); onSave({ title: title.trim(), comment: comment.trim(), date, time, assignee, equipment }); }} className="mt-4 space-y-3.5 text-xs">
+          <div>
+            <label htmlFor="task-assignee" className="mb-1.5 block font-semibold text-slate-700 dark:text-slate-200">İcraçı:</label>
+            <select id="task-assignee" required value={assignee} onChange={e => setAssignee(e.target.value)} className="dark:[&_option]:bg-slate-800 dark:[&_option]:text-slate-100 w-full rounded-xl border border-emerald-200/80 dark:border-emerald-800/60 bg-white/85 dark:bg-slate-800/90 px-3 py-3 text-xs text-slate-700 dark:text-slate-200 outline-none transition backdrop-blur-sm focus:border-emerald-400 dark:focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-500/25">
+              {['Emil Xanciqazov', 'emil xanjiyev', 'İzzət', 'Emil Mahmudov', 'Sayid Mardaliyev', 'Ali Mensimov', 'Vasif Xudiyev'].map(name => <option key={name}>{name}</option>)}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="task-title" className="mb-1.5 block font-semibold text-slate-700 dark:text-slate-200">Tapşırıq adı:</label>
+            <input id="task-title" required value={title} onChange={e => setTitle(e.target.value)} placeholder="Tapşırıq adı" className="w-full rounded-xl border border-emerald-200/80 dark:border-emerald-800/60 bg-white/85 dark:bg-slate-800/90 px-3 py-3 text-xs text-slate-700 dark:text-slate-200 outline-none transition backdrop-blur-sm placeholder:text-slate-400 focus:border-emerald-400 dark:focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-500/25" />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label htmlFor="task-date" className="mb-1.5 block font-semibold text-slate-700 dark:text-slate-200">Dedlayn (Tarix):</label>
+              <input id="task-date" type="date" required value={date} onChange={e => setDate(e.target.value)} className="w-full rounded-xl border border-emerald-200/80 dark:border-emerald-800/60 bg-white/85 dark:bg-slate-800/90 px-3 py-3 text-xs text-slate-700 dark:text-slate-200 outline-none transition backdrop-blur-sm focus:border-emerald-400 dark:focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-500/25" />
+            </div>
+            <div>
+              <label htmlFor="task-time" className="mb-1.5 block font-semibold text-slate-700 dark:text-slate-200">Saat:</label>
+              <input id="task-time" type="time" required value={time} onChange={e => setTime(e.target.value)} className="w-full rounded-xl border border-emerald-200/80 dark:border-emerald-800/60 bg-white/85 dark:bg-slate-800/90 px-3 py-3 text-xs text-slate-700 dark:text-slate-200 outline-none transition backdrop-blur-sm focus:border-emerald-400 dark:focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-500/25" />
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="task-equipment" className="mb-1.5 block font-semibold text-slate-700 dark:text-slate-200">Avadanlıqlar (Halal 16):</label>
+            <select id="task-equipment" value={equipment} onChange={e => setEquipment(e.target.value)} className="dark:[&_option]:bg-slate-800 dark:[&_option]:text-slate-100 w-full rounded-xl border border-emerald-200/80 dark:border-emerald-800/60 bg-white/85 dark:bg-slate-800/90 px-3 py-3 text-xs text-slate-700 dark:text-slate-200 outline-none transition backdrop-blur-sm focus:border-emerald-400 dark:focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-500/25">
+              {['Optik Tester və Kabel', 'Server / Router avadanlığı', 'Laptop və Şəbəkə alətləri', 'Heç biri'].map(item => <option key={item}>{item}</option>)}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="task-comment" className="mb-1.5 block font-semibold text-slate-700 dark:text-slate-200">Komment / Təsvir:</label>
+            <textarea id="task-comment" rows="2" value={comment} onChange={e => setComment(e.target.value)} placeholder="Komment və ya tapşırıq detalları" className="w-full resize-none rounded-xl border border-emerald-200/80 dark:border-emerald-800/60 bg-white/85 dark:bg-slate-800/90 px-3 py-3 text-xs text-slate-700 dark:text-slate-200 outline-none transition backdrop-blur-sm placeholder:text-slate-400 focus:border-emerald-400 dark:focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-500/25" />
+          </div>
+
+          <div className="flex items-center justify-end gap-2 border-t border-emerald-100 dark:border-emerald-900/70 pt-3">
+            <button type="button" onClick={onClose} className="rounded-xl px-3.5 py-2 text-xs font-medium text-slate-500 dark:text-slate-400 transition hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-100">
+              Ləğv et
+            </button>
+            <button type="submit" className="rounded-xl bg-gradient-to-r from-emerald-500 dark:from-emerald-600 to-teal-500 dark:to-teal-600 px-5 py-2.5 text-xs font-bold text-white shadow-[0_12px_22px_rgba(16,185,129,0.25)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.24)] transition hover:brightness-105 active:translate-y-[1px]">
+              Yadda saxla
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
