@@ -82,13 +82,9 @@ export default function UsersView({
             shadow-sm
             shadow-emerald-500/20
             hover:shadow-md
-            hover:shadow-emerald-500/20
             active:scale-[0.98]
             transition-all
-            duration-200
-            flex
-            items-center
-            gap-2
+            flex items-center gap-2
           "
         >
           <Icon
@@ -115,8 +111,7 @@ export default function UsersView({
                 items-center
                 gap-3
                 w-fit
-                px-4
-                py-2.5
+                px-4 py-2.5
                 rounded-xl
                 bg-white
                 dark:bg-slate-900
@@ -124,13 +119,11 @@ export default function UsersView({
                 border-slate-200
                 dark:border-slate-800
                 shadow-[0_2px_10px_rgba(15,23,42,0.04)]
-                dark:shadow-none
               "
             >
               <div
                 className="
-                  w-9
-                  h-9
+                  w-9 h-9
                   rounded-lg
                   bg-emerald-50
                   dark:bg-emerald-500/10
@@ -138,7 +131,6 @@ export default function UsersView({
                   items-center
                   justify-center
                   text-emerald-600
-                  dark:text-emerald-400
                 "
               >
                 <svg
@@ -175,8 +167,7 @@ export default function UsersView({
                 <Icon
                   name="search"
                   className="
-                    w-4
-                    h-4
+                    w-4 h-4
                     text-slate-400
                     absolute
                     left-3.5
@@ -192,8 +183,7 @@ export default function UsersView({
                   className="
                     w-full
                     h-11
-                    pl-10
-                    pr-9
+                    pl-10 pr-9
                     rounded-xl
                     bg-white
                     dark:bg-slate-900
@@ -206,7 +196,6 @@ export default function UsersView({
                     placeholder:text-slate-400
                     outline-none
                     shadow-[0_2px_10px_rgba(15,23,42,0.03)]
-                    dark:shadow-none
                     focus:border-emerald-400
                     focus:ring-4
                     focus:ring-emerald-500/10
@@ -216,7 +205,6 @@ export default function UsersView({
 
                 {search && (
                   <button
-                    type="button"
                     onClick={() => setSearch("")}
                     className="
                       absolute
@@ -225,8 +213,6 @@ export default function UsersView({
                       -translate-y-1/2
                       text-slate-400
                       hover:text-slate-700
-                      dark:hover:text-white
-                      transition
                     "
                   >
                     ×
@@ -253,7 +239,6 @@ export default function UsersView({
                   dark:text-slate-300
                   outline-none
                   shadow-[0_2px_10px_rgba(15,23,42,0.03)]
-                  dark:shadow-none
                   focus:border-emerald-400
                   focus:ring-4
                   focus:ring-emerald-500/10
@@ -284,32 +269,17 @@ export default function UsersView({
                   dark:text-slate-300
                   outline-none
                   shadow-[0_2px_10px_rgba(15,23,42,0.03)]
-                  dark:shadow-none
                   focus:border-emerald-400
                   focus:ring-4
                   focus:ring-emerald-500/10
                   cursor-pointer
                 "
               >
-                <option value="name-az">
-                  Ad: A → Z
-                </option>
-
-                <option value="name-za">
-                  Ad: Z → A
-                </option>
-
-                <option value="company-az">
-                  Şirkət: A → Z
-                </option>
-
-                <option value="active-first">
-                  Aktiv əvvəl
-                </option>
-
-                <option value="waiting-first">
-                  Gözləmədə əvvəl
-                </option>
+                <option value="name-az">Ad: A → Z</option>
+                <option value="name-za">Ad: Z → A</option>
+                <option value="company-az">Şirkət: A → Z</option>
+                <option value="active-first">Aktiv əvvəl</option>
+                <option value="waiting-first">Gözləmədə əvvəl</option>
               </select>
             </div>
           </div>
@@ -327,7 +297,6 @@ export default function UsersView({
                 border-slate-200/80
                 dark:border-slate-800
                 shadow-[0_5px_20px_rgba(15,23,42,0.055)]
-                dark:shadow-none
                 overflow-hidden
               "
             >
@@ -349,11 +318,10 @@ export default function UsersView({
                     <col className="w-[17%]" />
                     <col className="w-[21%]" />
                     <col className="w-[19%]" />
-                    <col className="w-[10%]" />
-                    <col className="w-[14%]" />
+                    <col className="w-[12%]" />
+                    <col className="w-[12%]" />
                   </colgroup>
 
-                  {/* TABLE HEADER */}
                   <thead>
                     <tr
                       className="
@@ -364,85 +332,33 @@ export default function UsersView({
                         dark:border-slate-800
                       "
                     >
-                      <th
-                        className="
-                          px-5
-                          py-4
-                          text-[12px]
-                          uppercase
-                          tracking-[0.07em]
-                          font-extrabold
-                          text-slate-500
-                          dark:text-slate-400
-                        "
-                      >
-                        Ad / Soyad
-                      </th>
+                      {[
+                        "Ad / Soyad",
+                        "Şirkət",
+                        "E-mail",
+                        "Vəzifə",
+                        "Status",
+                      ].map((item) => (
+                        <th
+                          key={item}
+                          className="
+                            px-5
+                            py-4
+                            text-[12px]
+                            uppercase
+                            tracking-[0.07em]
+                            font-extrabold
+                            text-slate-500
+                            dark:text-slate-400
+                          "
+                        >
+                          {item}
+                        </th>
+                      ))}
 
                       <th
                         className="
                           px-5
-                          py-4
-                          text-[12px]
-                          uppercase
-                          tracking-[0.07em]
-                          font-extrabold
-                          text-slate-500
-                          dark:text-slate-400
-                        "
-                      >
-                        Şirkət
-                      </th>
-
-                      <th
-                        className="
-                          px-5
-                          py-4
-                          text-[12px]
-                          uppercase
-                          tracking-[0.07em]
-                          font-extrabold
-                          text-slate-500
-                          dark:text-slate-400
-                        "
-                      >
-                        E-mail
-                      </th>
-
-                      <th
-                        className="
-                          px-5
-                          py-4
-                          text-[12px]
-                          uppercase
-                          tracking-[0.07em]
-                          font-extrabold
-                          text-slate-500
-                          dark:text-slate-400
-                        "
-                      >
-                        Vəzifə
-                      </th>
-
-                      <th
-                        className="
-                          px-5
-                          py-4
-                          text-[12px]
-                          uppercase
-                          tracking-[0.07em]
-                          font-extrabold
-                          text-slate-500
-                          dark:text-slate-400
-                        "
-                      >
-                        Status
-                      </th>
-
-                      <th
-                        className="
-                          pl-5
-                          pr-7
                           py-4
                           text-right
                           text-[12px]
@@ -450,7 +366,6 @@ export default function UsersView({
                           tracking-[0.07em]
                           font-extrabold
                           text-slate-500
-                          dark:text-slate-400
                         "
                       >
                         Əməliyyatlar
@@ -458,7 +373,6 @@ export default function UsersView({
                     </tr>
                   </thead>
 
-                  {/* TABLE BODY */}
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                     {list.length > 0 ? (
                       list.map((user) => (
@@ -476,8 +390,7 @@ export default function UsersView({
                             <div className="flex items-center gap-3 min-w-0">
                               <div
                                 className="
-                                  w-10
-                                  h-10
+                                  w-10 h-10
                                   shrink-0
                                   rounded-xl
                                   bg-gradient-to-br
@@ -491,8 +404,6 @@ export default function UsersView({
                                   font-black
                                   shadow-sm
                                   shadow-emerald-500/20
-                                  group-hover:scale-105
-                                  transition-transform
                                 "
                               >
                                 {user.name
@@ -520,8 +431,7 @@ export default function UsersView({
                           {/* COMPANY */}
                           <td
                             className="
-                              px-5
-                              py-4
+                              px-5 py-4
                               text-sm
                               font-bold
                               text-emerald-600
@@ -536,8 +446,7 @@ export default function UsersView({
                           {/* EMAIL */}
                           <td
                             className="
-                              px-5
-                              py-4
+                              px-5 py-4
                               text-sm
                               font-medium
                               text-slate-600
@@ -552,8 +461,7 @@ export default function UsersView({
                           {/* POSITION */}
                           <td
                             className="
-                              px-5
-                              py-4
+                              px-5 py-4
                               text-sm
                               font-medium
                               text-slate-600
@@ -568,7 +476,6 @@ export default function UsersView({
                           {/* STATUS */}
                           <td className="px-5 py-4">
                             <button
-                              type="button"
                               onClick={() => onStatus(user.id)}
                               className={`
                                 inline-flex
@@ -580,7 +487,6 @@ export default function UsersView({
                                 text-xs
                                 font-bold
                                 border
-                                whitespace-nowrap
                                 transition
 
                                 ${
@@ -590,29 +496,20 @@ export default function UsersView({
                                       text-emerald-700
                                       border-emerald-200
                                       hover:bg-emerald-100
-                                      dark:bg-emerald-500/10
-                                      dark:text-emerald-400
-                                      dark:border-emerald-500/20
                                     `
                                     : `
                                       bg-amber-50
                                       text-amber-700
                                       border-amber-200
                                       hover:bg-amber-100
-                                      dark:bg-amber-500/10
-                                      dark:text-amber-400
-                                      dark:border-amber-500/20
                                     `
                                 }
                               `}
                             >
                               <span
                                 className={`
-                                  w-1.5
-                                  h-1.5
+                                  w-1.5 h-1.5
                                   rounded-full
-                                  shrink-0
-
                                   ${
                                     user.status === "Aktiv"
                                       ? "bg-emerald-500"
@@ -626,24 +523,13 @@ export default function UsersView({
                           </td>
 
                           {/* ACTIONS */}
-                          <td className="pl-5 pr-7 py-4">
-                            <div
-                              className="
-                                flex
-                                items-center
-                                justify-end
-                                gap-2
-                                whitespace-nowrap
-                              "
-                            >
-                              {/* STATUS BUTTON */}
+                          <td className="px-5 py-4">
+                            <div className="flex items-center justify-end gap-1">
+
                               <button
-                                type="button"
                                 onClick={() => onStatus(user.id)}
                                 className="
-                                  w-9
-                                  h-9
-                                  shrink-0
+                                  w-9 h-9
                                   flex
                                   items-center
                                   justify-center
@@ -651,8 +537,7 @@ export default function UsersView({
                                   text-slate-400
                                   hover:text-emerald-600
                                   hover:bg-emerald-50
-                                  dark:hover:bg-emerald-500/10
-                                  transition-all
+                                  transition
                                 "
                                 title="Statusu dəyiş"
                               >
@@ -671,14 +556,10 @@ export default function UsersView({
                                 </svg>
                               </button>
 
-                              {/* DELETE BUTTON */}
                               <button
-                                type="button"
                                 onClick={() => onDelete(user.id)}
                                 className="
-                                  w-9
-                                  h-9
-                                  shrink-0
+                                  w-9 h-9
                                   flex
                                   items-center
                                   justify-center
@@ -686,8 +567,7 @@ export default function UsersView({
                                   text-slate-400
                                   hover:text-rose-600
                                   hover:bg-rose-50
-                                  dark:hover:bg-rose-500/10
-                                  transition-all
+                                  transition
                                 "
                                 title="Sil"
                               >
@@ -695,13 +575,13 @@ export default function UsersView({
                                   className="w-[18px] h-[18px]"
                                   fill="none"
                                   stroke="currentColor"
-                                  strokeWidth="1.9"
+                                  strokeWidth="2"
                                   viewBox="0 0 24 24"
                                 >
                                   <path
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
-                                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79"
                                   />
                                 </svg>
                               </button>
@@ -712,28 +592,22 @@ export default function UsersView({
                     ) : (
                       <tr>
                         <td colSpan="6">
-                          <div className="py-20 flex flex-col items-center justify-center text-center">
+                          <div className="py-20 flex flex-col items-center text-center">
                             <div
                               className="
-                                w-12
-                                h-12
+                                w-12 h-12
                                 rounded-xl
                                 bg-emerald-50
-                                dark:bg-emerald-500/10
-                                flex
-                                items-center
+                                flex items-center
                                 justify-center
                                 text-emerald-500
                                 mb-3
                               "
                             >
-                              <Icon
-                                name="search"
-                                className="w-5 h-5"
-                              />
+                              <Icon name="search" className="w-5 h-5" />
                             </div>
 
-                            <p className="text-base font-bold text-slate-700 dark:text-slate-200">
+                            <p className="text-base font-bold text-slate-700">
                               İstifadəçi tapılmadı
                             </p>
 
@@ -752,7 +626,6 @@ export default function UsersView({
         </div>
       </div>
 
-      {/* ANIMATION */}
       <style>{`
         @keyframes usersTableEnter {
           from {
@@ -791,7 +664,6 @@ export default function UsersView({
           top: 0;
           left: 0;
           right: 0;
-
           height: 2px;
 
           background:
@@ -810,13 +682,6 @@ export default function UsersView({
             cubic-bezier(0.22, 1, 0.36, 1)
             0.1s
             both;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .users-table-enter,
-          .users-green-line {
-            animation: none;
-          }
         }
       `}</style>
     </section>

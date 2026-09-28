@@ -55,16 +55,57 @@ export default function UsersView({
   }, [users, search, status, sortOrder]);
 
   return (
-    <section className="flex-1 flex flex-col h-full bg-slate-50 dark:bg-slate-950 overflow-hidden min-w-0">
-
+    <section
+      className="
+        flex-1
+        flex flex-col
+        h-full
+        bg-slate-50
+        dark:bg-slate-950
+        overflow-hidden
+        min-w-0
+      "
+    >
       {/* HEADER */}
-      <header className="h-20 px-6 md:px-8 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/95 backdrop-blur flex items-center justify-between shrink-0 z-10">
+      <header
+        className="
+          h-20
+          px-6 md:px-8
+          border-b
+          border-slate-200/80
+          dark:border-slate-800/80
+          bg-white/95
+          dark:bg-slate-900/95
+          backdrop-blur
+          flex
+          items-center
+          justify-between
+          shrink-0
+          z-10
+        "
+      >
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+          <h1
+            className="
+              text-xl
+              md:text-2xl
+              font-black
+              tracking-tight
+              text-slate-900
+              dark:text-white
+            "
+          >
             İstifadəçilər
           </h1>
 
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p
+            className="
+              text-sm
+              text-slate-500
+              dark:text-slate-400
+              mt-1
+            "
+          >
             Sistem istifadəçiləri və giriş hüquqları
           </p>
         </div>
@@ -72,7 +113,8 @@ export default function UsersView({
         <button
           onClick={onCreate}
           className="
-            px-5 py-3
+            px-5
+            py-3
             rounded-xl
             bg-emerald-600
             hover:bg-emerald-700
@@ -102,21 +144,37 @@ export default function UsersView({
       </header>
 
       {/* CONTENT */}
-      <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+      <div
+        className="
+          flex-1
+          overflow-y-auto
+          p-4
+          md:p-6
+          lg:p-8
+        "
+      >
         <div className="w-full space-y-4">
 
           {/* TOOLBAR */}
-          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3">
-
-            {/* COUNT */}
+          <div
+            className="
+              flex
+              flex-col
+              lg:flex-row
+              lg:items-center
+              justify-between
+              gap-3
+            "
+          >
+            {/* USER COUNT */}
             <div
               className="
                 inline-flex
                 items-center
                 gap-3
                 w-fit
-                px-4
-                py-2.5
+                px-3.5
+                py-2
                 rounded-xl
                 bg-white
                 dark:bg-slate-900
@@ -129,8 +187,8 @@ export default function UsersView({
             >
               <div
                 className="
-                  w-9
-                  h-9
+                  w-8
+                  h-8
                   rounded-lg
                   bg-emerald-50
                   dark:bg-emerald-500/10
@@ -142,7 +200,7 @@ export default function UsersView({
                 "
               >
                 <svg
-                  className="w-[18px] h-[18px]"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -157,21 +215,42 @@ export default function UsersView({
               </div>
 
               <div className="flex items-baseline gap-1.5">
-                <span className="text-base font-black text-slate-900 dark:text-white">
+                <span
+                  className="
+                    text-base
+                    font-black
+                    text-slate-900
+                    dark:text-white
+                  "
+                >
                   {list.length}
                 </span>
 
-                <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                <span
+                  className="
+                    text-[13px]
+                    font-medium
+                    text-slate-500
+                    dark:text-slate-400
+                  "
+                >
                   istifadəçi göstərilir
                 </span>
               </div>
             </div>
 
-            {/* SEARCH / FILTER / SORT */}
-            <div className="flex flex-col sm:flex-row gap-2">
-
+            {/* SEARCH + FILTER + SORT */}
+            <div
+              className="
+                flex
+                flex-col
+                sm:flex-row
+                gap-2
+                sm:items-center
+              "
+            >
               {/* SEARCH */}
-              <div className="relative w-full sm:w-[330px]">
+              <div className="relative w-full sm:w-[320px]">
                 <Icon
                   name="search"
                   className="
@@ -193,7 +272,7 @@ export default function UsersView({
                     w-full
                     h-11
                     pl-10
-                    pr-9
+                    pr-10
                     rounded-xl
                     bg-white
                     dark:bg-slate-900
@@ -202,7 +281,7 @@ export default function UsersView({
                     dark:border-slate-800
                     text-sm
                     text-slate-900
-                    dark:text-white
+                    dark:text-slate-100
                     placeholder:text-slate-400
                     outline-none
                     shadow-[0_2px_10px_rgba(15,23,42,0.03)]
@@ -234,8 +313,9 @@ export default function UsersView({
                 )}
               </div>
 
-              {/* STATUS */}
+              {/* STATUS FILTER */}
               <select
+                aria-label="İstifadəçi statusu"
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
                 className="
@@ -257,16 +337,26 @@ export default function UsersView({
                   focus:border-emerald-400
                   focus:ring-4
                   focus:ring-emerald-500/10
+                  transition
                   cursor-pointer
                 "
               >
-                <option value="">Bütün statuslar</option>
-                <option value="Aktiv">Aktiv</option>
-                <option value="Gözləmədə">Gözləmədə</option>
+                <option value="">
+                  Bütün statuslar
+                </option>
+
+                <option value="Aktiv">
+                  Aktiv
+                </option>
+
+                <option value="Gözləmədə">
+                  Gözləmədə
+                </option>
               </select>
 
               {/* SORT */}
               <select
+                aria-label="İstifadəçi sıralaması"
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value)}
                 className="
@@ -288,6 +378,7 @@ export default function UsersView({
                   focus:border-emerald-400
                   focus:ring-4
                   focus:ring-emerald-500/10
+                  transition
                   cursor-pointer
                 "
               >
@@ -304,21 +395,22 @@ export default function UsersView({
                 </option>
 
                 <option value="active-first">
-                  Aktiv əvvəl
+                  Status: Aktiv əvvəl
                 </option>
 
                 <option value="waiting-first">
-                  Gözləmədə əvvəl
+                  Status: Gözləmədə əvvəl
                 </option>
               </select>
             </div>
           </div>
 
-          {/* TABLE */}
+          {/* TABLE ANIMATION */}
           <div className="users-table-enter">
+
+            {/* TABLE CARD */}
             <div
               className="
-                relative
                 w-full
                 bg-white
                 dark:bg-slate-900
@@ -326,159 +418,95 @@ export default function UsersView({
                 border
                 border-slate-200/80
                 dark:border-slate-800
-                shadow-[0_5px_20px_rgba(15,23,42,0.055)]
+                shadow-[0_4px_18px_rgba(15,23,42,0.05)]
                 dark:shadow-none
                 overflow-hidden
+                relative
               "
             >
+              {/* GREEN SWEEP LINE */}
               <div className="users-green-line" />
 
               <div className="overflow-x-auto">
                 <table
                   className="
                     w-full
-                    min-w-[1050px]
-                    table-fixed
-                    border-collapse
                     text-left
+                    border-collapse
+                    min-w-[950px]
                   "
                 >
-                  {/* COLUMN WIDTHS */}
-                  <colgroup>
-                    <col className="w-[19%]" />
-                    <col className="w-[17%]" />
-                    <col className="w-[21%]" />
-                    <col className="w-[19%]" />
-                    <col className="w-[10%]" />
-                    <col className="w-[14%]" />
-                  </colgroup>
-
                   {/* TABLE HEADER */}
                   <thead>
                     <tr
                       className="
+                        border-b
+                        border-slate-200/70
+                        dark:border-slate-800
                         bg-slate-50/90
                         dark:bg-slate-800/40
-                        border-b
-                        border-slate-200
-                        dark:border-slate-800
+                        text-xs
+                        uppercase
+                        tracking-[0.08em]
+                        font-bold
+                        text-slate-400
                       "
                     >
-                      <th
-                        className="
-                          px-5
-                          py-4
-                          text-[12px]
-                          uppercase
-                          tracking-[0.07em]
-                          font-extrabold
-                          text-slate-500
-                          dark:text-slate-400
-                        "
-                      >
+                      <th className="py-4.5 px-6">
                         Ad / Soyad
                       </th>
 
-                      <th
-                        className="
-                          px-5
-                          py-4
-                          text-[12px]
-                          uppercase
-                          tracking-[0.07em]
-                          font-extrabold
-                          text-slate-500
-                          dark:text-slate-400
-                        "
-                      >
+                      <th className="py-4.5 px-5">
                         Şirkət
                       </th>
 
-                      <th
-                        className="
-                          px-5
-                          py-4
-                          text-[12px]
-                          uppercase
-                          tracking-[0.07em]
-                          font-extrabold
-                          text-slate-500
-                          dark:text-slate-400
-                        "
-                      >
+                      <th className="py-4.5 px-5">
                         E-mail
                       </th>
 
-                      <th
-                        className="
-                          px-5
-                          py-4
-                          text-[12px]
-                          uppercase
-                          tracking-[0.07em]
-                          font-extrabold
-                          text-slate-500
-                          dark:text-slate-400
-                        "
-                      >
+                      <th className="py-4.5 px-5">
                         Vəzifə
                       </th>
 
-                      <th
-                        className="
-                          px-5
-                          py-4
-                          text-[12px]
-                          uppercase
-                          tracking-[0.07em]
-                          font-extrabold
-                          text-slate-500
-                          dark:text-slate-400
-                        "
-                      >
+                      <th className="py-4.5 px-5">
                         Status
                       </th>
 
-                      <th
-                        className="
-                          pl-5
-                          pr-7
-                          py-4
-                          text-right
-                          text-[12px]
-                          uppercase
-                          tracking-[0.07em]
-                          font-extrabold
-                          text-slate-500
-                          dark:text-slate-400
-                        "
-                      >
+                      <th className="py-4.5 px-6 text-right">
                         Əməliyyatlar
                       </th>
                     </tr>
                   </thead>
 
-                  {/* TABLE BODY */}
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                  {/* BODY */}
+                  <tbody
+                    className="
+                      divide-y
+                      divide-slate-100
+                      dark:divide-slate-800/70
+                    "
+                  >
                     {list.length > 0 ? (
                       list.map((user) => (
                         <tr
                           key={user.id}
                           className="
                             group
-                            hover:bg-emerald-50/40
+                            hover:bg-emerald-50/35
                             dark:hover:bg-emerald-500/[0.035]
                             transition-colors
+                            duration-200
                           "
                         >
                           {/* NAME */}
-                          <td className="px-5 py-4">
-                            <div className="flex items-center gap-3 min-w-0">
+                          <td className="py-5 px-6">
+                            <div className="flex items-center gap-3.5">
+
+                              {/* AVATAR */}
                               <div
                                 className="
                                   w-10
                                   h-10
-                                  shrink-0
                                   rounded-xl
                                   bg-gradient-to-br
                                   from-emerald-500
@@ -490,9 +518,10 @@ export default function UsersView({
                                   text-xs
                                   font-black
                                   shadow-sm
-                                  shadow-emerald-500/20
+                                  shadow-emerald-500/15
                                   group-hover:scale-105
                                   transition-transform
+                                  duration-200
                                 "
                               >
                                 {user.name
@@ -505,9 +534,8 @@ export default function UsersView({
 
                               <span
                                 className="
-                                  truncate
-                                  text-[15px]
                                   font-bold
+                                  text-sm
                                   text-slate-900
                                   dark:text-white
                                 "
@@ -520,53 +548,46 @@ export default function UsersView({
                           {/* COMPANY */}
                           <td
                             className="
+                              py-5
                               px-5
-                              py-4
-                              text-sm
-                              font-bold
+                              text-[13px]
+                              font-semibold
                               text-emerald-600
                               dark:text-emerald-400
                             "
                           >
-                            <span className="block truncate">
-                              {user.company}
-                            </span>
+                            {user.company}
                           </td>
 
                           {/* EMAIL */}
                           <td
                             className="
+                              py-5
                               px-5
-                              py-4
-                              text-sm
-                              font-medium
+                              font-mono
+                              text-xs
                               text-slate-600
                               dark:text-slate-300
                             "
                           >
-                            <span className="block truncate">
-                              {user.email}
-                            </span>
+                            {user.email}
                           </td>
 
                           {/* POSITION */}
                           <td
                             className="
+                              py-5
                               px-5
-                              py-4
-                              text-sm
-                              font-medium
+                              text-[13px]
                               text-slate-600
                               dark:text-slate-300
                             "
                           >
-                            <span className="block truncate">
-                              {user.position}
-                            </span>
+                            {user.position}
                           </td>
 
                           {/* STATUS */}
-                          <td className="px-5 py-4">
+                          <td className="py-5 px-5">
                             <button
                               type="button"
                               onClick={() => onStatus(user.id)}
@@ -580,8 +601,7 @@ export default function UsersView({
                                 text-xs
                                 font-bold
                                 border
-                                whitespace-nowrap
-                                transition
+                                transition-all
 
                                 ${
                                   user.status === "Aktiv"
@@ -611,7 +631,6 @@ export default function UsersView({
                                   w-1.5
                                   h-1.5
                                   rounded-full
-                                  shrink-0
 
                                   ${
                                     user.status === "Aktiv"
@@ -621,30 +640,30 @@ export default function UsersView({
                                 `}
                               />
 
-                              {user.status}
+                              {user.status === "Aktiv"
+                                ? "Aktiv"
+                                : "Gözləmədə"}
                             </button>
                           </td>
 
                           {/* ACTIONS */}
-                          <td className="pl-5 pr-7 py-4">
+                          <td className="py-5 px-6 text-right">
                             <div
                               className="
                                 flex
                                 items-center
                                 justify-end
-                                gap-2
-                                whitespace-nowrap
+                                gap-1.5
                               "
                             >
-                              {/* STATUS BUTTON */}
+                              {/* STATUS */}
                               <button
                                 type="button"
                                 onClick={() => onStatus(user.id)}
                                 className="
-                                  w-9
-                                  h-9
-                                  shrink-0
-                                  flex
+                                  w-10
+                                  h-10
+                                  inline-flex
                                   items-center
                                   justify-center
                                   rounded-lg
@@ -671,15 +690,14 @@ export default function UsersView({
                                 </svg>
                               </button>
 
-                              {/* DELETE BUTTON */}
+                              {/* DELETE */}
                               <button
                                 type="button"
                                 onClick={() => onDelete(user.id)}
                                 className="
-                                  w-9
-                                  h-9
-                                  shrink-0
-                                  flex
+                                  w-10
+                                  h-10
+                                  inline-flex
                                   items-center
                                   justify-center
                                   rounded-lg
@@ -695,7 +713,7 @@ export default function UsersView({
                                   className="w-[18px] h-[18px]"
                                   fill="none"
                                   stroke="currentColor"
-                                  strokeWidth="1.9"
+                                  strokeWidth="2"
                                   viewBox="0 0 24 24"
                                 >
                                   <path
@@ -712,7 +730,16 @@ export default function UsersView({
                     ) : (
                       <tr>
                         <td colSpan="6">
-                          <div className="py-20 flex flex-col items-center justify-center text-center">
+                          <div
+                            className="
+                              py-20
+                              flex
+                              flex-col
+                              items-center
+                              justify-center
+                              text-center
+                            "
+                          >
                             <div
                               className="
                                 w-12
@@ -733,11 +760,24 @@ export default function UsersView({
                               />
                             </div>
 
-                            <p className="text-base font-bold text-slate-700 dark:text-slate-200">
+                            <p
+                              className="
+                                text-base
+                                font-bold
+                                text-slate-700
+                                dark:text-slate-200
+                              "
+                            >
                               İstifadəçi tapılmadı
                             </p>
 
-                            <p className="text-sm text-slate-400 mt-1">
+                            <p
+                              className="
+                                text-sm
+                                text-slate-400
+                                mt-1
+                              "
+                            >
                               Axtarış, status və ya sıralamanı dəyiş
                             </p>
                           </div>
@@ -757,7 +797,7 @@ export default function UsersView({
         @keyframes usersTableEnter {
           from {
             opacity: 0;
-            transform: translateY(5px) scale(0.996);
+            transform: translateY(5px) scale(0.995);
           }
 
           to {
@@ -767,12 +807,16 @@ export default function UsersView({
         }
 
         @keyframes greenLineSweep {
-          from {
+          0% {
             transform: scaleX(0);
             opacity: 0;
           }
 
-          to {
+          30% {
+            opacity: 1;
+          }
+
+          100% {
             transform: scaleX(1);
             opacity: 1;
           }
@@ -791,7 +835,6 @@ export default function UsersView({
           top: 0;
           left: 0;
           right: 0;
-
           height: 2px;
 
           background:
