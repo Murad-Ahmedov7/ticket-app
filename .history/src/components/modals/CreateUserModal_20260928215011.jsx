@@ -24,16 +24,15 @@ export default function CreateUserModal({ onClose, onSave }) {
     w-full
     px-3.5
     py-2.5
+
     rounded-xl
 
     bg-slate-50
     dark:bg-slate-800/80
 
-    text-[13px]
     text-slate-900
     dark:text-slate-100
 
-    placeholder:text-[13px]
     placeholder:text-slate-400
     dark:placeholder:text-slate-500
 
@@ -56,8 +55,10 @@ export default function CreateUserModal({ onClose, onSave }) {
   const labelClass = `
     block
     mb-1.5
+
     text-[11px]
     font-bold
+
     text-slate-600
     dark:text-slate-300
   `;
@@ -118,7 +119,6 @@ export default function CreateUserModal({ onClose, onSave }) {
             top-0
             left-0
             right-0
-
             h-[3px]
 
             bg-gradient-to-r
@@ -135,7 +135,6 @@ export default function CreateUserModal({ onClose, onSave }) {
             absolute
             inset-x-0
             top-0
-
             h-24
 
             bg-gradient-to-b
@@ -288,7 +287,6 @@ export default function CreateUserModal({ onClose, onSave }) {
 
                     w-2
                     h-2
-
                     rounded-full
                     bg-emerald-500
                   "
@@ -348,7 +346,7 @@ export default function CreateUserModal({ onClose, onSave }) {
 
           {/* STATUS */}
           <div>
-            <label className={labelClass}>
+            <label htmlFor="user-status" className={labelClass}>
               Status
             </label>
 
@@ -408,7 +406,6 @@ export default function CreateUserModal({ onClose, onSave }) {
                   className={`
                     w-2
                     h-2
-
                     rounded-full
 
                     ${
@@ -477,7 +474,6 @@ export default function CreateUserModal({ onClose, onSave }) {
                   className={`
                     w-2
                     h-2
-
                     rounded-full
 
                     ${
@@ -540,6 +536,8 @@ export default function CreateUserModal({ onClose, onSave }) {
             <button
               type="submit"
               className="
+                group
+
                 inline-flex
                 items-center
                 justify-center
