@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import Icon from '../common/Icons.jsx';
 
@@ -58,46 +59,110 @@ export default function OperatorView({
   ];
 
   return (
-    <section className="flex-1 min-w-0 h-full flex flex-col bg-slate-50 dark:bg-slate-950 overflow-hidden">
-      <style>
-        {`
-          @keyframes fadeSlideIn {
-            from {
-              opacity: 0;
-              transform: translateY(7px);
-            }
-
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-        `}
-      </style>
-
+    <section
+      className="
+        flex-1
+        min-w-0
+        h-full
+        flex
+        flex-col
+        bg-slate-50
+        dark:bg-slate-950
+        overflow-hidden
+      "
+    >
       {/* HEADER */}
-      <header className="shrink-0 bg-white dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-800">
-        <div className="px-4 sm:px-6 lg:px-8 py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <header
+        className="
+          shrink-0
+          bg-white
+          dark:bg-slate-900
+          border-b
+          border-slate-200/80
+          dark:border-slate-800
+        "
+      >
+        <div
+          className="
+            px-4
+            sm:px-6
+            lg:px-8
+            py-4
+            flex
+            flex-col
+            lg:flex-row
+            lg:items-center
+            lg:justify-between
+            gap-4
+          "
+        >
           {/* TITLE */}
           <div>
             <div className="flex items-center gap-3">
-              <span className="relative w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0">
-                <span className="absolute inset-0 rounded-full bg-emerald-400 opacity-30 scale-[1.8]" />
+              <span
+                className="
+                  relative
+                  w-2.5
+                  h-2.5
+                  rounded-full
+                  bg-emerald-500
+                  shrink-0
+                "
+              >
+                <span
+                  className="
+                    absolute
+                    inset-0
+                    rounded-full
+                    bg-emerald-400
+                    opacity-30
+                    scale-[1.8]
+                  "
+                />
               </span>
 
-              <h1 className="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+              <h1
+                className="
+                text-xl md:text-2xl
+                  font-black
+                  tracking-tight
+                  text-slate-900
+                  dark:text-white
+                "
+              >
                 Operator təsdiq
               </h1>
             </div>
 
-            <p className="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">
+            <p
+              className="
+                mt-1.5
+                text-[13px]
+                text-slate-500
+                dark:text-slate-400
+              "
+            >
               Qeydiyyatdan keçən müştərilərin və istifadəçilərin operator tərəfindən təsdiqi
             </p>
           </div>
 
           {/* TABS */}
           <div className="overflow-x-auto">
-            <div className="inline-flex min-w-max items-center gap-1 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+            <div
+              className="
+                inline-flex
+                min-w-max
+                items-center
+                gap-1
+                p-1
+                rounded-xl
+                bg-slate-100
+                dark:bg-slate-800
+                border
+                border-slate-200
+                dark:border-slate-700
+              "
+            >
               {tabs.map((tab) => {
                 const active = operatorTab === tab.value;
 
@@ -116,7 +181,6 @@ export default function OperatorView({
                       font-bold
                       whitespace-nowrap
                       transition-all
-                      duration-200
                       ${
                         active
                           ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
@@ -157,28 +221,112 @@ export default function OperatorView({
       </header>
 
       {/* CONTENT */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6">
-        <div className="w-full bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-2xl shadow-[0_6px_24px_rgba(15,23,42,0.045)] overflow-hidden">
+      <div
+        className="
+          flex-1
+          overflow-y-auto
+          p-4
+          sm:p-5
+          lg:p-6
+        "
+      >
+        <div
+          className="
+            w-full
+            bg-white
+            dark:bg-slate-900
+            border
+            border-slate-200/90
+            dark:border-slate-800
+            rounded-2xl
+            shadow-[0_6px_24px_rgba(15,23,42,0.045)]
+            overflow-hidden
+          "
+        >
           {/* TOOLBAR */}
-          <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div
+            className="
+              px-5
+              py-4
+              border-b
+              border-slate-100
+              dark:border-slate-800
+              flex
+              flex-col
+              md:flex-row
+              md:items-center
+              md:justify-between
+              gap-3
+            "
+          >
             <div>
               <div className="flex items-center gap-2.5">
-                <h2 className="text-[20px] font-black text-slate-900 dark:text-white">
+                <h2
+                  className="
+                    text-[20px]
+                    font-black
+                    text-slate-900
+                    dark:text-white
+                  "
+                >
                   İstifadəçilər
                 </h2>
 
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 text-[11px] font-bold border border-emerald-100 dark:border-emerald-900">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span
+                  className="
+                    inline-flex
+                    items-center
+                    gap-1.5
+                    px-2.5
+                    py-1
+                    rounded-lg
+                    bg-emerald-50
+                    text-emerald-700
+                    dark:bg-emerald-950/40
+                    dark:text-emerald-300
+                    text-[11px]
+                    font-bold
+                    border
+                    border-emerald-100
+                    dark:border-emerald-900
+                  "
+                >
+                  <span
+                    className="
+                      w-1.5
+                      h-1.5
+                      rounded-full
+                      bg-emerald-500
+                    "
+                  />
+
                   {list.length} istifadəçi
                 </span>
               </div>
+
+
             </div>
 
             {/* SEARCH */}
-            <div className="relative w-full md:w-[360px] lg:w-[400px]">
+            <div
+              className="
+                relative
+                w-full
+                md:w-[360px]
+                lg:w-[400px]
+              "
+            >
               <Icon
                 name="search"
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
+                className="
+                  absolute
+                  left-3.5
+                  top-1/2
+                  -translate-y-1/2
+                  w-4
+                  h-4
+                  text-slate-400
+                "
               />
 
               <input
@@ -214,9 +362,24 @@ export default function OperatorView({
             <>
               {/* DESKTOP TABLE */}
               <div className="hidden md:block overflow-x-auto">
-                <table className="w-full min-w-[1050px] border-collapse text-left">
+                <table
+                  className="
+                    w-full
+                    min-w-[1050px]
+                    border-collapse
+                    text-left
+                  "
+                >
                   <thead>
-                    <tr className="bg-slate-50/80 dark:bg-slate-800/40 border-b border-slate-200/80 dark:border-slate-800">
+                    <tr
+                      className="
+                        bg-slate-50/80
+                        dark:bg-slate-800/40
+                        border-b
+                        border-slate-200/80
+                        dark:border-slate-800
+                      "
+                    >
                       {[
                         'Ad / Soyad',
                         'E-mail',
@@ -235,8 +398,12 @@ export default function OperatorView({
                             tracking-[0.08em]
                             font-black
                             text-slate-400
-                            ${index === 0 ? 'pl-5' : ''}
-                            ${index === 5 ? 'pr-5 text-right' : ''}
+                            ${
+                              index === 0 ? 'pl-5' : ''
+                            }
+                            ${
+                              index === 5 ? 'pr-5 text-right' : ''
+                            }
                           `}
                         >
                           {label}
@@ -245,26 +412,35 @@ export default function OperatorView({
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                    {list.map((item, index) => (
+                  <tbody
+                    className="
+                      divide-y
+                      divide-slate-100
+                      dark:divide-slate-800
+                    "
+                  >
+                    {list.map((item) => (
                       <tr
                         key={item.id}
-                        style={{
-                          animation: `fadeSlideIn 260ms ease-out ${
-                            index * 45
-                          }ms both`,
-                        }}
                         className="
                           group
                           relative
                           hover:bg-emerald-50/60
                           dark:hover:bg-emerald-950/20
-                          transition-all
+                          transition-colors
                           duration-200
                         "
                       >
                         {/* NAME */}
-                        <td className="relative px-5 pl-5 py-[18px] whitespace-nowrap">
+                        <td
+                          className="
+                            relative
+                            px-5
+                            pl-5
+                            py-[18px]
+                            whitespace-nowrap
+                          "
+                        >
                           {/* STATUS RAIL */}
                           <span
                             className={`
@@ -276,7 +452,6 @@ export default function OperatorView({
                               rounded-r-full
                               transition-all
                               duration-200
-                              group-hover:w-[4px]
                               group-hover:top-1
                               group-hover:bottom-1
                               ${
@@ -287,23 +462,56 @@ export default function OperatorView({
                             `}
                           />
 
-                          <span className="text-sm font-black text-slate-900 dark:text-white">
+                          <span
+                            className="
+                              text-sm
+                              font-black
+                              text-slate-900
+                              dark:text-white
+                            "
+                          >
                             {item.name}
                           </span>
                         </td>
 
                         {/* EMAIL */}
-                        <td className="px-5 py-[18px] text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                        <td
+                          className="
+                            px-5
+                            py-[18px]
+                            text-sm
+                            text-slate-600
+                            dark:text-slate-300
+                            whitespace-nowrap
+                          "
+                        >
                           {item.email}
                         </td>
 
                         {/* PHONE */}
-                        <td className="px-5 py-[18px] text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                        <td
+                          className="
+                            px-5
+                            py-[18px]
+                            text-sm
+                            text-slate-600
+                            dark:text-slate-300
+                            whitespace-nowrap
+                          "
+                        >
                           {item.phone}
                         </td>
 
                         {/* POSITION */}
-                        <td className="px-5 py-[18px] text-sm text-slate-700 dark:text-slate-300">
+                        <td
+                          className="
+                            px-5
+                            py-[18px]
+                            text-sm
+                            text-slate-700
+                            dark:text-slate-300
+                          "
+                        >
                           {item.position}
                         </td>
 
@@ -325,13 +533,11 @@ export default function OperatorView({
                               dark:border-slate-700
                               text-xs
                               font-bold
-                              transition-all
-                              duration-200
+                              transition-colors
                               group-hover:bg-white
                               dark:group-hover:bg-slate-800
                               group-hover:border-emerald-200
                               dark:group-hover:border-emerald-800
-                              group-hover:shadow-sm
                             "
                           >
                             {item.company}
@@ -339,12 +545,21 @@ export default function OperatorView({
                         </td>
 
                         {/* ACTION */}
-                        <td className="px-5 pr-5 py-[18px] text-right whitespace-nowrap">
+                        <td
+                          className="
+                            px-5
+                            pr-5
+                            py-[18px]
+                            text-right
+                            whitespace-nowrap
+                          "
+                        >
                           {item.status === 'pending' ? (
                             <button
-                              onClick={() => onApprove(item.id)}
+                              onClick={() =>
+                                onApprove(item.id)
+                              }
                               className="
-                                group/button
                                 inline-flex
                                 items-center
                                 justify-center
@@ -365,17 +580,10 @@ export default function OperatorView({
                                 active:translate-y-0
                                 active:scale-[0.98]
                                 transition-all
-                                duration-200
                               "
                             >
                               <svg
-                                className="
-                                  w-4
-                                  h-4
-                                  transition-transform
-                                  duration-200
-                                  group-hover/button:translate-x-0.5
-                                "
+                                className="w-4 h-4"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
@@ -410,7 +618,15 @@ export default function OperatorView({
                                 font-bold
                               "
                             >
-                              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                              <span
+                                className="
+                                  w-2
+                                  h-2
+                                  rounded-full
+                                  bg-emerald-500
+                                "
+                              />
+
                               Təsdiqləndi
                             </span>
                           )}
@@ -422,22 +638,23 @@ export default function OperatorView({
               </div>
 
               {/* MOBILE */}
-              <div className="md:hidden divide-y divide-slate-100 dark:divide-slate-800">
-                {list.map((item, index) => (
+              <div
+                className="
+                  md:hidden
+                  divide-y
+                  divide-slate-100
+                  dark:divide-slate-800
+                "
+              >
+                {list.map((item) => (
                   <div
                     key={item.id}
-                    style={{
-                      animation: `fadeSlideIn 260ms ease-out ${
-                        index * 45
-                      }ms both`,
-                    }}
                     className="
                       relative
                       p-5
                       hover:bg-emerald-50/60
                       dark:hover:bg-emerald-950/20
-                      transition-all
-                      duration-200
+                      transition-colors
                     "
                   >
                     {/* STATUS RAIL */}
@@ -458,40 +675,122 @@ export default function OperatorView({
                     />
 
                     {/* TOP */}
-                    <div className="flex items-start justify-between gap-3">
+                    <div
+                      className="
+                        flex
+                        items-start
+                        justify-between
+                        gap-3
+                      "
+                    >
                       <div className="min-w-0">
-                        <h3 className="text-base font-black text-slate-900 dark:text-white">
+                        <h3
+                          className="
+                            text-base
+                            font-black
+                            text-slate-900
+                            dark:text-white
+                          "
+                        >
                           {item.name}
                         </h3>
 
-                        <p className="mt-1.5 text-[13px] text-slate-500 truncate">
+                        <p
+                          className="
+                            mt-1.5
+                            text-[13px]
+                            text-slate-500
+                            truncate
+                          "
+                        >
                           {item.email}
                         </p>
                       </div>
 
-                      <span className="px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold shrink-0">
+                      <span
+                        className="
+                          px-3
+                          py-1.5
+                          rounded-md
+                          bg-slate-100
+                          dark:bg-slate-800
+                          text-slate-700
+                          dark:text-slate-300
+                          border
+                          border-slate-200
+                          dark:border-slate-700
+                          text-xs
+                          font-bold
+                          shrink-0
+                        "
+                      >
                         {item.company}
                       </span>
                     </div>
 
                     {/* DETAILS */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                    <div
+                      className="
+                        grid
+                        grid-cols-1
+                        sm:grid-cols-2
+                        gap-4
+                        mt-4
+                        p-4
+                        rounded-xl
+                        bg-slate-50
+                        dark:bg-slate-800/50
+                        border
+                        border-slate-100
+                        dark:border-slate-800
+                      "
+                    >
                       <div>
-                        <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
+                        <p
+                          className="
+                            text-[11px]
+                            uppercase
+                            tracking-wider
+                            font-bold
+                            text-slate-400
+                          "
+                        >
                           Telefon
                         </p>
 
-                        <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
+                        <p
+                          className="
+                            mt-1
+                            text-sm
+                            text-slate-700
+                            dark:text-slate-300
+                          "
+                        >
                           {item.phone}
                         </p>
                       </div>
 
                       <div>
-                        <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
+                        <p
+                          className="
+                            text-[11px]
+                            uppercase
+                            tracking-wider
+                            font-bold
+                            text-slate-400
+                          "
+                        >
                           Vəzifə
                         </p>
 
-                        <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
+                        <p
+                          className="
+                            mt-1
+                            text-sm
+                            text-slate-700
+                            dark:text-slate-300
+                          "
+                        >
                           {item.position}
                         </p>
                       </div>
@@ -501,9 +800,10 @@ export default function OperatorView({
                     <div className="mt-4">
                       {item.status === 'pending' ? (
                         <button
-                          onClick={() => onApprove(item.id)}
+                          onClick={() =>
+                            onApprove(item.id)
+                          }
                           className="
-                            group/button
                             w-full
                             flex
                             items-center
@@ -519,21 +819,12 @@ export default function OperatorView({
                             font-bold
                             shadow-sm
                             shadow-emerald-500/10
-                            hover:-translate-y-[1px]
-                            active:translate-y-0
                             active:scale-[0.99]
                             transition-all
-                            duration-200
                           "
                         >
                           <svg
-                            className="
-                              w-4
-                              h-4
-                              transition-transform
-                              duration-200
-                              group-hover/button:translate-x-0.5
-                            "
+                            className="w-4 h-4"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
@@ -549,8 +840,36 @@ export default function OperatorView({
                           Təsdiqlə
                         </button>
                       ) : (
-                        <div className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900 text-sm font-bold">
-                          <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                        <div
+                          className="
+                            w-full
+                            flex
+                            items-center
+                            justify-center
+                            gap-2
+                            px-4
+                            py-3
+                            rounded-xl
+                            bg-emerald-50
+                            text-emerald-700
+                            dark:bg-emerald-950/40
+                            dark:text-emerald-300
+                            border
+                            border-emerald-200
+                            dark:border-emerald-900
+                            text-sm
+                            font-bold
+                          "
+                        >
+                          <span
+                            className="
+                              w-2
+                              h-2
+                              rounded-full
+                              bg-emerald-500
+                            "
+                          />
+
                           Təsdiqləndi
                         </div>
                       )}
@@ -561,16 +880,59 @@ export default function OperatorView({
             </>
           ) : (
             /* EMPTY */
-            <div className="min-h-[320px] flex flex-col items-center justify-center text-center px-6">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 flex items-center justify-center text-emerald-500 border border-emerald-100 dark:border-emerald-900">
-                <Icon name="search" className="w-6 h-6" />
+            <div
+              className="
+                min-h-[320px]
+                flex
+                flex-col
+                items-center
+                justify-center
+                text-center
+                px-6
+              "
+            >
+              <div
+                className="
+                  w-14
+                  h-14
+                  rounded-2xl
+                  bg-emerald-50
+                  dark:bg-emerald-950/30
+                  flex
+                  items-center
+                  justify-center
+                  text-emerald-500
+                  border
+                  border-emerald-100
+                  dark:border-emerald-900
+                "
+              >
+                <Icon
+                  name="search"
+                  className="w-6 h-6"
+                />
               </div>
 
-              <h3 className="mt-4 text-base font-black text-slate-800 dark:text-slate-200">
+              <h3
+                className="
+                  mt-4
+                  text-base
+                  font-black
+                  text-slate-800
+                  dark:text-slate-200
+                "
+              >
                 Məlumat tapılmadı
               </h3>
 
-              <p className="mt-1.5 max-w-sm text-[13px] text-slate-400">
+              <p
+                className="
+                  mt-1.5
+                  max-w-sm
+                  text-[13px]
+                  text-slate-400
+                "
+              >
                 Axtarışa və ya seçilmiş kateqoriyaya uyğun istifadəçi yoxdur.
               </p>
             </div>
