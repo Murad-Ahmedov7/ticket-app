@@ -1,13 +1,31 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Icon from '../common/Icons.jsx';
 
 export default function CompaniesView({
   companies,
   onCreate,
   onEdit,
+  isActive,
 }) {
   const [search, setSearch] = useState('');
   const [sortOrder, setSortOrder] = useState('az');
+  const [isVisible, setIsVisible] = useState(false);
+
+  // HƏR DƏFƏ BU TAB AÇILANDA ANİMASİYA İŞLƏYİR
+  useEffect(() => {
+    if (!isActive) {
+      setIsVisible(false);
+      return;
+    }
+
+    setIsVisible(false);
+
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 80);
+
+    return () => clearTimeout(timer);
+  }, [isActive]);
 
   const filteredCompanies = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -30,22 +48,42 @@ export default function CompaniesView({
   }, [companies, search, sortOrder]);
 
   return (
-    <section className="flex-1 flex flex-col h-full bg-slate-50 dark:bg-slate-950 overflow-hidden min-w-0">
-
+    <section
+      className="
+        flex-1
+        flex flex-col
+        h-full
+        bg-slate-50
+        dark:bg-slate-950
+        overflow-hidden
+        min-w-0
+      "
+    >
       {/* HEADER */}
       <header
-        className="
+        className={`
           min-h-20
           px-6 md:px-8
-          border-b border-slate-200/80 dark:border-slate-800/80
-          bg-white/95 dark:bg-slate-900/95
+          border-b border-slate-200/80
+          dark:border-slate-800/80
+          bg-white/95
+          dark:bg-slate-900/95
           backdrop-blur
           flex items-center justify-between
           gap-4
           shrink-0
           z-10
-          animate-[fadeDown_0.45s_ease-out]
-        "
+
+          transition-all
+          duration-500
+          ease-out
+
+          ${
+            isVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 -translate-y-2'
+          }
+        `}
       >
         <div>
           <h1 className="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
@@ -83,6 +121,7 @@ export default function CompaniesView({
             strokeWidth={2.5}
             className="w-[18px] h-[18px]"
           />
+
           Əlavə et
         </button>
       </header>
@@ -93,14 +132,26 @@ export default function CompaniesView({
 
           {/* TOOLBAR */}
           <div
-            className="
+            className={`
               flex flex-col
               lg:flex-row
               lg:items-center
               justify-between
               gap-3
-              animate-[fadeUp_0.5s_ease-out]
-            "
+
+              transition-all
+              duration-500
+              ease-out
+
+              ${
+                isVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-3'
+              }
+            `}
+            style={{
+              transitionDelay: isVisible ? '70ms' : '0ms',
+            }}
           >
             {/* COMPANY COUNT */}
             <div
@@ -160,6 +211,8 @@ export default function CompaniesView({
 
             {/* SEARCH + SORT */}
             <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+
+              {/* SEARCH */}
               <div className="relative w-full sm:w-[340px]">
                 <svg
                   className="
@@ -201,9 +254,11 @@ export default function CompaniesView({
                     dark:text-slate-100
                     placeholder:text-slate-400
                     outline-none
+
                     focus:border-emerald-400
                     focus:ring-4
                     focus:ring-emerald-500/10
+
                     transition
                   "
                 />
@@ -228,6 +283,7 @@ export default function CompaniesView({
                 )}
               </div>
 
+              {/* SORT */}
               <select
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value)}
@@ -245,9 +301,11 @@ export default function CompaniesView({
                   text-slate-600
                   dark:text-slate-300
                   outline-none
+
                   focus:border-emerald-400
                   focus:ring-4
                   focus:ring-emerald-500/10
+
                   transition
                   cursor-pointer
                 "
@@ -258,8 +316,24 @@ export default function CompaniesView({
             </div>
           </div>
 
-          {/* TABLE */}
-          <div className="animate-[fadeUp_0.7s_ease-out]">
+          {/* TABLE ANIMATION */}
+          <div
+            className={`
+              transition-all
+              duration-700
+              ease-out
+
+              ${
+                isVisible
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-6 scale-[0.985]'
+              }
+            `}
+            style={{
+              transitionDelay: isVisible ? '120ms' : '0ms',
+            }}
+          >
+            {/* TABLE */}
             <div
               className="
                 w-full
@@ -274,6 +348,7 @@ export default function CompaniesView({
                 relative
               "
             >
+              {/* GREEN LIGHT */}
               <div
                 className="
                   absolute
@@ -290,6 +365,8 @@ export default function CompaniesView({
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse min-w-[1000px]">
+
+                  {/* HEADER */}
                   <thead>
                     <tr
                       className="
@@ -305,38 +382,61 @@ export default function CompaniesView({
                         text-slate-400
                       "
                     >
-                      <th className="py-4 px-6 w-[85px]">Logo</th>
-                      <th className="py-4 px-5">Şirkət adı</th>
-                      <th className="py-4 px-5">Ünvan</th>
+                      <th className="py-4 px-6 w-[85px]">
+                        Logo
+                      </th>
+
+                      <th className="py-4 px-5">
+                        Şirkət adı
+                      </th>
+
+                      <th className="py-4 px-5">
+                        Ünvan
+                      </th>
+
                       <th className="py-4 px-5 whitespace-nowrap">
                         Əlaqə nömrəsi
                       </th>
+
                       <th className="py-4 px-5 whitespace-nowrap">
                         Elektron poçt ünvanı
                       </th>
+
                       <th className="py-4 px-6 text-right w-[110px]">
                         Əməliyyat
                       </th>
                     </tr>
                   </thead>
 
+                  {/* BODY */}
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800/70">
+
                     {filteredCompanies.length > 0 ? (
                       filteredCompanies.map((company, index) => (
                         <tr
                           key={company.id}
-                          className="
+                          className={`
                             group
+
                             hover:bg-emerald-50/40
                             dark:hover:bg-emerald-500/[0.04]
+
                             transition-all
-                            duration-300
-                            animate-[rowIn_0.45s_ease-out_both]
-                          "
+                            duration-500
+
+                            ${
+                              isVisible
+                                ? 'opacity-100 translate-x-0'
+                                : 'opacity-0 -translate-x-3'
+                            }
+                          `}
                           style={{
-                            animationDelay: `${120 + index * 70}ms`,
+                            transitionDelay: isVisible
+                              ? `${180 + index * 65}ms`
+                              : '0ms',
                           }}
                         >
+                          {/* LOGO */}
                           <td className="py-4 px-6">
                             <div
                               className="
@@ -345,7 +445,8 @@ export default function CompaniesView({
                                 bg-gradient-to-br
                                 from-emerald-500
                                 to-teal-600
-                                flex items-center
+                                flex
+                                items-center
                                 justify-center
                                 text-white
                                 font-black
@@ -361,26 +462,60 @@ export default function CompaniesView({
                             </div>
                           </td>
 
+                          {/* NAME */}
                           <td className="py-4 px-5">
                             <div className="font-bold text-[13px] text-slate-900 dark:text-white">
                               {company.name}
                             </div>
                           </td>
 
-                          <td className="py-4 px-5 text-[12px] text-slate-500 dark:text-slate-400 max-w-[380px]">
+                          {/* ADDRESS */}
+                          <td
+                            className="
+                              py-4
+                              px-5
+                              text-[12px]
+                              text-slate-500
+                              dark:text-slate-400
+                              max-w-[380px]
+                            "
+                          >
                             <span className="line-clamp-1">
                               {company.address}
                             </span>
                           </td>
 
-                          <td className="py-4 px-5 text-[12px] font-mono text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                          {/* PHONE */}
+                          <td
+                            className="
+                              py-4
+                              px-5
+                              text-[12px]
+                              font-mono
+                              text-slate-600
+                              dark:text-slate-300
+                              whitespace-nowrap
+                            "
+                          >
                             {company.phone}
                           </td>
 
-                          <td className="py-4 px-5 text-[12px] font-mono text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                          {/* EMAIL */}
+                          <td
+                            className="
+                              py-4
+                              px-5
+                              text-[12px]
+                              font-mono
+                              text-slate-600
+                              dark:text-slate-300
+                              whitespace-nowrap
+                            "
+                          >
                             {company.email}
                           </td>
 
+                          {/* EDIT */}
                           <td className="py-4 px-6 text-right">
                             <button
                               type="button"
@@ -393,10 +528,14 @@ export default function CompaniesView({
                                 w-9 h-9
                                 rounded-lg
                                 text-slate-400
+
                                 hover:text-emerald-600
                                 hover:bg-emerald-50
+
                                 dark:hover:bg-emerald-500/10
+
                                 group-hover:text-emerald-500
+
                                 transition-all
                               "
                             >
@@ -459,6 +598,7 @@ export default function CompaniesView({
                         </td>
                       </tr>
                     )}
+
                   </tbody>
                 </table>
               </div>
@@ -466,42 +606,6 @@ export default function CompaniesView({
           </div>
         </div>
       </div>
-
-      {/* LOCAL ANIMATION STYLES */}
-      <style>{`
-        @keyframes fadeDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes fadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(18px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes rowIn {
-          from {
-            opacity: 0;
-            transform: translateX(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-      `}</style>
     </section>
   );
 }

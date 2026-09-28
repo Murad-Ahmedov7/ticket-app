@@ -1,13 +1,40 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Icon from '../common/Icons.jsx';
 
 export default function CompaniesView({
   companies,
   onCreate,
   onEdit,
+  isActive,
 }) {
   const [search, setSearch] = useState('');
   const [sortOrder, setSortOrder] = useState('az');
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (!isActive) {
+      setIsVisible(false);
+      return;
+    }
+
+    setIsVisible(false);
+
+    let frame2;
+
+    const frame1 = requestAnimationFrame(() => {
+      frame2 = requestAnimationFrame(() => {
+        setIsVisible(true);
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(frame1);
+
+      if (frame2) {
+        cancelAnimationFrame(frame2);
+      }
+    };
+  }, [isActive]);
 
   const filteredCompanies = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -44,7 +71,6 @@ export default function CompaniesView({
           gap-4
           shrink-0
           z-10
-          animate-[fadeDown_0.45s_ease-out]
         "
       >
         <div>
@@ -83,6 +109,7 @@ export default function CompaniesView({
             strokeWidth={2.5}
             className="w-[18px] h-[18px]"
           />
+
           Əlavə et
         </button>
       </header>
@@ -93,14 +120,22 @@ export default function CompaniesView({
 
           {/* TOOLBAR */}
           <div
-            className="
+            className={`
               flex flex-col
               lg:flex-row
               lg:items-center
               justify-between
               gap-3
-              animate-[fadeUp_0.5s_ease-out]
-            "
+              transition-all
+              duration-500
+              ease-out
+
+              ${
+                isVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 -translate-y-2'
+              }
+            `}
           >
             {/* COMPANY COUNT */}
             <div
@@ -111,11 +146,8 @@ export default function CompaniesView({
                 w-fit
                 px-3.5 py-2
                 rounded-xl
-                bg-white
-                dark:bg-slate-900
-                border
-                border-slate-200
-                dark:border-slate-800
+                bg-white dark:bg-slate-900
+                border border-slate-200 dark:border-slate-800
                 shadow-sm
               "
             >
@@ -125,9 +157,7 @@ export default function CompaniesView({
                   rounded-lg
                   bg-emerald-50
                   dark:bg-emerald-500/10
-                  flex
-                  items-center
-                  justify-center
+                  flex items-center justify-center
                   text-emerald-600
                   dark:text-emerald-400
                 "
@@ -160,6 +190,8 @@ export default function CompaniesView({
 
             {/* SEARCH + SORT */}
             <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+
+              {/* SEARCH */}
               <div className="relative w-full sm:w-[340px]">
                 <svg
                   className="
@@ -191,14 +223,10 @@ export default function CompaniesView({
                     h-11
                     pl-10 pr-10
                     rounded-xl
-                    bg-white
-                    dark:bg-slate-900
-                    border
-                    border-slate-200
-                    dark:border-slate-800
+                    bg-white dark:bg-slate-900
+                    border border-slate-200 dark:border-slate-800
                     text-sm
-                    text-slate-800
-                    dark:text-slate-100
+                    text-slate-800 dark:text-slate-100
                     placeholder:text-slate-400
                     outline-none
                     focus:border-emerald-400
@@ -210,7 +238,6 @@ export default function CompaniesView({
 
                 {search && (
                   <button
-                    type="button"
                     onClick={() => setSearch('')}
                     className="
                       absolute
@@ -228,6 +255,7 @@ export default function CompaniesView({
                 )}
               </div>
 
+              {/* SORT */}
               <select
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value)}
@@ -235,15 +263,10 @@ export default function CompaniesView({
                   h-11
                   px-4
                   rounded-xl
-                  bg-white
-                  dark:bg-slate-900
-                  border
-                  border-slate-200
-                  dark:border-slate-800
-                  text-xs
-                  font-semibold
-                  text-slate-600
-                  dark:text-slate-300
+                  bg-white dark:bg-slate-900
+                  border border-slate-200 dark:border-slate-800
+                  text-xs font-semibold
+                  text-slate-600 dark:text-slate-300
                   outline-none
                   focus:border-emerald-400
                   focus:ring-4
@@ -252,34 +275,52 @@ export default function CompaniesView({
                   cursor-pointer
                 "
               >
-                <option value="az">Ad: A → Z</option>
-                <option value="za">Ad: Z → A</option>
+                <option value="az">
+                  Ad: A → Z
+                </option>
+
+                <option value="za">
+                  Ad: Z → A
+                </option>
               </select>
             </div>
           </div>
 
-          {/* TABLE */}
-          <div className="animate-[fadeUp_0.7s_ease-out]">
+          {/* TABLE ANIMATION */}
+          <div
+            className={`
+              transition-all
+              duration-700
+              ease-out
+
+              ${
+                isVisible
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-5 scale-[0.99]'
+              }
+            `}
+            style={{
+              transitionDelay: isVisible ? '80ms' : '0ms',
+            }}
+          >
+            {/* TABLE CARD */}
             <div
               className="
                 w-full
-                bg-white
-                dark:bg-slate-900
+                bg-white dark:bg-slate-900
                 rounded-2xl
-                border
-                border-slate-200/80
-                dark:border-slate-800
+                border border-slate-200/80 dark:border-slate-800
                 shadow-sm
                 overflow-hidden
                 relative
               "
             >
+
+              {/* GREEN TOP ACCENT */}
               <div
                 className="
                   absolute
-                  top-0
-                  left-0
-                  right-0
+                  top-0 left-0 right-0
                   h-[2px]
                   bg-gradient-to-r
                   from-transparent
@@ -290,6 +331,8 @@ export default function CompaniesView({
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse min-w-[1000px]">
+
+                  {/* TABLE HEADER */}
                   <thead>
                     <tr
                       className="
@@ -305,38 +348,59 @@ export default function CompaniesView({
                         text-slate-400
                       "
                     >
-                      <th className="py-4 px-6 w-[85px]">Logo</th>
-                      <th className="py-4 px-5">Şirkət adı</th>
-                      <th className="py-4 px-5">Ünvan</th>
+                      <th className="py-4 px-6 w-[85px]">
+                        Logo
+                      </th>
+
+                      <th className="py-4 px-5">
+                        Şirkət adı
+                      </th>
+
+                      <th className="py-4 px-5">
+                        Ünvan
+                      </th>
+
                       <th className="py-4 px-5 whitespace-nowrap">
                         Əlaqə nömrəsi
                       </th>
+
                       <th className="py-4 px-5 whitespace-nowrap">
                         Elektron poçt ünvanı
                       </th>
+
                       <th className="py-4 px-6 text-right w-[110px]">
                         Əməliyyat
                       </th>
                     </tr>
                   </thead>
 
+                  {/* TABLE BODY */}
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800/70">
                     {filteredCompanies.length > 0 ? (
                       filteredCompanies.map((company, index) => (
                         <tr
                           key={company.id}
-                          className="
+                          className={`
                             group
                             hover:bg-emerald-50/40
                             dark:hover:bg-emerald-500/[0.04]
                             transition-all
-                            duration-300
-                            animate-[rowIn_0.45s_ease-out_both]
-                          "
+                            duration-500
+
+                            ${
+                              isVisible
+                                ? 'opacity-100 translate-x-0'
+                                : 'opacity-0 -translate-x-2'
+                            }
+                          `}
                           style={{
-                            animationDelay: `${120 + index * 70}ms`,
+                            transitionDelay: isVisible
+                              ? `${150 + index * 55}ms`
+                              : '0ms',
                           }}
                         >
+
+                          {/* LOGO */}
                           <td className="py-4 px-6">
                             <div
                               className="
@@ -345,8 +409,7 @@ export default function CompaniesView({
                                 bg-gradient-to-br
                                 from-emerald-500
                                 to-teal-600
-                                flex items-center
-                                justify-center
+                                flex items-center justify-center
                                 text-white
                                 font-black
                                 text-xs
@@ -361,29 +424,59 @@ export default function CompaniesView({
                             </div>
                           </td>
 
+                          {/* COMPANY NAME */}
                           <td className="py-4 px-5">
                             <div className="font-bold text-[13px] text-slate-900 dark:text-white">
                               {company.name}
                             </div>
                           </td>
 
-                          <td className="py-4 px-5 text-[12px] text-slate-500 dark:text-slate-400 max-w-[380px]">
+                          {/* ADDRESS */}
+                          <td
+                            className="
+                              py-4 px-5
+                              text-[12px]
+                              text-slate-500
+                              dark:text-slate-400
+                              max-w-[380px]
+                            "
+                          >
                             <span className="line-clamp-1">
                               {company.address}
                             </span>
                           </td>
 
-                          <td className="py-4 px-5 text-[12px] font-mono text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                          {/* PHONE */}
+                          <td
+                            className="
+                              py-4 px-5
+                              text-[12px]
+                              font-mono
+                              text-slate-600
+                              dark:text-slate-300
+                              whitespace-nowrap
+                            "
+                          >
                             {company.phone}
                           </td>
 
-                          <td className="py-4 px-5 text-[12px] font-mono text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                          {/* EMAIL */}
+                          <td
+                            className="
+                              py-4 px-5
+                              text-[12px]
+                              font-mono
+                              text-slate-600
+                              dark:text-slate-300
+                              whitespace-nowrap
+                            "
+                          >
                             {company.email}
                           </td>
 
+                          {/* ACTION */}
                           <td className="py-4 px-6 text-right">
                             <button
-                              type="button"
                               onClick={() => onEdit(company)}
                               title="Redaktə et"
                               className="
@@ -420,15 +513,21 @@ export default function CompaniesView({
                     ) : (
                       <tr>
                         <td colSpan="6">
-                          <div className="py-20 flex flex-col items-center justify-center text-center">
+                          <div
+                            className="
+                              py-20
+                              flex flex-col
+                              items-center justify-center
+                              text-center
+                            "
+                          >
                             <div
                               className="
                                 w-12 h-12
                                 rounded-xl
                                 bg-emerald-50
                                 dark:bg-emerald-500/10
-                                flex items-center
-                                justify-center
+                                flex items-center justify-center
                                 mb-3
                                 text-emerald-500
                               "
@@ -466,42 +565,6 @@ export default function CompaniesView({
           </div>
         </div>
       </div>
-
-      {/* LOCAL ANIMATION STYLES */}
-      <style>{`
-        @keyframes fadeDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes fadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(18px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes rowIn {
-          from {
-            opacity: 0;
-            transform: translateX(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-      `}</style>
     </section>
   );
 }
