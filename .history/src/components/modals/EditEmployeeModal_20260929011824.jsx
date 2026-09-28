@@ -46,7 +46,7 @@ export default function EditEmployeeModal({
           animate-modal
         "
       >
-        {/* GREEN TOP ACCENT */}
+        {/* GREEN ACCENT */}
         <div
           className="
             absolute
@@ -62,6 +62,7 @@ export default function EditEmployeeModal({
         />
 
         <div className="p-6">
+
           {/* HEADER */}
           <div
             className="
@@ -105,11 +106,25 @@ export default function EditEmployeeModal({
               </div>
 
               <div>
-                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                <h3
+                  className="
+                    text-lg
+                    font-black
+                    text-slate-900
+                    dark:text-white
+                  "
+                >
                   İşçini redaktə et
                 </h3>
 
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                <p
+                  className="
+                    text-xs
+                    text-slate-500
+                    dark:text-slate-400
+                    mt-0.5
+                  "
+                >
                   İşçi məlumatlarını yenilə
                 </p>
               </div>
@@ -429,52 +444,48 @@ export default function EditEmployeeModal({
                 type="button"
                 onClick={() => onDelete(employee.id)}
                 className="
-                  h-10
                   px-4
-                  shrink-0
+                  py-2.5
                   rounded-xl
                   text-sm
                   font-bold
                   text-rose-600
                   bg-rose-50
                   hover:bg-rose-100
-                  hover:text-rose-700
                   dark:bg-rose-500/10
                   dark:hover:bg-rose-500/15
                   dark:text-rose-400
-                  transition-all
+                  transition
                   flex
                   items-center
-                  justify-center
                   gap-2
                 "
               >
-                {/* FIXED TRASH ICON */}
                 <svg
-                  className="w-[17px] h-[17px] shrink-0"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="1.9"
+                  strokeWidth="2"
                   viewBox="0 0 24 24"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79"
                   />
                 </svg>
 
                 Sil
               </button>
 
-              {/* RIGHT ACTIONS */}
               <div className="flex items-center gap-2">
+                {/* CANCEL */}
                 <button
                   type="button"
                   onClick={onClose}
                   className="
-                    h-10
                     px-4
+                    py-2.5
                     rounded-xl
                     text-sm
                     font-semibold
@@ -489,11 +500,12 @@ export default function EditEmployeeModal({
                   Ləğv et
                 </button>
 
+                {/* SAVE */}
                 <button
                   type="submit"
                   className="
-                    h-10
                     px-5
+                    py-2.5
                     rounded-xl
                     bg-emerald-600
                     hover:bg-emerald-700

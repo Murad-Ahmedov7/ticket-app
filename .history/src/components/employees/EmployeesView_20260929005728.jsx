@@ -367,20 +367,8 @@ export default function EmployeesView({
                 overflow-hidden
               "
             >
-              {/* STATIC GREEN ACCENT */}
-              <div
-                className="
-                  absolute
-                  top-0
-                  left-0
-                  right-0
-                  h-[2px]
-                  bg-gradient-to-r
-                  from-transparent
-                  via-emerald-500/70
-                  to-transparent
-                "
-              />
+              {/* GREEN ACCENT */}
+              <div className="employees-green-line" />
 
               <div className="overflow-x-auto">
                 <table
@@ -578,6 +566,7 @@ export default function EmployeesView({
                                       bg-emerald-50
                                       text-emerald-700
                                       border-emerald-200
+
                                       dark:bg-emerald-500/10
                                       dark:text-emerald-400
                                       dark:border-emerald-500/20
@@ -586,6 +575,7 @@ export default function EmployeesView({
                                       bg-amber-50
                                       text-amber-700
                                       border-amber-200
+
                                       dark:bg-amber-500/10
                                       dark:text-amber-400
                                       dark:border-amber-500/20
@@ -641,8 +631,7 @@ export default function EmployeesView({
                                   truncate
                                 "
                               >
-                                {employee.position ||
-                                  "Vəzifə qeyd edilməyib"}
+                                {employee.position || "Vəzifə qeyd edilməyib"}
                               </div>
 
                               <div
@@ -671,10 +660,14 @@ export default function EmployeesView({
                                   items-center
                                   justify-center
                                   rounded-lg
+
                                   text-slate-400
+
                                   hover:text-emerald-600
                                   hover:bg-emerald-50
+
                                   dark:hover:bg-emerald-500/10
+
                                   transition-all
                                 "
                                 title="Redaktə et"
@@ -767,47 +760,86 @@ export default function EmployeesView({
         @keyframes employeesToolbarEnter {
           from {
             opacity: 0;
-            transform: translateX(10px);
+            transform: translateY(4px);
           }
 
           to {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateY(0);
           }
         }
 
         @keyframes employeesTableEnter {
           from {
             opacity: 0;
-            transform: scale(0.985);
+            transform: translateY(7px);
           }
 
           to {
             opacity: 1;
-            transform: scale(1);
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes employeesGreenLine {
+          from {
+            transform: scaleX(0);
+            opacity: 0;
+          }
+
+          to {
+            transform: scaleX(1);
+            opacity: 1;
           }
         }
 
         .employees-toolbar-enter {
           animation:
             employeesToolbarEnter
-            0.35s
-            cubic-bezier(0.22, 1, 0.36, 1)
+            0.3s
+            ease-out
             both;
         }
 
         .employees-table-enter {
           animation:
             employeesTableEnter
-            0.45s
+            0.4s
             cubic-bezier(0.22, 1, 0.36, 1)
-            0.05s
+            0.04s
+            both;
+        }
+
+        .employees-green-line {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+
+          height: 2px;
+
+          background:
+            linear-gradient(
+              90deg,
+              transparent,
+              rgba(16, 185, 129, 0.75),
+              transparent
+            );
+
+          transform-origin: left;
+
+          animation:
+            employeesGreenLine
+            0.6s
+            cubic-bezier(0.22, 1, 0.36, 1)
+            0.08s
             both;
         }
 
         @media (prefers-reduced-motion: reduce) {
           .employees-toolbar-enter,
-          .employees-table-enter {
+          .employees-table-enter,
+          .employees-green-line {
             animation: none;
           }
         }
