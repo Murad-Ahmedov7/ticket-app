@@ -345,7 +345,7 @@ export default function GroupsView({
                 key={group.id}
 
                 style={{
-                  animationDelay: `${index * 140}ms`,
+                  animationDelay: `${index * 90}ms`,
                 }}
 
                 className={`
@@ -714,7 +714,7 @@ export default function GroupsView({
 
             animation:
               groupCardEnter
-              0.75s
+              0.48s
               cubic-bezier(0.22, 1, 0.36, 1)
               forwards;
           }

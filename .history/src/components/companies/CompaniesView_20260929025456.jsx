@@ -1,30 +1,29 @@
-import { useMemo, useState } from "react";
-import Icon from "../common/Icons.jsx";
+import { useMemo, useState } from 'react';
+import Icon from '../common/Icons.jsx';
 
 export default function CompaniesView({
   companies,
   onCreate,
   onEdit,
 }) {
-  const [search, setSearch] = useState("");
-  const [sortOrder, setSortOrder] = useState("az");
+  const [search, setSearch] = useState('');
+  const [sortOrder, setSortOrder] = useState('az');
 
   const filteredCompanies = useMemo(() => {
     const query = search.trim().toLowerCase();
 
-    const filtered = companies.filter(
-      (company) =>
-        company.name?.toLowerCase().includes(query) ||
-        company.address?.toLowerCase().includes(query) ||
-        company.phone?.toLowerCase().includes(query) ||
-        company.email?.toLowerCase().includes(query)
+    const filtered = companies.filter((company) =>
+      company.name?.toLowerCase().includes(query) ||
+      company.address?.toLowerCase().includes(query) ||
+      company.phone?.toLowerCase().includes(query) ||
+      company.email?.toLowerCase().includes(query)
     );
 
     return [...filtered].sort((a, b) => {
-      const first = a.name?.toLowerCase() || "";
-      const second = b.name?.toLowerCase() || "";
+      const first = a.name?.toLowerCase() || '';
+      const second = b.name?.toLowerCase() || '';
 
-      return sortOrder === "az"
+      return sortOrder === 'az'
         ? first.localeCompare(second)
         : second.localeCompare(first);
     });
@@ -37,17 +36,11 @@ export default function CompaniesView({
       <header
         className="
           min-h-20
-          px-6
-          md:px-8
-          border-b
-          border-slate-200/80
-          dark:border-slate-800/80
-          bg-white/95
-          dark:bg-slate-900/95
+          px-6 md:px-8
+          border-b border-slate-200/80 dark:border-slate-800/80
+          bg-white/95 dark:bg-slate-900/95
           backdrop-blur
-          flex
-          items-center
-          justify-between
+          flex items-center justify-between
           gap-4
           shrink-0
           z-10
@@ -55,11 +48,11 @@ export default function CompaniesView({
         "
       >
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
             Şirkətlər Siyahısı
           </h1>
 
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Platformada qeydiyyatdan keçmiş tərəfdaş və müştəri şirkətlər
           </p>
         </div>
@@ -67,8 +60,7 @@ export default function CompaniesView({
         <button
           onClick={onCreate}
           className="
-            px-6
-            py-3
+            px-6 py-3
             rounded-xl
             bg-emerald-600
             hover:bg-emerald-700
@@ -82,8 +74,7 @@ export default function CompaniesView({
             active:scale-[0.97]
             transition-all
             duration-200
-            flex
-            items-center
+            flex items-center
             gap-2.5
           "
         >
@@ -92,7 +83,6 @@ export default function CompaniesView({
             strokeWidth={2.5}
             className="w-[18px] h-[18px]"
           />
-
           Əlavə et
         </button>
       </header>
@@ -104,8 +94,7 @@ export default function CompaniesView({
           {/* TOOLBAR */}
           <div
             className="
-              flex
-              flex-col
+              flex flex-col
               lg:flex-row
               lg:items-center
               justify-between
@@ -120,8 +109,7 @@ export default function CompaniesView({
                 items-center
                 gap-3
                 w-fit
-                px-4
-                py-2.5
+                px-3.5 py-2
                 rounded-xl
                 bg-white
                 dark:bg-slate-900
@@ -133,8 +121,7 @@ export default function CompaniesView({
             >
               <div
                 className="
-                  w-9
-                  h-9
+                  w-8 h-8
                   rounded-lg
                   bg-emerald-50
                   dark:bg-emerald-500/10
@@ -146,7 +133,7 @@ export default function CompaniesView({
                 "
               >
                 <svg
-                  className="w-[18px] h-[18px]"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -161,11 +148,11 @@ export default function CompaniesView({
               </div>
 
               <div className="flex items-baseline gap-1.5">
-                <span className="text-base font-black text-slate-900 dark:text-white">
+                <span className="text-sm font-black text-slate-900 dark:text-white">
                   {filteredCompanies.length}
                 </span>
 
-                <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
                   şirkət göstərilir
                 </span>
               </div>
@@ -173,17 +160,14 @@ export default function CompaniesView({
 
             {/* SEARCH + SORT */}
             <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-
-              {/* SEARCH */}
-              <div className="relative w-full sm:w-[360px]">
+              <div className="relative w-full sm:w-[340px]">
                 <svg
                   className="
                     absolute
                     left-3.5
                     top-1/2
                     -translate-y-1/2
-                    w-4
-                    h-4
+                    w-4 h-4
                     text-slate-400
                   "
                   fill="none"
@@ -205,8 +189,7 @@ export default function CompaniesView({
                   className="
                     w-full
                     h-11
-                    pl-10
-                    pr-10
+                    pl-10 pr-10
                     rounded-xl
                     bg-white
                     dark:bg-slate-900
@@ -228,7 +211,7 @@ export default function CompaniesView({
                 {search && (
                   <button
                     type="button"
-                    onClick={() => setSearch("")}
+                    onClick={() => setSearch('')}
                     className="
                       absolute
                       right-3
@@ -245,7 +228,6 @@ export default function CompaniesView({
                 )}
               </div>
 
-              {/* SORT */}
               <select
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value)}
@@ -258,7 +240,7 @@ export default function CompaniesView({
                   border
                   border-slate-200
                   dark:border-slate-800
-                  text-sm
+                  text-xs
                   font-semibold
                   text-slate-600
                   dark:text-slate-300
@@ -270,13 +252,8 @@ export default function CompaniesView({
                   cursor-pointer
                 "
               >
-                <option value="az">
-                  Ad: A → Z
-                </option>
-
-                <option value="za">
-                  Ad: Z → A
-                </option>
+                <option value="az">Ad: A → Z</option>
+                <option value="za">Ad: Z → A</option>
               </select>
             </div>
           </div>
@@ -292,13 +269,11 @@ export default function CompaniesView({
                 border
                 border-slate-200/80
                 dark:border-slate-800
-                shadow-[0_5px_20px_rgba(15,23,42,0.055)]
-                dark:shadow-none
+                shadow-sm
                 overflow-hidden
                 relative
               "
             >
-              {/* GREEN ACCENT */}
               <div
                 className="
                   absolute
@@ -314,9 +289,7 @@ export default function CompaniesView({
               />
 
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse min-w-[1050px]">
-
-                  {/* HEAD */}
+                <table className="w-full text-left border-collapse min-w-[1000px]">
                   <thead>
                     <tr
                       className="
@@ -325,41 +298,28 @@ export default function CompaniesView({
                         border-b
                         border-slate-200/70
                         dark:border-slate-800
-                        text-xs
+                        text-[11px]
                         uppercase
-                        tracking-[0.07em]
-                        font-extrabold
-                        text-slate-500
-                        dark:text-slate-400
+                        tracking-[0.08em]
+                        font-bold
+                        text-slate-400
                       "
                     >
-                      <th className="py-4 px-6 w-[90px]">
-                        Logo
-                      </th>
-
-                      <th className="py-4 px-5">
-                        Şirkət adı
-                      </th>
-
-                      <th className="py-4 px-5">
-                        Ünvan
-                      </th>
-
+                      <th className="py-4 px-6 w-[85px]">Logo</th>
+                      <th className="py-4 px-5">Şirkət adı</th>
+                      <th className="py-4 px-5">Ünvan</th>
                       <th className="py-4 px-5 whitespace-nowrap">
                         Əlaqə nömrəsi
                       </th>
-
                       <th className="py-4 px-5 whitespace-nowrap">
                         Elektron poçt ünvanı
                       </th>
-
-                      <th className="py-4 px-6 text-right w-[120px]">
+                      <th className="py-4 px-6 text-right w-[110px]">
                         Əməliyyat
                       </th>
                     </tr>
                   </thead>
 
-                  {/* BODY */}
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800/70">
                     {filteredCompanies.length > 0 ? (
                       filteredCompanies.map((company, index) => (
@@ -377,22 +337,19 @@ export default function CompaniesView({
                             animationDelay: `${120 + index * 70}ms`,
                           }}
                         >
-                          {/* LOGO */}
-                          <td className="py-5 px-6">
+                          <td className="py-4 px-6">
                             <div
                               className="
-                                w-11
-                                h-11
+                                w-10 h-10
                                 rounded-xl
                                 bg-gradient-to-br
                                 from-emerald-500
                                 to-teal-600
-                                flex
-                                items-center
+                                flex items-center
                                 justify-center
                                 text-white
                                 font-black
-                                text-sm
+                                text-xs
                                 shadow-sm
                                 shadow-emerald-500/20
                                 group-hover:scale-105
@@ -404,68 +361,27 @@ export default function CompaniesView({
                             </div>
                           </td>
 
-                          {/* NAME */}
-                          <td className="py-5 px-5">
-                            <div
-                              className="
-                                font-bold
-                                text-[15px]
-                                text-slate-900
-                                dark:text-white
-                              "
-                            >
+                          <td className="py-4 px-5">
+                            <div className="font-bold text-[13px] text-slate-900 dark:text-white">
                               {company.name}
                             </div>
                           </td>
 
-                          {/* ADDRESS */}
-                          <td
-                            className="
-                              py-5
-                              px-5
-                              text-sm
-                              text-slate-500
-                              dark:text-slate-400
-                              max-w-[380px]
-                            "
-                          >
+                          <td className="py-4 px-5 text-[12px] text-slate-500 dark:text-slate-400 max-w-[380px]">
                             <span className="line-clamp-1">
                               {company.address}
                             </span>
                           </td>
 
-                          {/* PHONE */}
-                          <td
-                            className="
-                              py-5
-                              px-5
-                              text-sm
-                              font-medium
-                              text-slate-600
-                              dark:text-slate-300
-                              whitespace-nowrap
-                            "
-                          >
+                          <td className="py-4 px-5 text-[12px] font-mono text-slate-600 dark:text-slate-300 whitespace-nowrap">
                             {company.phone}
                           </td>
 
-                          {/* EMAIL */}
-                          <td
-                            className="
-                              py-5
-                              px-5
-                              text-sm
-                              font-medium
-                              text-slate-600
-                              dark:text-slate-300
-                              whitespace-nowrap
-                            "
-                          >
+                          <td className="py-4 px-5 text-[12px] font-mono text-slate-600 dark:text-slate-300 whitespace-nowrap">
                             {company.email}
                           </td>
 
-                          {/* ACTION */}
-                          <td className="py-5 px-6 text-right">
+                          <td className="py-4 px-6 text-right">
                             <button
                               type="button"
                               onClick={() => onEdit(company)}
@@ -474,8 +390,7 @@ export default function CompaniesView({
                                 inline-flex
                                 items-center
                                 justify-center
-                                w-10
-                                h-10
+                                w-9 h-9
                                 rounded-lg
                                 text-slate-400
                                 hover:text-emerald-600
@@ -486,7 +401,7 @@ export default function CompaniesView({
                               "
                             >
                               <svg
-                                className="w-[18px] h-[18px]"
+                                className="w-4 h-4"
                                 fill="none"
                                 stroke="currentColor"
                                 strokeWidth="2"
@@ -508,13 +423,11 @@ export default function CompaniesView({
                           <div className="py-20 flex flex-col items-center justify-center text-center">
                             <div
                               className="
-                                w-12
-                                h-12
+                                w-12 h-12
                                 rounded-xl
                                 bg-emerald-50
                                 dark:bg-emerald-500/10
-                                flex
-                                items-center
+                                flex items-center
                                 justify-center
                                 mb-3
                                 text-emerald-500
@@ -535,11 +448,11 @@ export default function CompaniesView({
                               </svg>
                             </div>
 
-                            <p className="text-base font-bold text-slate-700 dark:text-slate-200">
+                            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">
                               Şirkət tapılmadı
                             </p>
 
-                            <p className="text-sm text-slate-400 mt-1">
+                            <p className="text-xs text-slate-400 mt-1">
                               Axtarış kriteriyasını dəyiş
                             </p>
                           </div>
@@ -554,14 +467,13 @@ export default function CompaniesView({
         </div>
       </div>
 
-      {/* ANIMATION */}
+      {/* LOCAL ANIMATION STYLES */}
       <style>{`
         @keyframes fadeDown {
           from {
             opacity: 0;
             transform: translateY(-10px);
           }
-
           to {
             opacity: 1;
             transform: translateY(0);
@@ -571,9 +483,8 @@ export default function CompaniesView({
         @keyframes fadeUp {
           from {
             opacity: 0;
-            transform: translateY(14px);
+            transform: translateY(18px);
           }
-
           to {
             opacity: 1;
             transform: translateY(0);
@@ -583,18 +494,11 @@ export default function CompaniesView({
         @keyframes rowIn {
           from {
             opacity: 0;
-            transform: translateX(-8px);
+            transform: translateX(-10px);
           }
-
           to {
             opacity: 1;
             transform: translateX(0);
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            animation-duration: 0.01ms !important;
           }
         }
       `}</style>

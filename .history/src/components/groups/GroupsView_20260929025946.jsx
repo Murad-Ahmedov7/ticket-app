@@ -345,7 +345,7 @@ export default function GroupsView({
                 key={group.id}
 
                 style={{
-                  animationDelay: `${index * 140}ms`,
+                  animationDelay: `${index * 90}ms`,
                 }}
 
                 className={`
