@@ -63,7 +63,7 @@ return (
         </div>
 
         {/* Hamburger altındakı ayırıcı zolaq */}
-        <div className="w-full h-[1px] bg-white/20 dark:bg-teal-400/15" />
+        <div className="w-full h-[1px] bg-white/20 dark:bg-[color-mix(in_srgb,var(--navigation-active-accent)_15%,transparent)]" />
 
         {/* 2. SIRA: Home Düyməsi */}
         <button
@@ -114,7 +114,7 @@ return (
         </div>
 
         {/* Profil altındakı ayırıcı xətt */}
-        <div className="w-full h-[1px] bg-white/20 dark:bg-teal-400/15" />
+        <div className="w-full h-[1px] bg-white/20 dark:bg-[color-mix(in_srgb,var(--navigation-active-accent)_15%,transparent)]" />
 
         {/* 4. SIRA: Xüsusi Çat Düyməsi */}
         <div className="w-full">
@@ -124,7 +124,7 @@ return (
             title={!isExpanded ? 'Söhbətlər (Chat)' : undefined}
             className={`relative w-full h-11 rounded-xl flex items-center transition-all duration-200 group cursor-pointer ${
               activeView === 'chat'
-                ? 'bg-[#16847b] dark:bg-teal-400/15 text-white dark:text-teal-100 shadow-[0_2px_6px_rgba(0,0,0,0.10)] dark:shadow-[0_0_14px_rgba(45,212,191,0.12)] border border-teal-300/30 dark:border-teal-300/40'
+                ? 'bg-[var(--navigation-active-accent)] dark:bg-[color-mix(in_srgb,var(--navigation-active-accent)_15%,transparent)] text-white dark:text-teal-100 shadow-[0_2px_6px_rgba(0,0,0,0.10)] dark:shadow-[0_0_14px_rgba(45,212,191,0.12)] border border-teal-300/30 dark:border-teal-300/40'
                 : 'text-teal-50 dark:text-slate-300 hover:text-white hover:bg-[#108078] dark:hover:bg-white/10'
             } ${isExpanded ? 'justify-start px-3' : 'justify-center'}`}
           >
@@ -161,7 +161,7 @@ return (
                 title={!isExpanded ? label : undefined}
                 className={`relative w-full h-11 rounded-xl flex items-center transition-all duration-200 group cursor-pointer ${
                   isActive
-                    ? 'bg-[#16847b] dark:bg-teal-400/15 text-white dark:text-teal-100 shadow-[0_2px_6px_rgba(0,0,0,0.10)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] border border-teal-300/30 dark:border-teal-300/20'
+                    ? 'bg-[var(--navigation-active-accent)] dark:bg-[color-mix(in_srgb,var(--navigation-active-accent)_15%,transparent)] text-white dark:text-teal-100 shadow-[0_2px_6px_rgba(0,0,0,0.10)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] border border-teal-300/30 dark:border-teal-300/20'
                     : 'text-teal-50 dark:text-slate-300 hover:text-white hover:bg-[#108078] dark:hover:bg-white/10'
                 } ${isExpanded ? 'justify-start px-3' : 'justify-center'}`}
               >
@@ -213,7 +213,7 @@ return (
 
       {/* AŞAĞI HİSSƏ */}
       <div className="flex flex-col gap-2 w-full">
-        <div className="w-full h-[1px] bg-white/20 dark:bg-teal-400/15 mb-1" />
+        <div className="w-full h-[1px] bg-white/20 dark:bg-[color-mix(in_srgb,var(--navigation-active-accent)_15%,transparent)] mb-1" />
 
         <button
           onClick={onToggleTheme}

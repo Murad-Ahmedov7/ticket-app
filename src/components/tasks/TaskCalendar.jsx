@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import Icon from '../common/Icons.jsx';
-import { normalizeTaskStatus } from '../../utils/helpers.js';
+import { normalizeTaskStatus, acceptedStatusStyles } from '../../utils/helpers.js';
 
 const monthNames = [
   'Yanvar',
@@ -101,16 +101,7 @@ export default function TaskCalendar({
     }
 
     if (normalizedStatus === 'Qəbul olundu') {
-      return `
-        bg-fuchsia-50
-        text-fuchsia-800
-        border-fuchsia-300
-        hover:bg-fuchsia-100
-        dark:bg-fuchsia-500/15
-        dark:text-fuchsia-300
-        dark:border-fuchsia-500/40
-        dark:hover:bg-fuchsia-500/25
-      `;
+      return `${acceptedStatusStyles.surface} ${acceptedStatusStyles.border} ${acceptedStatusStyles.hover}`;
     }
 
     if (normalizedStatus === 'Bitmiş') {

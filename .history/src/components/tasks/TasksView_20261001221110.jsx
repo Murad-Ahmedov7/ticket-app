@@ -216,7 +216,7 @@ export default function TasksView({
               border
               border-slate-200/60
               bg-slate-100
-              p-1.5
+              p-1
               sm:flex
               dark:border-slate-700/60
               dark:bg-slate-800/80
@@ -232,12 +232,12 @@ export default function TasksView({
                 onClick={() => setTab(id)}
                 className={`
                   flex
-                  h-10
+                  h-8
                   items-center
-                  gap-2
+                  gap-1.5
                   rounded-lg
-                  px-4
-                  text-sm
+                  px-3
+                  text-xs
                   transition-all
                   ${
                     tab === id
@@ -261,7 +261,7 @@ export default function TasksView({
               >
                 <Icon
                   name={id}
-                  className="h-4 w-4"
+                  className="h-3.5 w-3.5"
                 />
 
                 {label}
@@ -499,6 +499,7 @@ export default function TasksView({
                   setSearch("");
                   setStatus("");
                   setSort("none");
+
                   notify(
                     "Filtirlər sıfırlandı"
                   );

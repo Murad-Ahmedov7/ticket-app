@@ -105,11 +105,7 @@ export default function TaskTable({
 
   const paginatedTasks = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
-
-    return tasks.slice(
-      start,
-      start + pageSize
-    );
+    return tasks.slice(start, start + pageSize);
   }, [tasks, currentPage, pageSize]);
 
   const firstItem =
@@ -141,58 +137,40 @@ export default function TaskTable({
     setDropdown(taskId);
   };
 
-  const getAvatar = (name = "") => {
-    const normalizedName = name
+  const getInitials = (name = "") => {
+    const parts = name
       .trim()
-      .toLowerCase();
+      .split(/\s+/)
+      .filter(Boolean);
 
-    let hash = 0;
+    if (!parts.length) return "?";
 
-    for (
-      let i = 0;
-      i < normalizedName.length;
-      i++
-    ) {
-      hash =
-        normalizedName.charCodeAt(i) +
-        ((hash << 5) - hash);
-
-      hash |= 0;
+    if (parts.length === 1) {
+      return parts[0]
+        .slice(0, 2)
+        .toUpperCase();
     }
 
-    const imageNumber =
-      (Math.abs(hash) % 70) + 1;
-
-    return `https://i.pravatar.cc/80?img=${imageNumber}`;
+    return (
+      parts[0][0] + parts[parts.length - 1][0]
+    ).toUpperCase();
   };
 
   const goToPage = (page) => {
     setCurrentPage(
-      Math.min(
-        Math.max(page, 1),
-        totalPages
-      )
+      Math.min(Math.max(page, 1), totalPages)
     );
   };
 
   const visiblePages = useMemo(() => {
     const pages = [];
-
-    const start = Math.max(
-      1,
-      currentPage - 2
-    );
-
+    const start = Math.max(1, currentPage - 2);
     const end = Math.min(
       totalPages,
       currentPage + 2
     );
 
-    for (
-      let page = start;
-      page <= end;
-      page++
-    ) {
+    for (let page = start; page <= end; page++) {
       pages.push(page);
     }
 
@@ -264,16 +242,13 @@ export default function TaskTable({
               {paginatedTasks.map(
                 (task, index) => {
                   const status =
-                    task.status ===
-                    "Tamamlandı"
+                    task.status === "Tamamlandı"
                       ? "Bitmiş"
                       : task.status;
 
                   const colors =
                     statusColors[status] ||
-                    statusColors[
-                      "Gözləmədə"
-                    ];
+                    statusColors["Gözləmədə"];
 
                   return (
                     <tr
@@ -345,22 +320,30 @@ export default function TaskTable({
 
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-2.5">
-                          <img
-                            src={getAvatar(
-                              task.creator
-                            )}
-                            alt={task.creator}
+                          <div
                             className="
+                              flex
                               h-8
                               w-8
                               shrink-0
+                              items-center
+                              justify-center
                               rounded-full
-                              object-cover
-                              ring-1
-                              ring-slate-200
-                              dark:ring-slate-700
+                              border
+                              border-emerald-200
+                              bg-emerald-100
+                              text-[10px]
+                              font-extrabold
+                              text-emerald-700
+                              dark:border-emerald-500/30
+                              dark:bg-emerald-500/15
+                              dark:text-emerald-300
                             "
-                          />
+                          >
+                            {getInitials(
+                              task.creator
+                            )}
+                          </div>
 
                           <span className="whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-300">
                             {task.creator}
@@ -368,15 +351,8 @@ export default function TaskTable({
                         </div>
                       </td>
 
-                      <td className="px-4 py-4">
-                        <div className="flex items-center gap-1.5 whitespace-nowrap font-mono text-[12px] text-slate-500 dark:text-slate-400">
-                          <Icon
-                            name="calendar"
-                            className="h-3.5 w-3.5 shrink-0"
-                          />
-
-                          {task.createdAt}
-                        </div>
+                      <td className="whitespace-nowrap px-4 py-4 font-mono text-[12px] text-slate-500 dark:text-slate-400">
+                        {task.createdAt}
                       </td>
 
                       <td className="px-4 py-4">
@@ -402,29 +378,36 @@ export default function TaskTable({
                             name="calendar"
                             className="h-3.5 w-3.5"
                           />
-
                           {task.deadline}
                         </span>
                       </td>
 
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-2.5">
-                          <img
-                            src={getAvatar(
-                              task.assignee
-                            )}
-                            alt={task.assignee}
+                          <div
                             className="
+                              flex
                               h-8
                               w-8
                               shrink-0
+                              items-center
+                              justify-center
                               rounded-full
-                              object-cover
-                              ring-1
-                              ring-slate-200
-                              dark:ring-slate-700
+                              border
+                              border-teal-200
+                              bg-teal-100
+                              text-[10px]
+                              font-extrabold
+                              text-teal-700
+                              dark:border-teal-500/30
+                              dark:bg-teal-500/15
+                              dark:text-teal-300
                             "
-                          />
+                          >
+                            {getInitials(
+                              task.assignee
+                            )}
+                          </div>
 
                           <span className="whitespace-nowrap text-sm font-bold text-emerald-700 dark:text-emerald-300">
                             {task.assignee}
@@ -487,20 +470,15 @@ export default function TaskTable({
                         </div>
                       </td>
 
-                      {/* ACTION BUTTONS */}
                       <td className="py-4 pl-4 pr-6 text-right">
-                        <div className="flex items-center justify-end gap-2">
+                        <div className="flex items-center justify-end gap-1">
                           <button
                             onClick={() =>
                               onDetail(task.id)
                             }
                             className="
-                              flex
-                              h-9
-                              w-9
-                              items-center
-                              justify-center
-                              rounded-xl
+                              rounded-lg
+                              p-2
                               text-slate-500
                               transition-all
                               duration-150
@@ -511,21 +489,14 @@ export default function TaskTable({
                             "
                             title="Detallar"
                           >
-                            <Icon
-                              name="eye"
-                              className="h-[18px] w-[18px]"
-                            />
+                            <Icon name="eye" />
                           </button>
 
                           <button
                             onClick={onChat}
                             className="
-                              flex
-                              h-9
-                              w-9
-                              items-center
-                              justify-center
-                              rounded-xl
+                              rounded-lg
+                              p-2
                               text-emerald-600
                               transition-all
                               duration-150
@@ -537,10 +508,7 @@ export default function TaskTable({
                             "
                             title="Söhbətə keç"
                           >
-                            <Icon
-                              name="chat"
-                              className="h-[18px] w-[18px]"
-                            />
+                            <Icon name="chat" />
                           </button>
                         </div>
                       </td>
@@ -578,9 +546,7 @@ export default function TaskTable({
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
-                onClick={() =>
-                  goToPage(1)
-                }
+                onClick={() => goToPage(1)}
                 disabled={currentPage === 1}
                 className="
                   flex
@@ -611,9 +577,7 @@ export default function TaskTable({
               <button
                 type="button"
                 onClick={() =>
-                  goToPage(
-                    currentPage - 1
-                  )
+                  goToPage(currentPage - 1)
                 }
                 disabled={currentPage === 1}
                 className="
@@ -642,49 +606,43 @@ export default function TaskTable({
                 ‹
               </button>
 
-              {visiblePages.map(
-                (page) => (
-                  <button
-                    key={page}
-                    type="button"
-                    onClick={() =>
-                      goToPage(page)
+              {visiblePages.map((page) => (
+                <button
+                  key={page}
+                  type="button"
+                  onClick={() =>
+                    goToPage(page)
+                  }
+                  className={`
+                    flex
+                    h-9
+                    min-w-9
+                    items-center
+                    justify-center
+                    rounded-lg
+                    border
+                    px-3
+                    text-sm
+                    font-semibold
+                    transition
+                    ${
+                      currentPage === page
+                        ? "border-emerald-600 bg-emerald-600 text-white shadow-sm"
+                        : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
                     }
-                    className={`
-                      flex
-                      h-9
-                      min-w-9
-                      items-center
-                      justify-center
-                      rounded-lg
-                      border
-                      px-3
-                      text-sm
-                      font-semibold
-                      transition
-                      ${
-                        currentPage ===
-                        page
-                          ? "border-emerald-600 bg-emerald-600 text-white shadow-sm"
-                          : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
-                      }
-                    `}
-                  >
-                    {page}
-                  </button>
-                )
-              )}
+                  `}
+                >
+                  {page}
+                </button>
+              ))}
 
               <button
                 type="button"
                 onClick={() =>
-                  goToPage(
-                    currentPage + 1
-                  )
+                  goToPage(currentPage + 1)
                 }
                 disabled={
-                  currentPage ===
-                  totalPages
+                  currentPage === totalPages
                 }
                 className="
                   flex
@@ -718,8 +676,7 @@ export default function TaskTable({
                   goToPage(totalPages)
                 }
                 disabled={
-                  currentPage ===
-                  totalPages
+                  currentPage === totalPages
                 }
                 className="
                   flex
@@ -751,9 +708,7 @@ export default function TaskTable({
                 value={pageSize}
                 onChange={(event) =>
                   setPageSize(
-                    Number(
-                      event.target.value
-                    )
+                    Number(event.target.value)
                   )
                 }
                 className="
@@ -776,11 +731,9 @@ export default function TaskTable({
                 <option value={5}>
                   5 / səhifə
                 </option>
-
                 <option value={10}>
                   10 / səhifə
                 </option>
-
                 <option value={20}>
                   20 / səhifə
                 </option>
@@ -825,17 +778,14 @@ export default function TaskTable({
               if (!task) return null;
 
               const status =
-                task.status ===
-                "Tamamlandı"
+                task.status === "Tamamlandı"
                   ? "Bitmiş"
                   : task.status;
 
               return taskStatuses.map(
                 (option) => {
                   const optionColors =
-                    statusColors[
-                      option
-                    ] ||
+                    statusColors[option] ||
                     statusColors[
                       "Gözləmədə"
                     ];
@@ -849,7 +799,6 @@ export default function TaskTable({
                           task.id,
                           option
                         );
-
                         setDropdown(null);
                       }}
                       className={`
@@ -863,8 +812,7 @@ export default function TaskTable({
                         text-[13px]
                         transition
                         ${
-                          status ===
-                          option
+                          status === option
                             ? `${optionColors.selected} font-bold`
                             : optionColors.idle ||
                               `
@@ -881,9 +829,7 @@ export default function TaskTable({
                           className={`h-2 w-2 shrink-0 rounded-full ${optionColors.dot}`}
                         />
 
-                        {statusLabel(
-                          option
-                        )}
+                        {statusLabel(option)}
                       </span>
 
                       {status === option && (

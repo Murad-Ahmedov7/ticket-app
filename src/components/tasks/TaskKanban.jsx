@@ -1,7 +1,24 @@
+import Icon from "../common/Icons.jsx";
+import KanbanEmptyState from "./KanbanEmptyState.jsx";
 import {
   normalizeTaskStatus,
   taskStatuses,
+  acceptedStatusStyles,
 } from "../../utils/helpers.js";
+
+const profileImages = [12, 32, 47, 33, 49, 15, 44, 68];
+
+function getAssigneeAvatar(task) {
+  if (task.assigneeAvatar) return task.assigneeAvatar;
+
+  // Keep the same placeholder portrait for each assignee across cards/renders.
+  const name = (task.assignee || "").trim().toLowerCase();
+  const hash = Array.from(name).reduce(
+    (value, letter) => (value * 31 + letter.codePointAt(0)) >>> 0,
+    0
+  );
+  return `https://i.pravatar.cc/64?img=${profileImages[hash % profileImages.length]}`;
+}
 
 export default function TaskKanban({
   tasks,
@@ -20,14 +37,14 @@ export default function TaskKanban({
 
   const getDeadlineStyle = (deadline) => {
     if (!deadline) {
-      return "text-slate-400 dark:text-slate-500";
+      return "text-slate-400 ring-transparent dark:text-slate-500";
     }
 
     const datePart = deadline.split(" ")[0];
     const parts = datePart.split("-");
 
     if (parts.length !== 3) {
-      return "text-slate-500 dark:text-slate-400";
+      return "text-slate-500 ring-transparent dark:text-slate-400";
     }
 
     const [day, month, year] = parts;
@@ -46,27 +63,33 @@ export default function TaskKanban({
 
     if (daysLeft < 0) {
       return `
-        bg-rose-50
-        text-rose-500
-        dark:bg-rose-500/10
-        dark:text-rose-400
+        bg-red-50
+        text-red-700
+        ring-red-200
+        dark:bg-red-500/15
+        dark:text-red-300
+        dark:ring-red-400/25
       `;
     }
 
     if (daysLeft <= 3) {
       return `
         bg-amber-50
-        text-amber-600
+        text-amber-700
+        ring-amber-200/80
         dark:bg-amber-500/10
         dark:text-amber-400
+        dark:ring-amber-400/20
       `;
     }
 
     return `
-      bg-slate-100
-      text-slate-500
-      dark:bg-slate-800
+      bg-slate-50
+      text-slate-600
+      ring-slate-200/80
+      dark:bg-slate-900/40
       dark:text-slate-300
+      dark:ring-slate-700
     `;
   };
 
@@ -74,80 +97,58 @@ export default function TaskKanban({
     const styles =
       status === "Gözləmədə"
         ? {
-            dot: "bg-amber-500",
+            iconColor: "text-amber-600 dark:text-amber-400",
+            iconPath: "M5 3h14M5 21h14M6 3c0 5 3 6 6 9-3 3-6 4-6 9M18 3c0 5-3 6-6 9 3 3 6 4 6 9",
+            emptyIconPath: "M3 13l3-8h12l3 8v7H3ZM3 13h5l2 3h4l2-3h5",
             badge:
               "bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300",
-            background:
-              "bg-amber-50/40 dark:bg-amber-500/[0.06]",
-            border:
-              "border-amber-200/70 dark:border-amber-500/30",
             accent: "bg-amber-500",
-            avatar:
-              "bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300",
           }
         : status === "Icra olunur"
         ? {
-            dot: "bg-blue-500",
+            iconColor: "text-blue-600 dark:text-blue-400",
+            iconPath: "M5 3.5 20 12 5 20.5Z",
+            emptyIconPath: "M3 19V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v2M3 19l3-9h15l-3 11H5a2 2 0 0 1-2-2Z",
             badge:
               "bg-blue-100 text-blue-800 dark:bg-blue-500/15 dark:text-blue-300",
-            background:
-              "bg-blue-50/40 dark:bg-blue-500/[0.06]",
-            border:
-              "border-blue-200/70 dark:border-blue-500/30",
             accent: "bg-blue-500",
-            avatar:
-              "bg-blue-100 text-blue-800 dark:bg-blue-500/15 dark:text-blue-300",
           }
         : status === "Pauzada"
         ? {
-            dot: "bg-violet-500",
+            iconColor: "text-purple-600 dark:text-purple-400",
+            iconPath: "M5 3h3v18H5ZM16 3h3v18h-3Z",
+            emptyIconPath: "M7 2l1 3M14 2l-1 3M3 9h15v5c0 5-3 8-7.5 8S3 19 3 14V9ZM18 10h1a3 3 0 0 1 0 6h-1",
             badge:
-              "bg-violet-100 text-violet-800 dark:bg-violet-500/15 dark:text-violet-300",
-            background:
-              "bg-violet-50/40 dark:bg-violet-500/[0.06]",
-            border:
-              "border-violet-200/70 dark:border-violet-500/30",
-            accent: "bg-violet-500",
-            avatar:
-              "bg-violet-100 text-violet-800 dark:bg-violet-500/15 dark:text-violet-300",
+              "bg-purple-100 text-purple-800 dark:bg-purple-500/15 dark:text-purple-300",
+            accent: "bg-purple-500",
           }
         : status === "Qəbul olundu"
         ? {
-            dot: "bg-fuchsia-500",
-            badge:
-              "bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-500/15 dark:text-fuchsia-300",
-            background:
-              "bg-fuchsia-50/40 dark:bg-fuchsia-500/[0.06]",
-            border:
-              "border-fuchsia-200/70 dark:border-fuchsia-500/30",
-            accent: "bg-fuchsia-500",
-            avatar:
-              "bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-500/15 dark:text-fuchsia-300",
+            iconColor: acceptedStatusStyles.text,
+            titleColor: acceptedStatusStyles.text,
+            emptyIconColor: acceptedStatusStyles.text,
+            accentOpacity: "opacity-100",
+            iconPath: "M8 5H6a2 2 0 0 0-2 2v13a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7a2 2 0 0 0-2-2h-2M9 3h6a1 1 0 0 1 1 1v3H8V4a1 1 0 0 1 1-1ZM8 13l3 3 5-5",
+            emptyIconPath: "M5 19H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h12M7 4h13a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1ZM10 9h7M10 12h7M10 15h7",
+            badge: acceptedStatusStyles.surface,
+            accent: acceptedStatusStyles.dot,
           }
         : status === "Bitmiş"
         ? {
-            dot: "bg-emerald-500",
+            iconColor: "text-green-600 dark:text-green-400",
+            iconPath: "M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM7.5 12l3 3 6-6",
+            emptyIconPath: "M3 3h18v5H3ZM5 8v13h14V8M9 12h6",
             badge:
-              "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300",
-            background:
-              "bg-emerald-50/40 dark:bg-emerald-500/[0.06]",
-            border:
-              "border-emerald-200/70 dark:border-emerald-500/30",
-            accent: "bg-emerald-500",
-            avatar:
-              "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300",
+              "bg-green-100 text-green-800 dark:bg-green-500/15 dark:text-green-300",
+            accent: "bg-green-500",
           }
         : {
-            dot: "bg-rose-600",
+            iconColor: "text-red-600 dark:text-red-400",
+            iconPath: "M3 6h18M8 6l1-4h6l1 4M5 6l1 15h12l1-15M10 10v7M14 10v7",
+            emptyIconPath: "M3 8l9-5 9 5-9 5ZM3 8v9l9 5 9-5V8M12 13v9",
             badge:
-              "bg-rose-100 text-rose-800 dark:bg-rose-500/15 dark:text-rose-300",
-            background:
-              "bg-rose-50/40 dark:bg-rose-500/[0.06]",
-            border:
-              "border-rose-200/70 dark:border-rose-500/30",
-            accent: "bg-rose-600",
-            avatar:
-              "bg-rose-100 text-rose-800 dark:bg-rose-500/15 dark:text-rose-300",
+              "bg-red-100 text-red-800 dark:bg-red-500/15 dark:text-red-300",
+            accent: "bg-red-600",
           };
 
     return {
@@ -161,413 +162,105 @@ export default function TaskKanban({
   });
 
   return (
-    <div className="grid grid-cols-1 items-start gap-5 md:grid-cols-2 xl:grid-cols-3">
-      {columns.map((column, columnIndex) => (
-        <div
+    <div className="grid min-h-full grid-cols-1 items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">
+      {columns.map((column) => (
+        <section
           key={column.label}
-          style={{
-            animationDelay: `${columnIndex * 120}ms`,
-          }}
-          className={`
-            kanban-column-enter
-
-            flex flex-col
-            rounded-[24px]
-            border
-            p-3
-            transition-colors
-
-            ${column.background}
-            ${column.border}
-          `}
+          aria-label={column.label}
+          className="flex min-h-[clamp(340px,42vh,480px)] min-w-0 flex-col overflow-hidden rounded-[10px] border border-slate-200/80 bg-slate-100/70 dark:border-slate-800 dark:bg-slate-900/70"
         >
-          {/* Header */}
-          <div className="mb-3">
-            <div className="flex items-center justify-between px-1 py-1">
-              <h3
-                className="
-                  flex items-center gap-2
-                  text-[14px]
-                  font-bold
-                  text-slate-800
-                  dark:text-slate-100
-                "
+          <header className="relative flex min-h-16 shrink-0 items-center justify-between gap-3 border-b border-slate-200/80 bg-white/60 px-4 py-3.5 dark:border-slate-800 dark:bg-slate-800/30">
+            <span aria-hidden="true" className={`absolute inset-x-4 bottom-0 h-0.5 ${column.accentOpacity || "opacity-70"} ${column.accent}`} />
+            <h3 className={`flex min-w-0 items-center gap-3 text-[15px] font-semibold ${column.titleColor || "text-slate-800 dark:text-slate-100"}`}>
+              <svg
+                className={`h-5 w-5 shrink-0 ${column.iconColor}`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.9"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
               >
-                <span
-                  className={`
-                    h-2.5 w-2.5
-                    rounded-full
-                    shadow-sm
-                    ${column.dot}
-                  `}
-                />
+                <path d={column.iconPath} />
+              </svg>
+              {column.label}
+            </h3>
+            <span className={`min-w-7 rounded-md px-2 py-1 text-center text-[13px] font-semibold tabular-nums ${column.badge}`}>
+              {column.tasks.length}
+            </span>
+          </header>
 
-                {column.label}
-              </h3>
-
-              <span
-                className={`
-                  min-w-[24px]
-                  rounded-full
-                  px-2 py-0.5
-                  text-center
-                  text-[11px]
-                  font-extrabold
-                  ${column.badge}
-                `}
-              >
-                {column.tasks.length}
-              </span>
-            </div>
-
-            <div
-              className={`
-                mt-2
-                h-[2px]
-                w-full
-                rounded-full
-                opacity-40
-                ${column.accent}
-              `}
-            />
-          </div>
-
-          {/* Tasks */}
           <div
-            className={`flex flex-col gap-3 ${
+            className={`flex flex-1 flex-col gap-3.5 p-3 ${
               column.tasks.length > 4
-                ? `
-                    max-h-[660px]
-                    overflow-y-auto
-                    pr-2
-
-                    [scrollbar-width:thin]
-                    [scrollbar-color:rgb(148_163_184)_transparent]
-
-                    dark:[scrollbar-color:rgb(71_85_105)_transparent]
-
-                    [&::-webkit-scrollbar]:w-2
-                    [&::-webkit-scrollbar-track]:bg-transparent
-
-                    [&::-webkit-scrollbar-thumb]:rounded-full
-                    [&::-webkit-scrollbar-thumb]:bg-slate-300
-
-                    hover:[&::-webkit-scrollbar-thumb]:bg-slate-400
-
-                    dark:[&::-webkit-scrollbar-thumb]:bg-slate-600/70
-                    dark:hover:[&::-webkit-scrollbar-thumb]:bg-slate-500
-                  `
+                ? "kanban-scroll max-h-[660px] overflow-y-auto"
                 : ""
             }`}
           >
             {column.tasks.length === 0 ? (
-              <div
-                className="
-                  flex min-h-[320px]
-                  flex-col
-                  items-center
-                  justify-center
-                  rounded-2xl
-                  border
-                  border-dashed
-                  border-slate-300/80
-                  bg-white/40
-                  px-4
-                  text-center
-                  dark:border-slate-700
-                  dark:bg-slate-900/40
-                "
-              >
-                <div
-                  className="
-                    mb-3
-                    flex h-10 w-10
-                    items-center
-                    justify-center
-                    rounded-xl
-                    bg-white
-                    text-lg
-                    text-slate-500
-                    shadow-sm
-                    dark:bg-slate-800
-                    dark:text-slate-300
-                    dark:shadow-none
-                  "
-                >
-                  ✓
-                </div>
-
-                <p
-                  className="
-                    text-[13px]
-                    font-semibold
-                    text-slate-600
-                    dark:text-slate-300
-                  "
-                >
-                  Bu mərhələdə tapşırıq yoxdur
-                </p>
-
-                <p
-                  className="
-                    mt-1
-                    text-[11px]
-                    text-slate-400
-                    dark:text-slate-500
-                  "
-                >
-                  Yeni tapşırıqlar əlavə olunduqda burada görünəcək
-                </p>
-              </div>
+              <KanbanEmptyState
+                color={column.emptyIconColor || column.iconColor}
+                iconPath={column.iconPath}
+              />
             ) : (
-              column.tasks.map((task, taskIndex) => (
+              column.tasks.map((task) => (
                 <div
                   key={task.id}
                   onClick={() => onDetail(task.id)}
-                  style={{
-                    animationDelay: `${
-                      300 + taskIndex * 80
-                    }ms`,
-                  }}
-                  className="
-                    kanban-task-enter
-
-                    group
-                    relative
-                    shrink-0
-                    cursor-pointer
-                    overflow-hidden
-                    rounded-2xl
-                    border
-                    border-white/80
-                    bg-white
-                    p-4
-                    shadow-sm
-                    transition-all
-                    duration-200
-                    hover:-translate-y-1
-                    hover:border-slate-200
-                    hover:shadow-lg
-
-                    dark:border-slate-700/80
-                    dark:bg-slate-900
-                    dark:shadow-none
-                    dark:hover:border-slate-600
-                    dark:hover:bg-slate-800/90
-                    dark:hover:shadow-xl
-                    dark:hover:shadow-black/20
-                  "
+                  className="group relative shrink-0 cursor-pointer rounded-lg border border-slate-200 bg-white p-[18px] shadow-[0_2px_5px_rgba(15,23,42,0.05)] transition-[border-color,box-shadow] duration-150 hover:border-slate-300 hover:shadow-[0_3px_8px_rgba(15,23,42,0.07)] dark:border-slate-700 dark:bg-slate-800 dark:shadow-none dark:hover:border-slate-500 motion-reduce:transition-none"
                 >
-                  {/* Accent */}
-                  <div
-                    className={`
-                      absolute
-                      bottom-3
-                      left-0
-                      top-3
-                      w-[3px]
-                      rounded-r-full
-                      ${column.accent}
-                    `}
-                  />
-
-                  {/* ID + deadline */}
-                  <div className="mb-3 flex items-center justify-between gap-3">
-                    <span
-                      className="
-                        rounded-md
-                        bg-slate-100
-                        px-2 py-1
-                        font-mono
-                        text-[11px]
-                        font-extrabold
-                        tracking-wide
-                        text-slate-500
-                        dark:bg-slate-800
-                        dark:text-slate-400
-                      "
-                    >
+                  <div className="mb-3 flex items-center justify-between gap-3 flex-wrap">
+                    <span className="rounded-md border border-slate-200/70 bg-slate-50 px-2 py-1 font-mono text-[11px] font-medium tracking-wide text-slate-500 dark:border-slate-700 dark:bg-slate-900/40 dark:text-slate-400">
                       TASK-{task.id}
                     </span>
-
-                    <span
-                      className={`
-                        rounded-lg
-                        px-2 py-1
-                        text-[11px]
-                        font-bold
-                        ${getDeadlineStyle(task.deadline)}
-                      `}
-                    >
-                      {task.deadline?.split(" ")[0] ||
-                        "—"}
+                    <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-xs font-semibold tabular-nums ring-1 ring-inset ${getDeadlineStyle(task.deadline)}`}>
+                      <Icon name="calendar" className="h-3.5 w-3.5" />
+                      {task.deadline?.split(" ")[0] || "—"}
                     </span>
                   </div>
 
-                  {/* Title */}
-                  <h4
-                    className="
-                      mb-2
-                      text-[15px]
-                      font-extrabold
-                      leading-snug
-                      text-slate-900
-                      dark:text-slate-100
-                    "
-                  >
+                  <h4 className="text-base font-semibold leading-6 tracking-[-0.01em] text-slate-900 [overflow-wrap:anywhere] dark:text-slate-100">
                     {task.title}
                   </h4>
-
-                  {/* Description */}
-                  <p
-                    className="
-                      mb-4
-                      line-clamp-2
-                      min-h-[40px]
-                      text-[13px]
-                      leading-relaxed
-                      text-slate-500
-                      dark:text-slate-400
-                    "
-                  >
-                    {task.message ||
-                      "Açıqlama yoxdur"}
+                  <p className="mt-2 line-clamp-2 text-[13px] leading-[21px] text-slate-500 dark:text-slate-400">
+                    {task.message || "Açıqlama yoxdur"}
                   </p>
 
-                  {/* Bottom */}
-                  <div
-                    className="
-                      flex items-center
-                      justify-between
-                      border-t
-                      border-slate-100
-                      pt-3
-                      dark:border-slate-800
-                    "
-                  >
-                    <div className="flex min-w-0 items-center gap-2">
-                      <div
-                        className={`
-                          flex h-8 w-8
-                          shrink-0
-                          items-center
-                          justify-center
-                          rounded-full
-                          text-[11px]
-                          font-extrabold
-                          ${column.avatar}
-                        `}
-                      >
-                        {getInitials(task.assignee) ||
-                          "?"}
+                  <div className="mt-4 flex items-center justify-between gap-3 border-t border-slate-100 pt-3 dark:border-slate-700/60">
+                    <div className="flex min-w-0 items-center gap-2.5">
+                      <div className="relative flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-slate-100 text-[10px] font-semibold text-slate-600 ring-1 ring-slate-200 dark:bg-slate-700 dark:text-slate-200 dark:ring-slate-600">
+                        {getInitials(task.assignee) || "?"}
+                        <img
+                          src={getAssigneeAvatar(task)}
+                          alt=""
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          className="absolute inset-0 h-full w-full object-cover"
+                          onError={(event) => { event.currentTarget.hidden = true; }}
+                        />
                       </div>
-
-                      <span
-                        className="
-                          truncate
-                          text-[12px]
-                          font-semibold
-                          text-slate-600
-                          dark:text-slate-300
-                        "
-                      >
+                      <span className="truncate text-[13px] font-medium text-slate-600 dark:text-slate-300">
                         {task.assignee}
                       </span>
                     </div>
-
                     <button
                       onClick={(event) => {
                         event.stopPropagation();
                         onCycle(task.id);
                       }}
-                      className="
-                        ml-3
-                        flex h-8 w-8
-                        shrink-0
-                        items-center
-                        justify-center
-                        rounded-full
-                        bg-slate-50
-                        text-sm
-                        font-bold
-                        text-slate-500
-                        transition-all
-                        duration-200
-                        hover:bg-slate-900
-                        hover:text-white
-                        group-hover:translate-x-0.5
-
-                        dark:bg-slate-800
-                        dark:text-slate-400
-                        dark:hover:bg-slate-700
-                        dark:hover:text-white
-                      "
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-slate-600 transition-colors duration-150 hover:border-teal-600/30 hover:bg-teal-50 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 dark:border-slate-600/70 dark:bg-slate-700/40 dark:text-slate-300 dark:hover:border-teal-400/30 dark:hover:bg-teal-400/10 dark:hover:text-teal-300 motion-reduce:transition-none"
                       title="Növbəti statusa keçir"
                     >
-                      →
+                      <Icon name="right" className="h-4 w-4" />
                     </button>
                   </div>
                 </div>
               ))
             )}
           </div>
-        </div>
+        </section>
       ))}
-
-      {/* ANIMATION */}
-      <style>{`
-        @keyframes kanbanColumnEnter {
-          from {
-            opacity: 0;
-            transform: translateY(14px) scale(0.985);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes kanbanTaskEnter {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .kanban-column-enter {
-          opacity: 0;
-
-          animation:
-            kanbanColumnEnter
-            0.7s
-            cubic-bezier(0.22, 1, 0.36, 1)
-            forwards;
-        }
-
-        .kanban-task-enter {
-          opacity: 0;
-
-          animation:
-            kanbanTaskEnter
-            0.55s
-            cubic-bezier(0.22, 1, 0.36, 1)
-            forwards;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .kanban-column-enter,
-          .kanban-task-enter {
-            opacity: 1;
-            animation: none;
-          }
-        }
-      `}</style>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import {
   taskStatuses,
   statusLabel,
   normalizeTaskStatus,
+  acceptedStatusStyles,
 } from "../../utils/helpers.js";
 
 export default function TaskDetailModal({
@@ -34,9 +35,9 @@ export default function TaskDetailModal({
     },
 
     "Qəbul olundu": {
-      dot: "bg-fuchsia-500",
-      active:
-        "border-fuchsia-300 bg-fuchsia-50 text-fuchsia-800 shadow-sm dark:border-fuchsia-500/40 dark:bg-fuchsia-500/15 dark:text-fuchsia-300",
+      dot: acceptedStatusStyles.dot,
+      active: `${acceptedStatusStyles.surface} ${acceptedStatusStyles.border} shadow-sm`,
+      idle: `border-transparent ${acceptedStatusStyles.text} ${acceptedStatusStyles.hover}`,
     },
 
     Bitmiş: {
@@ -359,7 +360,7 @@ export default function TaskDetailModal({
                       ${
                         active
                           ? colors.active
-                          : `
+                          : colors.idle || `
                               border-transparent
                               text-slate-500
                               hover:bg-white/70
