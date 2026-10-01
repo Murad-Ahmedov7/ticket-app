@@ -14,14 +14,14 @@ export default function ChatView({ conversations, messages, activeChatId, chatCa
   
   return <section className="chat-layout flex-1 flex flex-col h-full overflow-hidden min-w-0" data-list-open={showConversationList || !conversation}>
     <nav className="chat-view-tabs shrink-0 gap-2 border-b border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900" aria-label="Söhbət görünüşü">
-      <button type="button" aria-pressed={showConversationList || !conversation} onClick={() => { setShowConversationList(true); setReaction(null); }} className="min-w-0 flex-1 rounded-lg px-3 py-2 text-xs font-bold text-slate-600 aria-pressed:bg-teal-600 aria-pressed:text-white dark:text-slate-200">Söhbətlər</button>
+      <button type="button" aria-pressed={showConversationList || !conversation} onClick={() => { setShowConversationList(true); setReaction(null); }} className="min-w-0 flex-1 rounded-lg px-3 py-2 text-xs font-bold text-slate-600 aria-pressed:bg-teal-600 aria-pressed:text-white dark:text-slate-200 dark:aria-pressed:bg-slate-800 dark:aria-pressed:text-emerald-300">Söhbətlər</button>
       <button type="button" disabled={!conversation} aria-pressed={!showConversationList && !!conversation} onClick={() => setShowConversationList(false)} className="min-w-0 flex-1 truncate rounded-lg px-3 py-2 text-xs font-bold text-slate-600 aria-pressed:bg-teal-600 aria-pressed:text-white disabled:opacity-40 dark:text-slate-200">{conversation?.name || 'Mesajlar'}</button>
     </nav>
     <div className="chat-workspace flex min-h-0 min-w-0 flex-1" data-list-open={showConversationList || !conversation}>
     <div className="chat-conversations">
     <ConversationList conversations={conversations} activeChatId={activeChatId} chatCategory={chatCategory} onCategory={onCategory} onSelect={id => { onSelect(id); setShowConversationList(false); setReaction(null); }} onDelete={onDelete} onNewChat={() => onModal('newChat')} />
     </div>
-    <div className="chat-panel flex-1 flex flex-col h-full bg-white dark:bg-slate-950 overflow-hidden min-w-0 relative">
+    <div className="chat-panel flex-1 flex flex-col h-full bg-white dark:bg-slate-900 overflow-hidden min-w-0 relative">
       {conversation && <>
         <ChatHeader onShowConversations={() => setShowConversationList(true)} conversation={conversation} onCall={() => onModal('audioCall')} onCreateTask={() => onModal('createTask')} onInfo={() => onModal('chatInfo')} onAddMember={() => onModal('groupBulk')} />
         <MessageList messages={messages[activeChatId] || []} activeChatId={activeChatId} onReactionPicker={(event, id) => { event.stopPropagation(); const rect = event.currentTarget.getBoundingClientRect(); setReaction({ id, top: rect.top, left: rect.left }); }} onReaction={onReaction} onReply={onReply} onEdit={message => onModal('editMessage', message)} onCreateTask={message => onModal('createTask', { title: message.text?.slice(0, 30) || 'Söhbət tapşırığı', comment: `Mesajdan yaradıldı: "${message.text || ''}"` })} onTaskDetail={onTaskDetail} onVote={onVote} notify={notify} />

@@ -1,0 +1,94 @@
+export default function ReplyQuote({
+  reply,
+  outgoing = false,
+  onJump
+}) {
+  const canJump =
+    onJump && reply.id != null;
+
+  const Tag =
+    canJump ? 'button' : 'div';
+
+  return (
+    <Tag
+      {...(
+        canJump
+          ? {
+              type: 'button',
+              onClick: () => onJump(reply.id),
+              title: 'Əvvəlki mesaja keç'
+            }
+          : {}
+      )}
+      className={`
+        block
+        w-full
+        min-w-0
+        rounded-lg
+        border
+        border-slate-200/80
+        border-l-2
+        border-l-emerald-500
+        bg-slate-50
+        px-3
+        py-2.5
+        text-left
+        text-slate-700
+        shadow-none
+        dark:border-slate-700
+        dark:border-l-emerald-500
+        dark:bg-slate-800
+        dark:text-slate-200
+
+        ${
+          outgoing
+            ? 'border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-700'
+            : ''
+        }
+
+        ${
+          canJump
+            ? `
+              transition
+              hover:bg-slate-100
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-emerald-300
+              dark:hover:bg-slate-800
+            `
+            : ''
+        }
+      `}
+    >
+      <span
+        className="
+          mb-0.5
+          block
+          truncate
+          text-[11px]
+          font-semibold
+          tracking-wide
+          text-slate-600
+          dark:text-slate-400
+        "
+      >
+        {reply.sender}
+      </span>
+
+      <span
+        className="
+          block
+          line-clamp-2
+          whitespace-pre-wrap
+          text-xs
+          leading-relaxed
+          text-slate-600
+          [overflow-wrap:anywhere]
+          dark:text-slate-300
+        "
+      >
+        {reply.text}
+      </span>
+    </Tag>
+  );
+}
