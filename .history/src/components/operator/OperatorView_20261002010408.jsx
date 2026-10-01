@@ -14,8 +14,12 @@ export default function OperatorView({
 }) {
   const [search, setSearch] = useState("");
   const [company, setCompany] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+
+  const [currentPage, setCurrentPage] =
+    useState(1);
+
+  const [pageSize, setPageSize] =
+    useState(10);
 
   const total = approvals.length;
 
@@ -56,7 +60,8 @@ export default function OperatorView({
     const map = new Map();
 
     approvals.forEach((item) => {
-      const value = item.company?.trim();
+      const value =
+        item.company?.trim();
 
       if (!value) return;
 
@@ -226,34 +231,6 @@ export default function OperatorView({
     setCurrentPage(1);
   };
 
-  const IconBox = ({
-    children,
-    className = "",
-  }) => (
-    <span
-      className={`
-        flex
-        h-8
-        w-8
-        shrink-0
-        items-center
-        justify-center
-        rounded-lg
-        border
-        border-slate-200
-        bg-white
-        text-slate-500
-        shadow-sm
-        dark:border-slate-700
-        dark:bg-slate-800
-        dark:text-slate-300
-        ${className}
-      `}
-    >
-      {children}
-    </span>
-  );
-
   const BriefcaseIcon = ({
     className = "w-4 h-4",
   }) => (
@@ -300,47 +277,6 @@ export default function OperatorView({
       <path d="M8 15h4" />
       <path d="M9 21v-3h2v3" />
       <path d="M3 21h18" />
-    </svg>
-  );
-
-  const EmailIcon = ({
-    className = "w-4 h-4",
-  }) => (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <rect
-        x="3"
-        y="5"
-        width="18"
-        height="14"
-        rx="2"
-      />
-      <path d="m3 7 9 6 9-6" />
-    </svg>
-  );
-
-  const PhoneIcon = ({
-    className = "w-4 h-4",
-  }) => (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z" />
     </svg>
   );
 
@@ -476,7 +412,6 @@ export default function OperatorView({
                   name="users"
                   className="w-3.5 h-3.5"
                 />
-
                 {filteredList.length} istifadəçi
               </span>
             </div>
@@ -599,7 +534,7 @@ export default function OperatorView({
           {filteredList.length ? (
             <>
               <div className="hidden md:block overflow-x-auto">
-                <table className="w-full min-w-[1150px] border-collapse text-left">
+                <table className="w-full min-w-[1100px] border-collapse text-left">
                   <thead>
                     <tr className="bg-slate-50/80 dark:bg-slate-800/40 border-b border-slate-200/80 dark:border-slate-800">
                       {[
@@ -710,37 +645,18 @@ export default function OperatorView({
                           </div>
                         </td>
 
-                        <td className="px-5 py-4">
-                          <div className="flex items-center gap-3 whitespace-nowrap">
-                            <IconBox>
-                              <EmailIcon className="w-4 h-4" />
-                            </IconBox>
+                        <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                          {item.email}
+                        </td>
 
-                            <span className="text-sm text-slate-600 dark:text-slate-300">
-                              {item.email}
-                            </span>
-                          </div>
+                        <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                          {item.phone}
                         </td>
 
                         <td className="px-5 py-4">
-                          <div className="flex items-center gap-3 whitespace-nowrap">
-                            <IconBox>
-                              <PhoneIcon className="w-4 h-4" />
-                            </IconBox>
-
-                            <span className="text-sm text-slate-600 dark:text-slate-300">
-                              {item.phone}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td className="px-5 py-4">
-                          <div className="flex items-center gap-3">
-                            <IconBox>
-                              <BriefcaseIcon className="w-4 h-4" />
-                            </IconBox>
-
-                            <span className="text-sm text-slate-700 dark:text-slate-300">
+                          <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                            <BriefcaseIcon className="w-4 h-4 shrink-0 text-slate-400" />
+                            <span>
                               {item.position}
                             </span>
                           </div>
@@ -766,10 +682,7 @@ export default function OperatorView({
                               font-bold
                             "
                           >
-                            <IconBox className="h-7 w-7 rounded-md shadow-none">
-                              <BuildingIcon className="w-3.5 h-3.5" />
-                            </IconBox>
-
+                            <BuildingIcon className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                             {item.company}
                           </span>
                         </td>
@@ -875,12 +788,9 @@ export default function OperatorView({
                             {item.name}
                           </h3>
 
-                          <div className="mt-1 flex items-center gap-2 text-[13px] text-slate-500">
-                            <EmailIcon className="w-3.5 h-3.5 shrink-0" />
-                            <span className="truncate">
-                              {item.email}
-                            </span>
-                          </div>
+                          <p className="mt-1 text-[13px] text-slate-500 truncate">
+                            {item.email}
+                          </p>
                         </div>
                       </div>
 
@@ -896,13 +806,9 @@ export default function OperatorView({
                           Telefon
                         </p>
 
-                        <div className="mt-2 flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                          <IconBox>
-                            <PhoneIcon className="w-4 h-4" />
-                          </IconBox>
-
+                        <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
                           {item.phone}
-                        </div>
+                        </p>
                       </div>
 
                       <div>
@@ -910,11 +816,8 @@ export default function OperatorView({
                           Vəzifə
                         </p>
 
-                        <div className="mt-2 flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                          <IconBox>
-                            <BriefcaseIcon className="w-4 h-4" />
-                          </IconBox>
-
+                        <div className="mt-1 flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                          <BriefcaseIcon className="w-4 h-4 text-slate-400" />
                           {item.position}
                         </div>
                       </div>
@@ -933,7 +836,6 @@ export default function OperatorView({
                       ) : (
                         <div className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900 text-sm font-bold">
                           <span className="w-2 h-2 rounded-full bg-emerald-500" />
-
                           Təsdiqləndi
                         </div>
                       )}

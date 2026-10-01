@@ -14,8 +14,12 @@ export default function OperatorView({
 }) {
   const [search, setSearch] = useState("");
   const [company, setCompany] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+
+  const [currentPage, setCurrentPage] =
+    useState(1);
+
+  const [pageSize, setPageSize] =
+    useState(10);
 
   const total = approvals.length;
 
@@ -56,7 +60,8 @@ export default function OperatorView({
     const map = new Map();
 
     approvals.forEach((item) => {
-      const value = item.company?.trim();
+      const value =
+        item.company?.trim();
 
       if (!value) return;
 
@@ -226,34 +231,6 @@ export default function OperatorView({
     setCurrentPage(1);
   };
 
-  const IconBox = ({
-    children,
-    className = "",
-  }) => (
-    <span
-      className={`
-        flex
-        h-8
-        w-8
-        shrink-0
-        items-center
-        justify-center
-        rounded-lg
-        border
-        border-slate-200
-        bg-white
-        text-slate-500
-        shadow-sm
-        dark:border-slate-700
-        dark:bg-slate-800
-        dark:text-slate-300
-        ${className}
-      `}
-    >
-      {children}
-    </span>
-  );
-
   const BriefcaseIcon = ({
     className = "w-4 h-4",
   }) => (
@@ -303,47 +280,6 @@ export default function OperatorView({
     </svg>
   );
 
-  const EmailIcon = ({
-    className = "w-4 h-4",
-  }) => (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <rect
-        x="3"
-        y="5"
-        width="18"
-        height="14"
-        rx="2"
-      />
-      <path d="m3 7 9 6 9-6" />
-    </svg>
-  );
-
-  const PhoneIcon = ({
-    className = "w-4 h-4",
-  }) => (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z" />
-    </svg>
-  );
-
   const RefreshIcon = ({
     className = "w-4 h-4",
   }) => (
@@ -352,15 +288,13 @@ export default function OperatorView({
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.9"
+      strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      <path d="M20 6v5h-5" />
-      <path d="M4 18v-5h5" />
-      <path d="M18.5 9A7 7 0 0 0 6.2 6.5L4 9" />
-      <path d="M5.5 15A7 7 0 0 0 17.8 17.5L20 15" />
+      <path d="M20 11a8 8 0 1 0 2 5" />
+      <path d="M20 4v7h-7" />
     </svg>
   );
 
@@ -396,7 +330,10 @@ export default function OperatorView({
             </div>
 
             <p className="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">
-              Qeydiyyatdan keçən müştərilərin və istifadəçilərin operator tərəfindən təsdiqi
+              Qeydiyyatdan keçən
+              müştərilərin və
+              istifadəçilərin operator
+              tərəfindən təsdiqi
             </p>
           </div>
 
@@ -404,7 +341,8 @@ export default function OperatorView({
             <div className="inline-flex min-w-max items-center gap-1 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
               {tabs.map((tab) => {
                 const active =
-                  operatorTab === tab.value;
+                  operatorTab ===
+                  tab.value;
 
                 return (
                   <button
@@ -445,9 +383,11 @@ export default function OperatorView({
                         text-[11px]
                         font-black
                         ${
-                          tab.value === "pending"
+                          tab.value ===
+                          "pending"
                             ? "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300"
-                            : tab.value === "approved"
+                            : tab.value ===
+                              "approved"
                             ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"
                             : "bg-slate-200 text-slate-600 dark:bg-slate-600 dark:text-slate-200"
                         }
@@ -477,7 +417,10 @@ export default function OperatorView({
                   className="w-3.5 h-3.5"
                 />
 
-                {filteredList.length} istifadəçi
+                {
+                  filteredList.length
+                }{" "}
+                istifadəçi
               </span>
             </div>
 
@@ -491,7 +434,9 @@ export default function OperatorView({
                 <input
                   value={search}
                   onChange={(e) =>
-                    setSearch(e.target.value)
+                    setSearch(
+                      e.target.value
+                    )
                   }
                   placeholder="Ad, email, vəzifə və ya şirkət üzrə axtar..."
                   className="
@@ -525,7 +470,9 @@ export default function OperatorView({
                   <select
                     value={company}
                     onChange={(e) =>
-                      setCompany(e.target.value)
+                      setCompany(
+                        e.target.value
+                      )
                     }
                     className="
                       h-10
@@ -553,14 +500,16 @@ export default function OperatorView({
                       Bütün şirkətlər
                     </option>
 
-                    {companies.map((item) => (
-                      <option
-                        key={item}
-                        value={item}
-                      >
-                        {item}
-                      </option>
-                    ))}
+                    {companies.map(
+                      (item) => (
+                        <option
+                          key={item}
+                          value={item}
+                        >
+                          {item}
+                        </option>
+                      )
+                    )}
                   </select>
                 </div>
               )}
@@ -590,8 +539,9 @@ export default function OperatorView({
                   gap-2
                 "
               >
-                <RefreshIcon className="w-[17px] h-[17px]" />
-                <span>Sıfırla</span>
+                <RefreshIcon className="w-4 h-4" />
+
+                Sıfırla
               </button>
             </div>
           </div>
@@ -599,7 +549,7 @@ export default function OperatorView({
           {filteredList.length ? (
             <>
               <div className="hidden md:block overflow-x-auto">
-                <table className="w-full min-w-[1150px] border-collapse text-left">
+                <table className="w-full min-w-[1100px] border-collapse text-left">
                   <thead>
                     <tr className="bg-slate-50/80 dark:bg-slate-800/40 border-b border-slate-200/80 dark:border-slate-800">
                       {[
@@ -609,352 +559,392 @@ export default function OperatorView({
                         "Vəzifə",
                         "Şirkət",
                         "Əməliyyat",
-                      ].map((label, index) => (
-                        <th
-                          key={label}
-                          className={`
-                            px-5
-                            py-3.5
-                            text-[11px]
-                            uppercase
-                            tracking-[0.08em]
-                            font-black
-                            text-slate-400
-                            ${index === 0 ? "pl-5" : ""}
-                            ${index === 5 ? "pr-5 text-right" : ""}
-                          `}
-                        >
-                          {label}
-                        </th>
-                      ))}
+                      ].map(
+                        (
+                          label,
+                          index
+                        ) => (
+                          <th
+                            key={label}
+                            className={`
+                              px-5
+                              py-3.5
+                              text-[11px]
+                              uppercase
+                              tracking-[0.08em]
+                              font-black
+                              text-slate-400
+                              ${
+                                index ===
+                                0
+                                  ? "pl-5"
+                                  : ""
+                              }
+                              ${
+                                index ===
+                                5
+                                  ? "pr-5 text-right"
+                                  : ""
+                              }
+                            `}
+                          >
+                            {label}
+                          </th>
+                        )
+                      )}
                     </tr>
                   </thead>
 
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                    {list.map((item, index) => (
-                      <tr
-                        key={item.id}
-                        style={{
-                          animation: `fadeSlideIn 260ms ease-out ${
-                            index * 45
-                          }ms both`,
-                        }}
-                        className="
-                          group
-                          relative
-                          hover:bg-emerald-50/40
-                          dark:hover:bg-emerald-950/20
-                          transition-all
-                          duration-200
-                        "
-                      >
-                        <td className="relative px-5 py-4 whitespace-nowrap">
-                          <span
-                            className={`
-                              absolute
-                              left-0
-                              top-2
-                              bottom-2
-                              w-[3px]
-                              rounded-r-full
-                              transition-all
-                              duration-200
-                              group-hover:w-[4px]
-                              ${
-                                item.status === "pending"
-                                  ? "bg-amber-400"
-                                  : "bg-emerald-500"
-                              }
-                            `}
-                          />
-
-                          <div className="flex items-center gap-3">
-                            <div className="relative shrink-0">
-                              <img
-                                src={getAvatar(item.name)}
-                                alt={item.name}
-                                className="
-                                  w-10
-                                  h-10
-                                  rounded-full
-                                  object-cover
-                                  ring-1
-                                  ring-slate-200
-                                  dark:ring-slate-700
-                                "
-                              />
-
-                              <span
-                                className={`
-                                  absolute
-                                  right-0
-                                  bottom-0
-                                  w-2.5
-                                  h-2.5
-                                  rounded-full
-                                  ring-2
-                                  ring-white
-                                  dark:ring-slate-900
-                                  ${
-                                    item.status === "approved"
-                                      ? "bg-emerald-500"
-                                      : "bg-amber-400"
-                                  }
-                                `}
-                              />
-                            </div>
-
-                            <span className="text-sm font-black text-slate-900 dark:text-white">
-                              {item.name}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td className="px-5 py-4">
-                          <div className="flex items-center gap-3 whitespace-nowrap">
-                            <IconBox>
-                              <EmailIcon className="w-4 h-4" />
-                            </IconBox>
-
-                            <span className="text-sm text-slate-600 dark:text-slate-300">
-                              {item.email}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td className="px-5 py-4">
-                          <div className="flex items-center gap-3 whitespace-nowrap">
-                            <IconBox>
-                              <PhoneIcon className="w-4 h-4" />
-                            </IconBox>
-
-                            <span className="text-sm text-slate-600 dark:text-slate-300">
-                              {item.phone}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td className="px-5 py-4">
-                          <div className="flex items-center gap-3">
-                            <IconBox>
-                              <BriefcaseIcon className="w-4 h-4" />
-                            </IconBox>
-
-                            <span className="text-sm text-slate-700 dark:text-slate-300">
-                              {item.position}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td className="px-5 py-4">
-                          <span
-                            className="
-                              inline-flex
-                              items-center
-                              gap-2
-                              px-3
-                              py-1.5
-                              rounded-lg
-                              bg-slate-100
-                              dark:bg-slate-800
-                              text-slate-700
-                              dark:text-slate-300
-                              border
-                              border-slate-200
-                              dark:border-slate-700
-                              text-xs
-                              font-bold
-                            "
-                          >
-                            <IconBox className="h-7 w-7 rounded-md shadow-none">
-                              <BuildingIcon className="w-3.5 h-3.5" />
-                            </IconBox>
-
-                            {item.company}
-                          </span>
-                        </td>
-
-                        <td className="px-5 py-4 text-right whitespace-nowrap">
-                          {item.status === "pending" ? (
-                            <button
-                              onClick={() =>
-                                onApprove(item.id)
-                              }
-                              className="
-                                inline-flex
-                                items-center
-                                justify-center
-                                gap-2
-                                min-w-[108px]
-                                px-4
-                                py-2.5
-                                rounded-lg
-                                bg-emerald-600
-                                hover:bg-emerald-700
-                                text-white
-                                text-xs
-                                font-bold
-                                shadow-sm
+                    {list.map(
+                      (
+                        item,
+                        index
+                      ) => (
+                        <tr
+                          key={
+                            item.id
+                          }
+                          style={{
+                            animation: `fadeSlideIn 260ms ease-out ${
+                              index *
+                              45
+                            }ms both`,
+                          }}
+                          className="
+                            group
+                            relative
+                            hover:bg-emerald-50/40
+                            dark:hover:bg-emerald-950/20
+                            transition-all
+                            duration-200
+                          "
+                        >
+                          <td className="relative px-5 py-4 whitespace-nowrap">
+                            <span
+                              className={`
+                                absolute
+                                left-0
+                                top-2
+                                bottom-2
+                                w-[3px]
+                                rounded-r-full
                                 transition-all
-                                active:scale-[0.98]
-                              "
-                            >
-                              <svg
-                                className="w-4 h-4"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2.5"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M5 13l4 4L19 7"
-                                />
-                              </svg>
+                                duration-200
+                                group-hover:w-[4px]
+                                ${
+                                  item.status ===
+                                  "pending"
+                                    ? "bg-amber-400"
+                                    : "bg-emerald-500"
+                                }
+                              `}
+                            />
 
-                              Təsdiqlə
-                            </button>
-                          ) : (
+                            <div className="flex items-center gap-3">
+                              <div className="relative shrink-0">
+                                <img
+                                  src={getAvatar(
+                                    item.name
+                                  )}
+                                  alt={
+                                    item.name
+                                  }
+                                  className="
+                                    w-10
+                                    h-10
+                                    rounded-full
+                                    object-cover
+                                    ring-1
+                                    ring-slate-200
+                                    dark:ring-slate-700
+                                  "
+                                />
+
+                                <span
+                                  className={`
+                                    absolute
+                                    right-0
+                                    bottom-0
+                                    w-2.5
+                                    h-2.5
+                                    rounded-full
+                                    ring-2
+                                    ring-white
+                                    dark:ring-slate-900
+                                    ${
+                                      item.status ===
+                                      "approved"
+                                        ? "bg-emerald-500"
+                                        : "bg-amber-400"
+                                    }
+                                  `}
+                                />
+                              </div>
+
+                              <span className="text-sm font-black text-slate-900 dark:text-white">
+                                {
+                                  item.name
+                                }
+                              </span>
+                            </div>
+                          </td>
+
+                          <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                            {
+                              item.email
+                            }
+                          </td>
+
+                          <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                            {
+                              item.phone
+                            }
+                          </td>
+
+                          <td className="px-5 py-4">
+                            <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                              <BriefcaseIcon className="w-4 h-4 shrink-0 text-slate-400" />
+
+                              <span>
+                                {
+                                  item.position
+                                }
+                              </span>
+                            </div>
+                          </td>
+
+                          <td className="px-5 py-4">
                             <span
                               className="
                                 inline-flex
                                 items-center
-                                justify-center
                                 gap-2
-                                min-w-[108px]
-                                px-3.5
-                                py-2
+                                px-3
+                                py-1.5
                                 rounded-lg
-                                bg-emerald-50
-                                dark:bg-emerald-950/40
-                                text-emerald-700
-                                dark:text-emerald-300
+                                bg-slate-100
+                                dark:bg-slate-800
+                                text-slate-700
+                                dark:text-slate-300
                                 border
-                                border-emerald-200
-                                dark:border-emerald-900
+                                border-slate-200
+                                dark:border-slate-700
                                 text-xs
                                 font-bold
                               "
                             >
-                              <span className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">
-                                ✓
-                              </span>
+                              <BuildingIcon className="w-3.5 h-3.5 text-slate-500 shrink-0" />
 
-                              Təsdiqləndi
+                              {
+                                item.company
+                              }
                             </span>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+
+                          <td className="px-5 py-4 text-right whitespace-nowrap">
+                            {item.status ===
+                            "pending" ? (
+                              <button
+                                onClick={() =>
+                                  onApprove(
+                                    item.id
+                                  )
+                                }
+                                className="
+                                  inline-flex
+                                  items-center
+                                  justify-center
+                                  gap-2
+                                  min-w-[108px]
+                                  px-4
+                                  py-2.5
+                                  rounded-lg
+                                  bg-emerald-600
+                                  hover:bg-emerald-700
+                                  text-white
+                                  text-xs
+                                  font-bold
+                                  shadow-sm
+                                  transition-all
+                                  active:scale-[0.98]
+                                "
+                              >
+                                <svg
+                                  className="w-4 h-4"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2.5"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+
+                                Təsdiqlə
+                              </button>
+                            ) : (
+                              <span
+                                className="
+                                  inline-flex
+                                  items-center
+                                  justify-center
+                                  gap-2
+                                  min-w-[108px]
+                                  px-3.5
+                                  py-2
+                                  rounded-lg
+                                  bg-emerald-50
+                                  dark:bg-emerald-950/40
+                                  text-emerald-700
+                                  dark:text-emerald-300
+                                  border
+                                  border-emerald-200
+                                  dark:border-emerald-900
+                                  text-xs
+                                  font-bold
+                                "
+                              >
+                                <span className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">
+                                  ✓
+                                </span>
+
+                                Təsdiqləndi
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      )
+                    )}
                   </tbody>
                 </table>
               </div>
 
               <div className="md:hidden divide-y divide-slate-100 dark:divide-slate-800">
-                {list.map((item, index) => (
-                  <div
-                    key={item.id}
-                    style={{
-                      animation: `fadeSlideIn 260ms ease-out ${
-                        index * 45
-                      }ms both`,
-                    }}
-                    className="relative p-5"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <img
-                          src={getAvatar(item.name)}
-                          alt={item.name}
-                          className="w-11 h-11 rounded-full object-cover ring-1 ring-slate-200 dark:ring-slate-700 shrink-0"
-                        />
+                {list.map(
+                  (item, index) => (
+                    <div
+                      key={item.id}
+                      style={{
+                        animation: `fadeSlideIn 260ms ease-out ${
+                          index * 45
+                        }ms both`,
+                      }}
+                      className="relative p-5"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <img
+                            src={getAvatar(
+                              item.name
+                            )}
+                            alt={
+                              item.name
+                            }
+                            className="w-11 h-11 rounded-full object-cover ring-1 ring-slate-200 dark:ring-slate-700 shrink-0"
+                          />
 
-                        <div className="min-w-0">
-                          <h3 className="text-base font-black text-slate-900 dark:text-white truncate">
-                            {item.name}
-                          </h3>
+                          <div className="min-w-0">
+                            <h3 className="text-base font-black text-slate-900 dark:text-white truncate">
+                              {
+                                item.name
+                              }
+                            </h3>
 
-                          <div className="mt-1 flex items-center gap-2 text-[13px] text-slate-500">
-                            <EmailIcon className="w-3.5 h-3.5 shrink-0" />
-                            <span className="truncate">
-                              {item.email}
-                            </span>
+                            <p className="mt-1 text-[13px] text-slate-500 truncate">
+                              {
+                                item.email
+                              }
+                            </p>
+                          </div>
+                        </div>
+
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold shrink-0">
+                          <BuildingIcon className="w-3.5 h-3.5" />
+                          {
+                            item.company
+                          }
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                        <div>
+                          <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
+                            Telefon
+                          </p>
+
+                          <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
+                            {
+                              item.phone
+                            }
+                          </p>
+                        </div>
+
+                        <div>
+                          <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
+                            Vəzifə
+                          </p>
+
+                          <div className="mt-1 flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                            <BriefcaseIcon className="w-4 h-4 text-slate-400" />
+                            {
+                              item.position
+                            }
                           </div>
                         </div>
                       </div>
 
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold shrink-0">
-                        <BuildingIcon className="w-3.5 h-3.5" />
-                        {item.company}
-                      </span>
-                    </div>
+                      <div className="mt-4">
+                        {item.status ===
+                        "pending" ? (
+                          <button
+                            onClick={() =>
+                              onApprove(
+                                item.id
+                              )
+                            }
+                            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold transition-all active:scale-[0.99]"
+                          >
+                            ✓ Təsdiqlə
+                          </button>
+                        ) : (
+                          <div className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900 text-sm font-bold">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500" />
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                      <div>
-                        <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                          Telefon
-                        </p>
-
-                        <div className="mt-2 flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                          <IconBox>
-                            <PhoneIcon className="w-4 h-4" />
-                          </IconBox>
-
-                          {item.phone}
-                        </div>
-                      </div>
-
-                      <div>
-                        <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                          Vəzifə
-                        </p>
-
-                        <div className="mt-2 flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                          <IconBox>
-                            <BriefcaseIcon className="w-4 h-4" />
-                          </IconBox>
-
-                          {item.position}
-                        </div>
+                            Təsdiqləndi
+                          </div>
+                        )}
                       </div>
                     </div>
-
-                    <div className="mt-4">
-                      {item.status === "pending" ? (
-                        <button
-                          onClick={() =>
-                            onApprove(item.id)
-                          }
-                          className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold transition-all active:scale-[0.99]"
-                        >
-                          ✓ Təsdiqlə
-                        </button>
-                      ) : (
-                        <div className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900 text-sm font-bold">
-                          <span className="w-2 h-2 rounded-full bg-emerald-500" />
-
-                          Təsdiqləndi
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                  )
+                )}
               </div>
 
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between px-5 py-4 border-t border-slate-200/80 dark:border-slate-800">
                 <div className="text-sm text-slate-500 dark:text-slate-400">
                   <span className="font-semibold text-slate-700 dark:text-slate-200">
-                    {firstItem}-{lastItem}
+                    {firstItem}-
+                    {lastItem}
                   </span>{" "}
-                  / {filteredList.length} istifadəçi
+                  /{" "}
+                  {
+                    filteredList.length
+                  }{" "}
+                  istifadəçi
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => goToPage(1)}
-                    disabled={currentPage === 1}
+                    onClick={() =>
+                      goToPage(1)
+                    }
+                    disabled={
+                      currentPage === 1
+                    }
                     className="flex h-9 min-w-9 items-center justify-center rounded-lg border border-slate-200 bg-white px-2 text-sm text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
                   >
                     «
@@ -963,51 +953,65 @@ export default function OperatorView({
                   <button
                     type="button"
                     onClick={() =>
-                      goToPage(currentPage - 1)
+                      goToPage(
+                        currentPage -
+                          1
+                      )
                     }
-                    disabled={currentPage === 1}
+                    disabled={
+                      currentPage === 1
+                    }
                     className="flex h-9 min-w-9 items-center justify-center rounded-lg border border-slate-200 bg-white px-2 text-sm text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
                   >
                     ‹
                   </button>
 
-                  {visiblePages.map((page) => (
-                    <button
-                      key={page}
-                      type="button"
-                      onClick={() =>
-                        goToPage(page)
-                      }
-                      className={`
-                        flex
-                        h-9
-                        min-w-9
-                        items-center
-                        justify-center
-                        rounded-lg
-                        border
-                        px-3
-                        text-sm
-                        font-semibold
-                        transition
-                        ${
-                          currentPage === page
-                            ? "border-emerald-600 bg-emerald-600 text-white shadow-sm"
-                            : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                  {visiblePages.map(
+                    (page) => (
+                      <button
+                        key={page}
+                        type="button"
+                        onClick={() =>
+                          goToPage(
+                            page
+                          )
                         }
-                      `}
-                    >
-                      {page}
-                    </button>
-                  ))}
+                        className={`
+                          flex
+                          h-9
+                          min-w-9
+                          items-center
+                          justify-center
+                          rounded-lg
+                          border
+                          px-3
+                          text-sm
+                          font-semibold
+                          transition
+                          ${
+                            currentPage ===
+                            page
+                              ? "border-emerald-600 bg-emerald-600 text-white shadow-sm"
+                              : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                          }
+                        `}
+                      >
+                        {page}
+                      </button>
+                    )
+                  )}
 
                   <button
                     type="button"
                     onClick={() =>
-                      goToPage(currentPage + 1)
+                      goToPage(
+                        currentPage +
+                          1
+                      )
                     }
                     disabled={
-                      currentPage === totalPages
+                      currentPage ===
+                      totalPages
                     }
                     className="flex h-9 min-w-9 items-center justify-center rounded-lg border border-slate-200 bg-white px-2 text-sm text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
                   >
@@ -1017,10 +1021,13 @@ export default function OperatorView({
                   <button
                     type="button"
                     onClick={() =>
-                      goToPage(totalPages)
+                      goToPage(
+                        totalPages
+                      )
                     }
                     disabled={
-                      currentPage === totalPages
+                      currentPage ===
+                      totalPages
                     }
                     className="flex h-9 min-w-9 items-center justify-center rounded-lg border border-slate-200 bg-white px-2 text-sm text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
                   >
@@ -1031,7 +1038,10 @@ export default function OperatorView({
                     value={pageSize}
                     onChange={(e) =>
                       setPageSize(
-                        Number(e.target.value)
+                        Number(
+                          e.target
+                            .value
+                        )
                       )
                     }
                     className="h-9 rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-600 outline-none transition focus:border-emerald-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
@@ -1065,11 +1075,16 @@ export default function OperatorView({
               </h3>
 
               <p className="mt-1.5 max-w-sm text-[13px] text-slate-400">
-                Axtarışa, şirkətə və ya seçilmiş kateqoriyaya uyğun istifadəçi yoxdur.
+                Axtarışa, şirkətə və
+                ya seçilmiş
+                kateqoriyaya uyğun
+                istifadəçi yoxdur.
               </p>
 
               <button
-                onClick={resetFilters}
+                onClick={
+                  resetFilters
+                }
                 className="mt-4 px-4 py-2 rounded-lg text-sm font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition dark:bg-emerald-950/30 dark:border-emerald-900 dark:text-emerald-300"
               >
                 Filtrləri sıfırla
