@@ -1,3 +1,4 @@
+import UserAvatar from "../common/UserAvatar.jsx";
 // import Icon from '../common/Icons.jsx';
 
 // export default function ChatHeader({ conversation, onCall, onCreateTask, onInfo, onAddMember, onShowConversations }) {
@@ -82,23 +83,6 @@
 import Icon from '../common/Icons.jsx';
 import GroupAvatar from './GroupAvatar.jsx';
 
-const PERSON_AVATARS = [
-  'https://i.pravatar.cc/150?img=12',
-  'https://i.pravatar.cc/150?img=32',
-  'https://i.pravatar.cc/150?img=47',
-];
-
-function getAvatarByName(name = '') {
-  let hash = 0;
-
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  return PERSON_AVATARS[
-    Math.abs(hash) % PERSON_AVATARS.length
-  ];
-}
 
 export default function ChatHeader({
   conversation,
@@ -118,9 +102,6 @@ export default function ChatHeader({
     0
   );
 
-  const conversationAvatar =
-    conversation?.avatar ||
-    getAvatarByName(conversation?.name);
 
   return (
     <header
@@ -188,8 +169,8 @@ export default function ChatHeader({
           {isGroup ? (
             <GroupAvatar className="h-[46px] w-[46px]" />
           ) : (
-            <img
-              src={conversationAvatar}
+            <UserAvatar
+              user={conversation}
               alt={conversation?.name}
               className="
                 h-[46px]
@@ -278,9 +259,9 @@ export default function ChatHeader({
               <div className="mr-0.5 flex shrink-0 items-center -space-x-2">
 
                 {visibleMembers.map((member, index) => (
-                  <img
+                  <UserAvatar
                     key={`${member}-${index}`}
-                    src={getAvatarByName(member)}
+                    user={member}
                     alt={member}
                     title={member}
                     className="

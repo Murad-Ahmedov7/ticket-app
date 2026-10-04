@@ -1,3 +1,4 @@
+import { AvatarProvider } from "./components/common/UserAvatar.jsx";
 import { createReplySnapshot, getMessageContent } from './utils/messageReply.js';
 import { useCallback, useEffect, useState } from 'react';
 import { initialState } from './data/initialState.js';
@@ -299,6 +300,7 @@ export default function App() {
   }
 
   return (
+    <AvatarProvider users={store.users} employees={store.employees} approvals={store.operatorApprovals} conversations={store.conversations} tasks={store.tasks}>
     <div className="app-shell flex min-h-screen w-full overflow-hidden bg-slate-50 dark:bg-slate-950">
       <Sidebar activeView={activeView} onNavigate={setActiveView} taskCount={store.tasks.length} pendingCount={store.operatorApprovals.filter(item => item.status === 'pending').length} dark={dark} onToggleTheme={() => { setDark(!dark); notify(!dark ? 'Gecə rejimi aktivləşdirildi' : 'Gündüz rejimi aktivləşdirildi'); }} notify={notify} />
 
@@ -331,5 +333,6 @@ export default function App() {
       {modal?.type === 'registerRequest' && <RegisterRequestModal onClose={closeModal} onSave={registerRequest} />}
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
     </div>
+    </AvatarProvider>
   );
 }

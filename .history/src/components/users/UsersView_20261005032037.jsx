@@ -434,7 +434,7 @@ export default function UsersView({
 
                       <th className="pl-5 pr-7 py-4 text-right text-[12px] uppercase tracking-[0.07em] font-extrabold text-slate-500 dark:text-slate-400">
                         <span className="inline-flex items-center gap-2">
-                          <Icon name="edit" />
+                        
                           Əməliyyatlar
                         </span>
                       </th>

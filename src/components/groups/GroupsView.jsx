@@ -1,6 +1,6 @@
 import { useId, useMemo, useState } from "react";
 import Icon from "../common/Icons.jsx";
-import { getAvatarByGender } from "./avatars.js";
+import UserAvatar from "../common/UserAvatar.jsx";
 import { filterGroups, normalize } from "./directory.js";
 import "./GroupsView.css";
 
@@ -24,12 +24,8 @@ function CategoryIcon({ name, large = false }) {
 }
 
 function Avatar({ name, user, small = false }) {
-  const [failedSource, setFailedSource] = useState(null);
-  const source = getAvatarByGender(user || { name });
-  const initials = name.trim().split(/\s+/).slice(0, 2).map(part => part[0]).join("").toLocaleUpperCase("az");
   return <span aria-hidden="true" className={`relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-slate-100 text-xs font-semibold text-slate-600 ring-1 ring-slate-900/5 dark:border-slate-900 dark:bg-slate-800 dark:text-slate-300 dark:ring-white/5 ${small ? "h-9 w-9" : "h-[var(--member-avatar,42px)] w-[var(--member-avatar,42px)]"}`}>
-    {initials}
-    {failedSource !== source && <img src={source} alt="" loading="lazy" referrerPolicy="no-referrer" onError={() => setFailedSource(source)} className="absolute inset-0 h-full w-full object-cover" />}
+    <UserAvatar user={user || { name }} className="absolute inset-0 h-full w-full object-cover" />
   </span>;
 }
 

@@ -1,18 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import Icon from "../common/Icons.jsx";
-import { getAvatarByGender } from "../groups/avatars.js";
+import UserAvatar from "../common/UserAvatar.jsx";
 
 function EmployeeAvatar({ employee }) {
-  const source = getAvatarByGender(employee);
-  const [failedSource, setFailedSource] = useState(null);
-
-  const fallback = getAvatarByGender({
-    id: employee.id,
-    username: employee.username,
-    name: employee.name,
-    gender: "neutral",
-  });
-
   return (
     <div
       className="
@@ -29,14 +19,7 @@ function EmployeeAvatar({ employee }) {
         dark:bg-slate-800
       "
     >
-      <img
-        src={failedSource === source ? fallback : source}
-        alt={employee.name || ""}
-        loading="lazy"
-        referrerPolicy="no-referrer"
-        onError={() => setFailedSource(source)}
-        className="h-full w-full object-cover"
-      />
+      <UserAvatar user={employee} className="h-full w-full object-cover" />
     </div>
   );
 }
@@ -680,19 +663,7 @@ export default function EmployeesView({
                       >
                         <HeaderLabel
                           icon={
-                            <svg
-                              className="h-[16px] w-[16px]"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="1.9"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M9 12.75 11.25 15 15 9.75m5.25 2.25a8.25 8.25 0 1 1-16.5 0 8.25 8.25 0 0 1 16.5 0Z"
-                              />
-                            </svg>
+                            <Icon name="clipboardList" className="h-[16px] w-[16px]" strokeWidth={1.9} />
                           }
                         >
                           Öhdəlik
@@ -893,19 +864,7 @@ export default function EmployeesView({
                                 "
                               >
                                 <CellIcon>
-                                  <svg
-                                    className="h-[17px] w-[17px]"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.9"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M9 12.75 11.25 15 15 9.75m5.25 2.25a8.25 8.25 0 1 1-16.5 0 8.25 8.25 0 0 1 16.5 0Z"
-                                    />
-                                  </svg>
+                                  <Icon name="clipboardList" className="h-[17px] w-[17px]" strokeWidth={1.9} />
                                 </CellIcon>
 
                                 <span

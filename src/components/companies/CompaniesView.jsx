@@ -85,7 +85,7 @@ export default function CompaniesView({
                 <th scope="col" role="columnheader"><span><Icon name="location" />Ünvan</span></th>
                 <th scope="col" role="columnheader"><span><Icon name="phone" />Əlaqə nömrəsi</span></th>
                 <th scope="col" role="columnheader"><span><Icon name="mail" />Elektron poçt ünvanı</span></th>
-                <th scope="col" role="columnheader" className="company-actions-heading">Əməliyyat</th>
+                <th scope="col" role="columnheader" className="company-actions-heading"><span className="justify-center"><Icon name="edit" />Əməliyyat</span></th>
               </tr>
             </thead>
             <tbody role="rowgroup">

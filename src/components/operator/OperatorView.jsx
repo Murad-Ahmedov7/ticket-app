@@ -1,3 +1,4 @@
+import UserAvatar from "../common/UserAvatar.jsx";
 import {
   useEffect,
   useMemo,
@@ -27,30 +28,6 @@ export default function OperatorView({
     (item) => item.status === "approved"
   ).length;
 
-  const getAvatar = (name = "") => {
-    const normalized = name
-      .trim()
-      .toLowerCase();
-
-    let hash = 0;
-
-    for (
-      let i = 0;
-      i < normalized.length;
-      i++
-    ) {
-      hash =
-        normalized.charCodeAt(i) +
-        ((hash << 5) - hash);
-
-      hash |= 0;
-    }
-
-    const imageNumber =
-      (Math.abs(hash) % 70) + 1;
-
-    return `https://i.pravatar.cc/80?img=${imageNumber}`;
-  };
 
   const companies = useMemo(() => {
     const map = new Map();
@@ -603,13 +580,13 @@ export default function OperatorView({
                   <thead>
                     <tr className="bg-slate-50/80 dark:bg-slate-800/40 border-b border-slate-200/80 dark:border-slate-800">
                       {[
-                        "Ad / Soyad",
-                        "E-mail",
-                        "Telefon",
-                        "Vəzifə",
-                        "Şirkət",
-                        "Əməliyyat",
-                      ].map((label, index) => (
+                        { label: "Ad / Soyad", icon: "user" },
+                        { label: "E-mail", icon: "mail" },
+                        { label: "Telefon", icon: "phone" },
+                        { label: "Vəzifə", icon: "briefcase" },
+                        { label: "Şirkət", icon: "building2" },
+                        { label: "Əməliyyat", icon: "checkCircle" },
+                      ].map(({ label, icon }, index) => (
                         <th
                           key={label}
                           className={`
@@ -624,7 +601,10 @@ export default function OperatorView({
                             ${index === 5 ? "pr-5 text-right" : ""}
                           `}
                         >
-                          {label}
+                          <span className="inline-flex items-center gap-2 whitespace-nowrap align-middle">
+                            <Icon name={icon} className="h-[15px] w-[15px] shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.8} />
+                            <span>{label}</span>
+                          </span>
                         </th>
                       ))}
                     </tr>
@@ -670,8 +650,8 @@ export default function OperatorView({
 
                           <div className="flex items-center gap-3">
                             <div className="relative shrink-0">
-                              <img
-                                src={getAvatar(item.name)}
+                              <UserAvatar
+                                user={item}
                                 alt={item.name}
                                 className="
                                   w-10
@@ -864,8 +844,8 @@ export default function OperatorView({
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3 min-w-0">
-                        <img
-                          src={getAvatar(item.name)}
+                        <UserAvatar
+                          user={item}
                           alt={item.name}
                           className="w-11 h-11 rounded-full object-cover ring-1 ring-slate-200 dark:ring-slate-700 shrink-0"
                         />

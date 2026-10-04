@@ -37,6 +37,8 @@ export default function Icon({ name, className = 'w-4 h-4', strokeWidth = 2 }) {
     moon: 'M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z',
     trash: 'M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3M4 7h16',
     check: 'M5 13l4 4L19 7',
+    clipboardList: 'M9 2h6a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2 M12 11h4 M12 16h4 M8 11h.01 M8 16h.01',
+    checkCircle: 'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z m-15 0 3 3 7-7',
   };
   return (
     <svg className={className} fill="none" stroke="currentColor" strokeWidth={strokeWidth} viewBox="0 0 24 24" aria-hidden="true">

@@ -1,3 +1,4 @@
+import UserAvatar from "../common/UserAvatar.jsx";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -141,30 +142,6 @@ export default function TaskTable({
     setDropdown(taskId);
   };
 
-  const getAvatar = (name = "") => {
-    const normalizedName = name
-      .trim()
-      .toLowerCase();
-
-    let hash = 0;
-
-    for (
-      let i = 0;
-      i < normalizedName.length;
-      i++
-    ) {
-      hash =
-        normalizedName.charCodeAt(i) +
-        ((hash << 5) - hash);
-
-      hash |= 0;
-    }
-
-    const imageNumber =
-      (Math.abs(hash) % 70) + 1;
-
-    return `https://i.pravatar.cc/80?img=${imageNumber}`;
-  };
 
   const goToPage = (page) => {
     setCurrentPage(
@@ -254,7 +231,12 @@ export default function TaskTable({
                         : "px-4"
                     }`}
                   >
-                    {label}
+                    {i === 8 ? (
+                      <span className="inline-flex items-center gap-2 align-middle">
+                        <Icon name="edit" className="h-[15px] w-[15px] shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.8} />
+                        <span>{label}</span>
+                      </span>
+                    ) : label}
                   </th>
                 ))}
               </tr>
@@ -345,10 +327,8 @@ export default function TaskTable({
 
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-2.5">
-                          <img
-                            src={getAvatar(
-                              task.creator
-                            )}
+                          <UserAvatar
+                            user={{ name: task.creator, avatar: task.creatorAvatar }}
                             alt={task.creator}
                             className="
                               h-8
@@ -409,10 +389,8 @@ export default function TaskTable({
 
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-2.5">
-                          <img
-                            src={getAvatar(
-                              task.assignee
-                            )}
+                          <UserAvatar
+                            user={{ name: task.assignee, avatar: task.assigneeAvatar }}
                             alt={task.assignee}
                             className="
                               h-8

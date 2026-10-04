@@ -1,3 +1,4 @@
+import UserAvatar from "../common/UserAvatar.jsx";
 import Icon from '../common/Icons.jsx';
 
 export default function ChatInfoModal({ conversation, onClose, onClear }) {
@@ -15,7 +16,7 @@ export default function ChatInfoModal({ conversation, onClose, onClear }) {
 
         <div className="flex flex-col items-center space-y-2 pt-3.5 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-[22px] bg-gradient-to-br from-emerald-500 dark:from-emerald-600 via-teal-500 dark:via-teal-600 to-emerald-600 dark:to-emerald-700 text-[1.5rem] font-bold text-white shadow-[0_10px_22px_rgba(16,185,129,0.25)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.24)]">
-            {conversation?.type === 'group' ? 'G' : (conversation?.name || 'S').charAt(0).toUpperCase()}
+            {conversation?.type === 'group' ? 'G' : <UserAvatar user={conversation} className="h-16 w-16 rounded-[22px]" />}
           </div>
           <h4 className="text-[0.98rem] font-black text-slate-900 dark:text-slate-100">{conversation?.name || 'Söhbət'}</h4>
           <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -29,9 +30,7 @@ export default function ChatInfoModal({ conversation, onClose, onClear }) {
             {members.map((member) => (
               <div key={member} className="flex items-center justify-between rounded-xl border border-emerald-100 dark:border-emerald-900/70 bg-white/70 dark:bg-slate-800/70 p-2.5 shadow-[0_1px_0_rgba(255,255,255,0.7)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.24)]">
                 <div className="flex items-center gap-2">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 dark:from-emerald-600 to-teal-500 dark:to-teal-600 text-[10px] font-bold text-white">
-                    {member.charAt(0).toUpperCase()}
-                  </span>
+                  <UserAvatar user={member} className="h-6 w-6 rounded-full" />
                   <span className="text-[0.9rem] font-semibold text-slate-800 dark:text-slate-100">{member}</span>
                 </div>
                 <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 dark:bg-emerald-600 shadow-[0_0_0_3px_rgba(16,185,129,0.12)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.24)]" />

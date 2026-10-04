@@ -1,14 +1,10 @@
+import UserAvatar from "../common/UserAvatar.jsx";
 import { useEffect, useMemo, useState } from 'react';
 import Icon from '../common/Icons.jsx';
 import GroupAvatar from './GroupAvatar.jsx';
 
 const STORAGE_KEY = 'ticket-chat-read-state';
 
-const PERSON_AVATARS = [
-  'https://i.pravatar.cc/150?img=12',
-  'https://i.pravatar.cc/150?img=32',
-  'https://i.pravatar.cc/150?img=47',
-];
 
 function getStoredReadState() {
   if (typeof window === 'undefined') return [];
@@ -241,7 +237,7 @@ export default function ConversationList({
 
           <div className="space-y-2">
 
-            {list.map((c, index) => {
+            {list.map((c) => {
 
               const active = c.id === activeChatId;
 
@@ -249,8 +245,6 @@ export default function ConversationList({
                 c.unread > 0 &&
                 !readConversationIds.includes(c.id);
 
-              const avatar =
-                PERSON_AVATARS[index % PERSON_AVATARS.length];
 
               return (
                 <div
@@ -295,8 +289,8 @@ export default function ConversationList({
 
                       ) : (
 
-                        <img
-                          src={c.avatar || avatar}
+                        <UserAvatar
+                          user={c}
                           alt={c.name}
                           className="h-12 w-12 rounded-xl object-cover"
                         />

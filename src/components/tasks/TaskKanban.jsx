@@ -1,3 +1,4 @@
+import UserAvatar from "../common/UserAvatar.jsx";
 import Icon from "../common/Icons.jsx";
 import KanbanEmptyState from "./KanbanEmptyState.jsx";
 import {
@@ -6,34 +7,12 @@ import {
   acceptedStatusStyles,
 } from "../../utils/helpers.js";
 
-const profileImages = [12, 32, 47, 33, 49, 15, 44, 68];
-
-function getAssigneeAvatar(task) {
-  if (task.assigneeAvatar) return task.assigneeAvatar;
-
-  // Keep the same placeholder portrait for each assignee across cards/renders.
-  const name = (task.assignee || "").trim().toLowerCase();
-  const hash = Array.from(name).reduce(
-    (value, letter) => (value * 31 + letter.codePointAt(0)) >>> 0,
-    0
-  );
-  return `https://i.pravatar.cc/64?img=${profileImages[hash % profileImages.length]}`;
-}
 
 export default function TaskKanban({
   tasks,
   onDetail,
   onCycle,
 }) {
-  const getInitials = (name = "") => {
-    return name
-      .trim()
-      .split(" ")
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((word) => word[0]?.toUpperCase())
-      .join("");
-  };
 
   const getDeadlineStyle = (deadline) => {
     if (!deadline) {
@@ -230,14 +209,12 @@ export default function TaskKanban({
                   <div className="mt-4 flex items-center justify-between gap-3 border-t border-slate-100 pt-3 dark:border-slate-700/60">
                     <div className="flex min-w-0 items-center gap-2.5">
                       <div className="relative flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-slate-100 text-[10px] font-semibold text-slate-600 ring-1 ring-slate-200 dark:bg-slate-700 dark:text-slate-200 dark:ring-slate-600">
-                        {getInitials(task.assignee) || "?"}
-                        <img
-                          src={getAssigneeAvatar(task)}
+                        <UserAvatar
+                          user={{ name: task.assignee, avatar: task.assigneeAvatar }}
                           alt=""
                           loading="lazy"
                           referrerPolicy="no-referrer"
                           className="absolute inset-0 h-full w-full object-cover"
-                          onError={(event) => { event.currentTarget.hidden = true; }}
                         />
                       </div>
                       <span className="truncate text-[13px] font-medium text-slate-600 dark:text-slate-300">
