@@ -50,18 +50,35 @@
       background: rgba(16, 185, 129, 0.5);
     }
 
-    .custom-chat-bg {
-      background-color: #f4fbf7;
-      background-image: radial-gradient(#d9f4e5 1.1px, transparent 1.1px), radial-gradient(#d9f4e5 1.1px, #f4fbf7 1.1px);
-      background-size: 48px 48px;
-      background-position: 0 0, 24px 24px;
-    }
-    .dark .custom-chat-bg {
-      background-color: #081710;
-      background-image: radial-gradient(#123d2f 1.1px, transparent 1.1px), radial-gradient(#123d2f 1.1px, #081710 1.1px);
-      background-size: 48px 48px;
-      background-position: 0 0, 24px 24px;
-    }
+/* Shared neutral surfaces; decorative backgrounds belong to individual pages. */
+:root {
+  --canvas-base: #f8fafc;
+  --canvas-header: rgb(255 255 255 / 0.92);
+  --canvas-divider: rgb(148 163 184 / 0.2);
+  --canvas-shadow: rgb(15 23 42 / 0.025);
+}
+
+.dark {
+  --canvas-base: #020617;
+  --canvas-header: rgb(15 23 42 / 0.94);
+  --canvas-divider: rgb(148 163 184 / 0.12);
+  --canvas-shadow: rgb(0 0 0 / 0.1);
+}
+
+/* Preserve the neutral base across page and chat canvases. */
+.app-main > div > section,
+.app-main .chat-panel,
+.app-main .chat-panel .chat-messages,
+.app-main .custom-chat-bg {
+  background-color: var(--canvas-base);
+}
+
+.app-main > div > section > header,
+.app-main .chat-header {
+  background-color: var(--canvas-header);
+  border-bottom-color: var(--canvas-divider);
+  box-shadow: 0 4px 16px var(--canvas-shadow);
+}
 
     @keyframes pulse-ring {
       0% { transform: scale(0.95); opacity: 0.8; }

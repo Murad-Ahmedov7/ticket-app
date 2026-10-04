@@ -1,0 +1,165 @@
+/* The subtle decorative canvas is exclusive to the group directory. */
+.groups-page {
+  --canvas-teal: rgb(27 134 124 / 0.045);
+  --canvas-mint: rgb(122 219 180 / 0.053);
+  --canvas-blue: rgb(100 116 139 / 0.056);
+  --canvas-dot: rgb(100 116 139 / 0.081);
+  --group-line: #e2e8f0;
+  --group-muted-surface: #f8fafc;
+  --group-active-surface: #edf8f5;
+  --group-active-border: #94cfc3;
+  --group-accent: #0f766e;
+  --group-secondary-text: #475569;
+  --group-row-surface: rgb(241 245 249 / 0.38);
+  --group-icon-surface: #f0f7f5;
+  --group-card-shadow: 0 2px 4px rgb(15 23 42 / 0.025), 0 12px 28px -18px rgb(15 23 42 / 0.18);
+  background-image:
+    radial-gradient(circle, var(--canvas-dot) 0.65px, transparent 0.9px),
+    radial-gradient(ellipse at 8% 10%, var(--canvas-teal), transparent 58%),
+    radial-gradient(ellipse at 92% 42%, var(--canvas-blue), transparent 56%),
+    radial-gradient(ellipse at 40% 100%, var(--canvas-mint), transparent 60%);
+  background-size: 28px 28px, 100% 100%, 100% 100%, 100% 100%;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+}
+
+.dark .groups-page {
+  --canvas-teal: rgb(25 108 102 / 0.098);
+  --canvas-mint: rgb(25 86 82 / 0.081);
+  --canvas-blue: rgb(30 64 175 / 0.094);
+  --canvas-dot: rgb(148 163 184 / 0.056);
+  --group-line: #283548;
+  --group-muted-surface: #131e30;
+  --group-active-surface: #122f33;
+  --group-active-border: #2c655f;
+  --group-accent: #5eead4;
+  --group-secondary-text: #cbd5e1;
+  --group-row-surface: rgb(30 41 59 / 0.28);
+  --group-icon-surface: #172e32;
+  --group-card-shadow: 0 2px 4px rgb(0 0 0 / 0.08), 0 12px 28px -18px rgb(0 0 0 / 0.35);
+}
+
+.groups-page > header { padding-block: 24px; }
+.groups-page > header h1 { line-height: 1.25; }
+.groups-page > header p { margin-top: 6px; }
+
+/* Use the same surface edge and quiet elevation for both views. */
+.groups-page > div > div > .rounded-xl,
+.groups-page article {
+  border-color: var(--group-line);
+  box-shadow: var(--group-card-shadow);
+}
+
+.groups-page [role="group"] { border-color: var(--group-line); gap: 3px; }
+.groups-page [aria-pressed="true"] {
+  background-color: var(--group-active-surface);
+  border-color: var(--group-active-border);
+  color: var(--group-accent);
+}
+
+.groups-page nav[aria-label="Qruplar"] {
+  padding: 16px;
+  background-color: var(--group-muted-surface);
+  border-color: var(--group-line);
+}
+.groups-page nav[aria-label="Qruplar"] > div:first-child { margin-bottom: 16px; }
+.groups-page nav h2 { font-size: 12px; letter-spacing: 0.06em; }
+.groups-page nav [aria-live] {
+  padding: 4px 8px;
+  border: 1px solid var(--group-line);
+  border-radius: 6px;
+  color: var(--group-secondary-text);
+  font-weight: 500;
+}
+.groups-page nav button { min-height: 104px; }
+.groups-page nav button[aria-current="true"] {
+  background-color: var(--group-active-surface);
+  border-color: var(--group-active-border);
+  box-shadow: 0 2px 6px rgb(15 23 42 / 0.04);
+}
+.groups-page nav button[aria-current="true"] > span[aria-hidden] { width: 3px; }
+.groups-page nav button[aria-current="true"] > span:last-child {
+  border-color: var(--group-active-border);
+  color: var(--group-accent);
+  background-color: var(--group-icon-surface);
+}
+
+/* Matching icon tiles and title rhythm connect the two existing views. */
+.groups-page nav button > span:has(> svg),
+.groups-page article[aria-label] > div:first-child > div > span:has(> svg),
+.groups-page button[aria-expanded] > span:first-child {
+  background-color: var(--group-icon-surface);
+  border-color: var(--group-active-border);
+  color: var(--group-accent);
+  box-shadow: none;
+}
+.groups-page article[aria-label] h2,
+.groups-page button[aria-expanded] > span:nth-child(2) > span:first-child {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* Shared participant sizing makes switching views feel consistent. */
+.groups-page .group-members {
+  --member-avatar: 52px;
+  --member-row-height: 92px;
+  --member-padding-y: 18px;
+  --member-name-size: 16px;
+  --member-role-size: 14px;
+  padding-block: 4px;
+  padding-inline: 8px;
+}
+.groups-page .group-members > li {
+  gap: 20px;
+  border-color: var(--group-line);
+  padding-inline: 20px;
+}
+.groups-page .group-members > li:nth-child(even) { background-color: var(--group-row-surface); }
+.groups-page .group-members > li:hover { background-color: var(--group-muted-surface); }
+.groups-page .group-members p:first-child { line-height: 24px; }
+.groups-page .group-members p + p { margin-top: 4px; }
+.groups-page .group-members span[title] { font-size: 13px; color: var(--group-secondary-text); }
+.groups-page .group-members span[title] > span[aria-hidden] { width: 9px; height: 9px; }
+
+.groups-page article[aria-label] { box-shadow: none; }
+.groups-page article[aria-label] > div:first-child {
+  background-color: var(--group-muted-surface);
+  border-color: var(--group-line);
+}
+.groups-page article h3 { font-size: 14px; letter-spacing: 0.01em; }
+.groups-page article div:has(> h3) {
+  min-height: 56px;
+  background-color: var(--group-muted-surface);
+  border-color: var(--group-line);
+}
+.groups-page article h3 > span {
+  display: inline-flex;
+  min-width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 6px;
+  border-radius: 6px;
+  background-color: var(--group-active-surface);
+  color: var(--group-accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.groups-page article:has([aria-expanded="true"]) { border-color: var(--group-active-border); }
+.groups-page button[aria-expanded] { min-height: 104px; }
+.groups-page button[aria-expanded="false"]:hover {
+  background-color: var(--group-muted-surface);
+}
+.groups-page button[aria-expanded="true"] {
+  background-color: var(--group-active-surface);
+  box-shadow: inset 3px 0 var(--group-accent);
+}
+.groups-page article footer { background-color: var(--group-muted-surface); }
+
+@media (max-width: 639px) {
+  .groups-page > header { padding-block: 20px; }
+  .groups-page .group-members { padding-inline: 4px; }
+  .groups-page .group-members > li { gap: 12px; padding-inline: 12px; }
+}

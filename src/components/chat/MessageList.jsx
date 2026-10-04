@@ -93,9 +93,6 @@ export default function MessageList({
         overflow-x-hidden
         overflow-y-auto
         bg-[#f2f5f3]
-        [background-image:radial-gradient(circle,#d2d8d5_0.7px,transparent_0.8px)]
-        [background-size:20px_20px]
-        dark:[background-image:radial-gradient(circle,#2c3b52_0.7px,transparent_0.8px)]
         px-4
         py-4
         dark:bg-slate-900
