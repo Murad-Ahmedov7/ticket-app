@@ -22,18 +22,18 @@ export default function CreateUserModal({ onClose, onSave }) {
 
   const inputClass = `
     w-full
-    px-3.5
-    py-2.5
+    px-4
+    py-3
     rounded-xl
 
     bg-slate-50
     dark:bg-slate-800/80
 
-    text-[13px]
+    text-sm
     text-slate-900
     dark:text-slate-100
 
-    placeholder:text-[13px]
+    placeholder:text-sm
     placeholder:text-slate-400
     dark:placeholder:text-slate-500
 
@@ -55,8 +55,8 @@ export default function CreateUserModal({ onClose, onSave }) {
 
   const labelClass = `
     block
-    mb-1.5
-    text-[11px]
+    mb-2
+    text-xs
     font-bold
     text-slate-600
     dark:text-slate-300
@@ -92,9 +92,9 @@ export default function CreateUserModal({ onClose, onSave }) {
           relative
 
           w-full
-          max-w-md
+          max-w-[560px] max-h-[calc(100dvh-2rem)]
 
-          overflow-hidden
+          overflow-y-auto
 
           rounded-[24px]
 
@@ -156,9 +156,9 @@ export default function CreateUserModal({ onClose, onSave }) {
             items-center
             justify-between
 
-            px-6
-            pt-5
-            pb-4
+            px-5 sm:px-8
+            pt-6
+            pb-5
 
             border-b
             border-slate-100
@@ -194,7 +194,7 @@ export default function CreateUserModal({ onClose, onSave }) {
             <div>
               <h3
                 className="
-                  text-base
+                  text-lg
                   font-black
                   tracking-tight
 
@@ -208,7 +208,7 @@ export default function CreateUserModal({ onClose, onSave }) {
               <p
                 className="
                   mt-0.5
-                  text-[11px]
+                  text-xs
 
                   text-slate-500
                   dark:text-slate-400
@@ -256,10 +256,10 @@ export default function CreateUserModal({ onClose, onSave }) {
             relative
             z-10
 
-            px-6
-            py-5
+            px-5 sm:px-8
+            py-6
 
-            space-y-4
+            space-y-5 sm:space-y-6
           "
         >
           {/* NAME */}
@@ -363,7 +363,7 @@ export default function CreateUserModal({ onClose, onSave }) {
                   gap-2
 
                   px-3
-                  py-2.5
+                  py-3
 
                   rounded-xl
 
@@ -432,7 +432,7 @@ export default function CreateUserModal({ onClose, onSave }) {
                   gap-2
 
                   px-3
-                  py-2.5
+                  py-3
 
                   rounded-xl
 
@@ -501,7 +501,7 @@ export default function CreateUserModal({ onClose, onSave }) {
               justify-end
               gap-2.5
 
-              pt-5
+              pt-6
               mt-2
 
               border-t
@@ -514,7 +514,7 @@ export default function CreateUserModal({ onClose, onSave }) {
               onClick={onClose}
               className="
                 px-4
-                py-2.5
+                py-3
 
                 rounded-xl
 
@@ -546,7 +546,7 @@ export default function CreateUserModal({ onClose, onSave }) {
                 gap-2
 
                 px-5
-                py-2.5
+                py-3
 
                 rounded-xl
 

@@ -1,0 +1,76 @@
+.users-page {
+  --users-line: #e2e8f0;
+  --users-surface: #ffffff;
+  --users-muted: #64748b;
+  --users-heading: #475569;
+}
+.dark .users-page {
+  --users-line: #1e293b;
+  --users-surface: #0f172a;
+  --users-muted: #94a3b8;
+  --users-heading: #cbd5e1;
+}
+.users-page > header { height: auto; min-height: 88px; padding-block: 18px; gap: 16px; flex-wrap: wrap; }
+.users-page > header h1 { font-size: 26px; line-height: 32px; font-weight: 700; }
+.users-page > header p { font-size: 15px; line-height: 22px; }
+.users-page > header > button { flex-shrink: 0; font-weight: 600; }
+.users-page :is(button, input, select):focus-visible { outline: 2px solid #14b8a6; outline-offset: 3px; }
+.users-page .users-toolbar > div:first-child { box-shadow: none; }
+.users-page .users-toolbar > div:first-child span { font-weight: 600; }
+.users-page .users-toolbar > div:first-child span:last-child { font-size: 15px; }
+.users-page .users-controls { flex-wrap: wrap; min-width: 0; gap: 10px; }
+.users-page .users-controls > div { max-width: 100%; }
+.users-page .users-controls :is(input, select) {
+  height: 46px;
+  min-width: 0;
+  border-color: var(--users-line);
+  border-radius: 10px;
+  background-color: var(--users-surface);
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.025);
+  transition: border-color 150ms ease-out, box-shadow 150ms ease-out;
+}
+.users-page .users-controls :is(input, select):focus { border-color: #34d399; }
+.users-page table th { padding-block: 18px; font-size: 13px; line-height: 20px; font-weight: 600; letter-spacing: 0.045em; color: var(--users-heading); }
+.users-page table th > span { display: inline-flex; align-items: center; gap: 7px; }
+.users-page table th svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--users-muted); stroke-width: 1.8; }
+.users-page thead tr { background-color: #f8fafc; }
+.dark .users-page thead tr { background-color: rgb(30 41 59 / 0.6); }
+.users-page tbody td { padding-block: 18px; font-size: 15px; line-height: 22px; }
+.users-page tbody tr.group { height: 78px; transition: background-color 150ms ease-out; }
+.users-page tbody tr.group:hover,
+.users-page tbody tr.group:focus-within { background-color: rgb(20 184 166 / 0.045); }
+.dark .users-page tbody tr.group:hover,
+.dark .users-page tbody tr.group:focus-within { background-color: rgb(45 212 191 / 0.055); }
+.users-page tbody td:first-child > div > div { width: 42px; height: 42px; }
+.users-page tbody td:first-child > div > span { font-size: 16px; font-weight: 600; }
+.users-page tbody td:nth-child(2) { font-weight: 600; }
+.users-page .users-cell-detail { display: flex; align-items: center; min-width: 0; gap: 8px; }
+.users-page .users-cell-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 26px; height: 26px; border: 1px solid var(--users-line); border-radius: 7px; background-color: #f8fafc; color: var(--users-muted); }
+.users-page .users-cell-icon svg { width: 15px; height: 15px; stroke-width: 1.8; }
+.dark .users-page .users-cell-icon { background-color: rgb(30 41 59 / 0.6); }
+.users-page tbody td:nth-child(5) > button { min-width: 104px; min-height: 32px; justify-content: center; padding: 5px 10px; gap: 6px; font-size: 13px; line-height: 20px; font-weight: 600; transition: background-color 150ms ease-out; }
+.dark .users-page button[data-status="Aktiv"]:hover { background-color: rgb(16 185 129 / 0.18); }
+.dark .users-page button[data-status="Gözləmədə"]:hover { background-color: rgb(245 158 11 / 0.18); }
+.users-page tbody td:last-child button { width: 38px; height: 38px; border: 1px solid var(--users-line); background-color: var(--users-surface); color: var(--users-muted); transition: color 150ms ease-out, border-color 150ms ease-out, background-color 150ms ease-out; }
+.users-page tbody td:last-child button svg { width: 18px; height: 18px; stroke-width: 2; }
+.users-page tbody td:last-child button:first-child:hover { color: #0f766e; border-color: #99d5ca; background-color: #f0fdfa; }
+.users-page tbody td:last-child button:last-child:hover { color: #e11d48; border-color: #fecdd3; background-color: #fff1f2; }
+.dark .users-page tbody td:last-child button:first-child:hover { color: #5eead4; border-color: #285a55; background-color: #12282e; }
+.dark .users-page tbody td:last-child button:last-child:hover { color: #fda4af; border-color: #713047; background-color: #321d2a; }
+
+/* Refine the existing usersTableEnter motion and stage its three layers. */
+@keyframes usersTableEnter {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.users-page .users-toolbar { animation: usersTableEnter 280ms ease-out both; }
+.users-page .users-table-enter { animation: usersTableEnter 280ms ease-out 280ms both; }
+.users-page tbody tr.group { animation: usersTableEnter 280ms ease-out var(--user-enter-delay, 560ms) both; }
+.users-page .users-green-line { position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(90deg, transparent, rgb(16 185 129 / 0.4), transparent); }
+@media (prefers-reduced-motion: reduce) {
+  .users-page .users-toolbar,
+  .users-page .users-table-enter,
+  .users-page tbody tr.group { animation: none; }
+}

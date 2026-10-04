@@ -1,6 +1,11 @@
 // The original inline SVG artwork, shared only where the same icon is repeated.
 export default function Icon({ name, className = 'w-4 h-4', strokeWidth = 2 }) {
   const paths = {
+    user: 'M20 21v-2a7 7 0 0 0-14 0v2M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z',
+    building2: 'M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2M10 6h4m-4 4h4m-4 4h4m-4 8v-4h4v4',
+    briefcase: 'M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M4 6h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2ZM2 11a20 20 0 0 0 20 0M12 12v4',
+    circleDot: 'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0ZM14 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z',
+    moreHorizontal: 'M5 12a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM13 12a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM21 12a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z',
     mail: 'M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Zm-1 2 9 7 9-7',
     sort: 'M8 4v16m-4-4 4 4 4-4m4-12v16m-4-12 4-4 4 4',
     directory: 'M9 3v18M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z M13 8h4m-4 4h4m-4 4h4',
