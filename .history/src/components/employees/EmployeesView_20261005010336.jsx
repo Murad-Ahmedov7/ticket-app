@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Icon from "../common/Icons.jsx";
 import { getAvatarByGender } from "../groups/avatars.js";
 
@@ -16,22 +16,19 @@ function EmployeeAvatar({ employee }) {
   return (
     <div
       className="
-        h-12
-        w-12
+        w-11 h-11
         shrink-0
         overflow-hidden
         rounded-xl
-        border
-        border-slate-200
+        border border-slate-200
         bg-slate-100
-        shadow-sm
         dark:border-slate-700
         dark:bg-slate-800
       "
     >
       <img
         src={failedSource === source ? fallback : source}
-        alt={employee.name || ""}
+        alt=""
         loading="lazy"
         referrerPolicy="no-referrer"
         onError={() => setFailedSource(source)}
@@ -41,59 +38,25 @@ function EmployeeAvatar({ employee }) {
   );
 }
 
-function HeaderLabel({ icon, children, right = false }) {
-  return (
-    <div
-      className={`
-        flex
-        items-center
-        gap-2.5
-        ${right ? "justify-end" : ""}
-      `}
-    >
-      <span
-        className="
-          flex
-          h-5
-          w-5
-          shrink-0
-          items-center
-          justify-center
-          text-slate-400
-          dark:text-slate-500
-        "
-      >
-        {icon}
-      </span>
-
-      <span className="leading-none">
-        {children}
-      </span>
-    </div>
-  );
-}
-
-function CellIcon({ children }) {
+function CellIcon({ name }) {
   return (
     <span
       className="
-        flex
-        h-9
-        w-9
+        w-8 h-8
         shrink-0
+        inline-flex
         items-center
         justify-center
         rounded-lg
-        border
-        border-slate-200
-        bg-slate-50
+        border border-slate-200
+        bg-white
         text-slate-400
         dark:border-slate-700
         dark:bg-slate-800
         dark:text-slate-400
       "
     >
-      {children}
+      <Icon name={name} className="w-[15px] h-[15px]" />
     </span>
   );
 }
@@ -106,10 +69,10 @@ export default function EmployeesView({
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState("name-az");
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  const filteredList = useMemo(() => {
+  const list = useMemo(() => {
     const query = search.trim().toLowerCase();
 
     const filtered = employees.filter((employee) =>
@@ -127,28 +90,18 @@ export default function EmployeesView({
     return [...filtered].sort((a, b) => {
       switch (sortOrder) {
         case "name-az":
-          return (a.name || "").localeCompare(
-            b.name || ""
-          );
+          return (a.name || "").localeCompare(b.name || "");
 
         case "name-za":
-          return (b.name || "").localeCompare(
-            a.name || ""
-          );
+          return (b.name || "").localeCompare(a.name || "");
 
         case "active-first":
           if (a.status === b.status) return 0;
-
-          return a.status === "Aktiv"
-            ? -1
-            : 1;
+          return a.status === "Aktiv" ? -1 : 1;
 
         case "waiting-first":
           if (a.status === b.status) return 0;
-
-          return a.status === "Gözləmədə"
-            ? -1
-            : 1;
+          return a.status === "Gözləmədə" ? -1 : 1;
 
         case "position-az":
           return (a.position || "").localeCompare(
@@ -163,80 +116,43 @@ export default function EmployeesView({
 
   const totalPages = Math.max(
     1,
-    Math.ceil(
-      filteredList.length / pageSize
-    )
+    Math.ceil(list.length / pageSize)
   );
 
-  useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages);
-    }
-  }, [currentPage, totalPages]);
+  const currentPage = Math.min(page, totalPages);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [search, sortOrder, pageSize]);
+  const pageStart =
+    list.length === 0
+      ? 0
+      : (currentPage - 1) * pageSize + 1;
+
+  const pageEnd = Math.min(
+    currentPage * pageSize,
+    list.length
+  );
 
   const paginatedList = useMemo(() => {
     const start =
       (currentPage - 1) * pageSize;
 
-    return filteredList.slice(
+    return list.slice(
       start,
       start + pageSize
     );
-  }, [
-    filteredList,
-    currentPage,
-    pageSize,
-  ]);
-
-  const startItem =
-    filteredList.length === 0
-      ? 0
-      : (currentPage - 1) *
-          pageSize +
-        1;
-
-  const endItem = Math.min(
-    currentPage * pageSize,
-    filteredList.length
-  );
+  }, [list, currentPage, pageSize]);
 
   const visiblePages = useMemo(() => {
-    const pages = [];
-
-    let start = Math.max(
-      1,
-      currentPage - 1
+    return Array.from(
+      { length: totalPages },
+      (_, index) => index + 1
+    ).filter(
+      (pageNumber) =>
+        totalPages <= 5 ||
+        pageNumber === 1 ||
+        pageNumber === totalPages ||
+        Math.abs(pageNumber - currentPage) <= 1
     );
-
-    let end = Math.min(
-      totalPages,
-      start + 2
-    );
-
-    if (end - start < 2) {
-      start = Math.max(
-        1,
-        end - 2
-      );
-    }
-
-    for (
-      let i = start;
-      i <= end;
-      i += 1
-    ) {
-      pages.push(i);
-    }
-
-    return pages;
-  }, [
-    currentPage,
-    totalPages,
-  ]);
+  }, [totalPages, currentPage]);
 
   return (
     <section
@@ -255,8 +171,7 @@ export default function EmployeesView({
       <header
         className="
           h-20
-          px-6
-          md:px-8
+          px-6 md:px-8
           shrink-0
           z-10
           flex
@@ -273,7 +188,7 @@ export default function EmployeesView({
         <div>
           <h1
             className="
-              text-[26px]
+              text-2xl
               font-black
               tracking-tight
               text-slate-900
@@ -286,7 +201,7 @@ export default function EmployeesView({
           <p
             className="
               mt-1
-              text-[14px]
+              text-sm
               text-slate-500
               dark:text-slate-400
             "
@@ -299,29 +214,29 @@ export default function EmployeesView({
           type="button"
           onClick={onCreate}
           className="
+            px-5
+            py-3
+            rounded-xl
+            bg-emerald-600
+            hover:bg-emerald-700
+            text-white
+            text-sm
+            font-bold
+            shadow-sm
+            shadow-emerald-500/20
+            hover:shadow-md
+            active:scale-[0.98]
+            transition-all
+            duration-200
             flex
             items-center
             gap-2
-            rounded-xl
-            bg-emerald-600
-            px-5
-            py-3
-            text-[14px]
-            font-bold
-            text-white
-            shadow-sm
-            shadow-emerald-500/20
-            transition-all
-            duration-200
-            hover:bg-emerald-700
-            hover:shadow-md
-            active:scale-[0.98]
           "
         >
           <Icon
             name="plus"
             strokeWidth={2.4}
-            className="h-[18px] w-[18px]"
+            className="w-[18px] h-[18px]"
           />
 
           İşçi əlavə et
@@ -333,85 +248,75 @@ export default function EmployeesView({
         className="
           flex-1
           overflow-y-auto
-          p-4
-          md:p-6
-          lg:p-8
+          p-4 md:p-6 lg:p-8
         "
       >
         <div className="w-full space-y-4">
-
           {/* TOOLBAR */}
           <div
             className="
               employees-toolbar-enter
               flex
               flex-col
-              gap-3
               lg:flex-row
               lg:items-center
-              lg:justify-between
+              justify-between
+              gap-3
             "
           >
             {/* COUNT */}
             <div
               className="
                 inline-flex
-                w-fit
                 items-center
                 gap-3
+                w-fit
+                px-4
+                py-2.5
                 rounded-xl
+                bg-white
+                dark:bg-slate-900
                 border
                 border-slate-200
-                bg-white
-                px-4
-                py-3
-                shadow-[0_2px_10px_rgba(15,23,42,0.04)]
                 dark:border-slate-800
-                dark:bg-slate-900
+                shadow-[0_2px_10px_rgba(15,23,42,0.04)]
                 dark:shadow-none
               "
             >
               <div
                 className="
-                  flex
-                  h-10
-                  w-10
-                  items-center
-                  justify-center
+                  w-9 h-9
                   rounded-lg
                   bg-emerald-50
-                  text-emerald-600
                   dark:bg-emerald-500/10
+                  flex
+                  items-center
+                  justify-center
+                  text-emerald-600
                   dark:text-emerald-400
                 "
               >
                 <Icon
                   name="users"
-                  className="h-[19px] w-[19px]"
+                  className="w-[18px] h-[18px]"
                 />
               </div>
 
-              <div
-                className="
-                  flex
-                  items-baseline
-                  gap-1.5
-                "
-              >
+              <div className="flex items-baseline gap-1.5">
                 <span
                   className="
-                    text-[18px]
+                    text-base
                     font-black
                     text-slate-900
                     dark:text-white
                   "
                 >
-                  {filteredList.length}
+                  {list.length}
                 </span>
 
                 <span
                   className="
-                    text-[14px]
+                    text-sm
                     font-medium
                     text-slate-500
                     dark:text-slate-400
@@ -427,77 +332,75 @@ export default function EmployeesView({
               className="
                 flex
                 flex-col
-                gap-2
                 sm:flex-row
                 sm:items-center
+                gap-2
               "
             >
-              <div
-                className="
-                  relative
-                  w-full
-                  sm:w-[370px]
-                "
-              >
+              {/* SEARCH */}
+              <div className="relative w-full sm:w-[360px]">
                 <Icon
                   name="search"
                   className="
+                    w-4 h-4
+                    text-slate-400
                     absolute
                     left-3.5
                     top-1/2
-                    h-[17px]
-                    w-[17px]
                     -translate-y-1/2
-                    text-slate-400
                   "
                 />
 
                 <input
                   value={search}
-                  onChange={(e) =>
-                    setSearch(
-                      e.target.value
-                    )
-                  }
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setPage(1);
+                  }}
                   placeholder="Ad, öhdəlik, vəzifə və ya telefon..."
                   className="
-                    h-12
                     w-full
-                    rounded-xl
-                    border
-                    border-slate-200
-                    bg-white
+                    h-11
                     pl-10
                     pr-10
-                    text-[14px]
+                    rounded-xl
+                    bg-white
+                    dark:bg-slate-900
+                    border
+                    border-slate-200
+                    dark:border-slate-800
+                    text-sm
                     text-slate-900
-                    outline-none
-                    transition
+                    dark:text-slate-100
                     placeholder:text-slate-400
+                    outline-none
+                    shadow-[0_2px_10px_rgba(15,23,42,0.03)]
+                    dark:shadow-none
                     focus:border-emerald-400
                     focus:ring-4
                     focus:ring-emerald-500/10
-                    dark:border-slate-800
-                    dark:bg-slate-900
-                    dark:text-slate-100
+                    transition
                   "
                 />
 
                 {search && (
                   <button
                     type="button"
-                    onClick={() =>
-                      setSearch("")
-                    }
+                    onClick={() => {
+                      setSearch("");
+                      setPage(1);
+                    }}
+                    aria-label="Axtarışı təmizlə"
+                    title="Axtarışı təmizlə"
                     className="
                       absolute
                       right-3
                       top-1/2
                       -translate-y-1/2
                       text-slate-400
-                      transition
                       hover:text-slate-700
                       dark:hover:text-white
+                      transition
                     "
                   >
                     ×
@@ -505,32 +408,34 @@ export default function EmployeesView({
                 )}
               </div>
 
+              {/* SORT */}
               <select
                 value={sortOrder}
-                onChange={(e) =>
-                  setSortOrder(
-                    e.target.value
-                  )
-                }
+                onChange={(e) => {
+                  setSortOrder(e.target.value);
+                  setPage(1);
+                }}
                 className="
-                  h-12
-                  cursor-pointer
+                  h-11
+                  px-4
                   rounded-xl
+                  bg-white
+                  dark:bg-slate-900
                   border
                   border-slate-200
-                  bg-white
-                  px-4
-                  text-[14px]
+                  dark:border-slate-800
+                  text-sm
                   font-semibold
                   text-slate-600
+                  dark:text-slate-300
                   outline-none
-                  transition
+                  shadow-[0_2px_10px_rgba(15,23,42,0.03)]
+                  dark:shadow-none
                   focus:border-emerald-400
                   focus:ring-4
                   focus:ring-emerald-500/10
-                  dark:border-slate-800
-                  dark:bg-slate-900
-                  dark:text-slate-300
+                  transition
+                  cursor-pointer
                 "
               >
                 <option value="name-az">
@@ -562,24 +467,24 @@ export default function EmployeesView({
               className="
                 relative
                 w-full
-                overflow-hidden
+                bg-white
+                dark:bg-slate-900
                 rounded-2xl
                 border
                 border-slate-200/80
-                bg-white
-                shadow-[0_5px_20px_rgba(15,23,42,0.055)]
                 dark:border-slate-800
-                dark:bg-slate-900
+                shadow-[0_5px_20px_rgba(15,23,42,0.055)]
                 dark:shadow-none
+                overflow-hidden
               "
             >
-              {/* TOP ACCENT */}
+              {/* GREEN ACCENT */}
               <div
                 className="
                   absolute
+                  top-0
                   left-0
                   right-0
-                  top-0
                   h-[2px]
                   bg-gradient-to-r
                   from-transparent
@@ -592,160 +497,136 @@ export default function EmployeesView({
                 <table
                   className="
                     w-full
-                    min-w-[1150px]
+                    min-w-[1050px]
                     table-fixed
                     border-collapse
                     text-left
                   "
                 >
+                  {/* WIDTHS */}
                   <colgroup>
-                    <col className="w-[23%]" />
+                    <col className="w-[22%]" />
                     <col className="w-[14%]" />
                     <col className="w-[25%]" />
                     <col className="w-[27%]" />
-                    <col className="w-[11%]" />
+                    <col className="w-[12%]" />
                   </colgroup>
 
                   {/* HEADER */}
                   <thead>
                     <tr
                       className="
-                        h-[58px]
+                        bg-slate-50/90
+                        dark:bg-slate-800/40
                         border-b
                         border-slate-200
-                        bg-slate-50/90
                         dark:border-slate-800
-                        dark:bg-slate-800/40
                       "
                     >
                       <th
                         className="
                           px-5
-                          align-middle
+                          py-4
                           text-[12px]
-                          font-extrabold
                           uppercase
                           tracking-[0.07em]
+                          font-extrabold
                           text-slate-500
                           dark:text-slate-400
                         "
                       >
-                        <HeaderLabel
-                          icon={
-                            <Icon
-                              name="user"
-                              className="h-[16px] w-[16px]"
-                            />
-                          }
-                        >
+                        <span className="inline-flex items-center gap-2">
+                          <Icon
+                            name="user"
+                            className="w-[15px] h-[15px]"
+                          />
                           Ad / Soyad
-                        </HeaderLabel>
+                        </span>
                       </th>
 
                       <th
                         className="
                           px-5
-                          align-middle
+                          py-4
                           text-[12px]
-                          font-extrabold
                           uppercase
                           tracking-[0.07em]
+                          font-extrabold
                           text-slate-500
                           dark:text-slate-400
                         "
                       >
-                        <HeaderLabel
-                          icon={
-                            <Icon
-                              name="circleDot"
-                              className="h-[16px] w-[16px]"
-                            />
-                          }
-                        >
+                        <span className="inline-flex items-center gap-2">
+                          <Icon
+                            name="circleDot"
+                            className="w-[15px] h-[15px]"
+                          />
                           Status
-                        </HeaderLabel>
+                        </span>
                       </th>
 
                       <th
                         className="
                           px-5
-                          align-middle
+                          py-4
                           text-[12px]
-                          font-extrabold
                           uppercase
                           tracking-[0.07em]
+                          font-extrabold
                           text-slate-500
                           dark:text-slate-400
                         "
                       >
-                        <HeaderLabel
-                          icon={
-                            <svg
-                              className="h-[16px] w-[16px]"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="1.9"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M9 12.75 11.25 15 15 9.75m5.25 2.25a8.25 8.25 0 1 1-16.5 0 8.25 8.25 0 0 1 16.5 0Z"
-                              />
-                            </svg>
-                          }
-                        >
+                        <span className="inline-flex items-center gap-2">
+                          <Icon
+                            name="clipboard"
+                            className="w-[15px] h-[15px]"
+                          />
                           Öhdəlik
-                        </HeaderLabel>
+                        </span>
                       </th>
 
                       <th
                         className="
                           px-5
-                          align-middle
+                          py-4
                           text-[12px]
-                          font-extrabold
                           uppercase
                           tracking-[0.07em]
+                          font-extrabold
                           text-slate-500
                           dark:text-slate-400
                         "
                       >
-                        <HeaderLabel
-                          icon={
-                            <Icon
-                              name="briefcase"
-                              className="h-[16px] w-[16px]"
-                            />
-                          }
-                        >
+                        <span className="inline-flex items-center gap-2">
+                          <Icon
+                            name="briefcase"
+                            className="w-[15px] h-[15px]"
+                          />
                           Əlaqə / Vəzifə
-                        </HeaderLabel>
+                        </span>
                       </th>
 
                       <th
                         className="
-                          px-5
-                          align-middle
+                          px-6
+                          py-4
+                          text-right
                           text-[12px]
-                          font-extrabold
                           uppercase
                           tracking-[0.07em]
+                          font-extrabold
                           text-slate-500
                           dark:text-slate-400
                         "
                       >
-                        <HeaderLabel
-                          right
-                          icon={
-                            <Icon
-                              name="edit"
-                              className="h-[16px] w-[16px]"
-                            />
-                          }
-                        >
+                        <span className="inline-flex items-center gap-2">
+                          <Icon
+                            name="moreHorizontal"
+                            className="w-[15px] h-[15px]"
+                          />
                           Əməliyyatlar
-                        </HeaderLabel>
+                        </span>
                       </th>
                     </tr>
                   </thead>
@@ -758,42 +639,31 @@ export default function EmployeesView({
                       dark:divide-slate-800/70
                     "
                   >
-                    {paginatedList.length >
-                    0 ? (
+                    {paginatedList.length > 0 ? (
                       paginatedList.map(
-                        (employee) => (
+                        (employee, index) => (
                           <tr
-                            key={
-                              employee.id
-                            }
+                            key={employee.id}
+                            style={{
+                              "--employee-delay": `${
+                                390 +
+                                Math.min(index, 10) * 18
+                              }ms`,
+                            }}
                             className="
-                              h-[78px]
+                              employee-row-enter
                               group
-                              transition-colors
-                              duration-200
                               hover:bg-emerald-50/40
                               dark:hover:bg-emerald-500/[0.035]
+                              transition-colors
+                              duration-200
                             "
                           >
                             {/* NAME */}
-                            <td
-                              className="
-                                px-5
-                                align-middle
-                              "
-                            >
-                              <div
-                                className="
-                                  flex
-                                  min-w-0
-                                  items-center
-                                  gap-3.5
-                                "
-                              >
+                            <td className="px-5 py-[15px]">
+                              <div className="flex items-center gap-3 min-w-0">
                                 <EmployeeAvatar
-                                  employee={
-                                    employee
-                                  }
+                                  employee={employee}
                                 />
 
                                 <span
@@ -801,65 +671,55 @@ export default function EmployeesView({
                                     truncate
                                     text-[15px]
                                     font-bold
-                                    leading-none
                                     text-slate-900
                                     dark:text-white
                                   "
                                 >
-                                  {
-                                    employee.name
-                                  }
+                                  {employee.name}
                                 </span>
                               </div>
                             </td>
 
                             {/* STATUS */}
-                            <td
-                              className="
-                                px-5
-                                align-middle
-                              "
-                            >
+                            <td className="px-5 py-[15px]">
                               <span
                                 className={`
                                   inline-flex
-                                  h-8
                                   items-center
-                                  justify-center
                                   gap-1.5
+                                  px-3
+                                  py-1.5
                                   rounded-full
-                                  border
-                                  px-3.5
-                                  text-[12px]
+                                  text-xs
                                   font-bold
-                                  leading-none
+                                  border
                                   whitespace-nowrap
                                   ${
                                     employee.status ===
                                     "Aktiv"
                                       ? `
-                                          border-emerald-200
-                                          bg-emerald-50
-                                          text-emerald-700
-                                          dark:border-emerald-500/20
-                                          dark:bg-emerald-500/10
-                                          dark:text-emerald-400
-                                        `
+                                        bg-emerald-50
+                                        text-emerald-700
+                                        border-emerald-200
+                                        dark:bg-emerald-500/10
+                                        dark:text-emerald-400
+                                        dark:border-emerald-500/20
+                                      `
                                       : `
-                                          border-amber-200
-                                          bg-amber-50
-                                          text-amber-700
-                                          dark:border-amber-500/20
-                                          dark:bg-amber-500/10
-                                          dark:text-amber-400
-                                        `
+                                        bg-amber-50
+                                        text-amber-700
+                                        border-amber-200
+                                        dark:bg-amber-500/10
+                                        dark:text-amber-400
+                                        dark:border-amber-500/20
+                                      `
                                   }
                                 `}
                               >
                                 <span
                                   className={`
-                                    h-1.5
                                     w-1.5
+                                    h-1.5
                                     rounded-full
                                     ${
                                       employee.status ===
@@ -878,49 +738,22 @@ export default function EmployeesView({
                             </td>
 
                             {/* LIABILITY */}
-                            <td
-                              className="
-                                px-5
-                                align-middle
-                              "
-                            >
-                              <div
-                                className="
-                                  flex
-                                  min-w-0
-                                  items-center
-                                  gap-3
-                                "
-                              >
-                                <CellIcon>
-                                  <svg
-                                    className="h-[17px] w-[17px]"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.9"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M9 12.75 11.25 15 15 9.75m5.25 2.25a8.25 8.25 0 1 1-16.5 0 8.25 8.25 0 0 1 16.5 0Z"
-                                    />
-                                  </svg>
-                                </CellIcon>
+                            <td className="px-5 py-[15px]">
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <CellIcon name="clipboard" />
 
                                 <span
-                                  title={
-                                    employee.liability
-                                  }
                                   className="
                                     min-w-0
                                     truncate
-                                    text-[14px]
-                                    font-semibold
-                                    leading-none
+                                    text-sm
+                                    font-medium
                                     text-slate-700
                                     dark:text-slate-300
                                   "
+                                  title={
+                                    employee.liability
+                                  }
                                 >
                                   {employee.liability ||
                                     "-"}
@@ -928,43 +761,17 @@ export default function EmployeesView({
                               </div>
                             </td>
 
-                            {/* POSITION + PHONE */}
-                            <td
-                              className="
-                                px-5
-                                align-middle
-                              "
-                            >
-                              <div
-                                className="
-                                  flex
-                                  min-w-0
-                                  items-center
-                                  gap-3
-                                "
-                              >
-                                <CellIcon>
-                                  <Icon
-                                    name="briefcase"
-                                    className="h-[17px] w-[17px]"
-                                  />
-                                </CellIcon>
+                            {/* POSITION / PHONE */}
+                            <td className="px-5 py-[15px]">
+                              <div className="flex items-center gap-3 min-w-0">
+                                <CellIcon name="briefcase" />
 
-                                <div
-                                  className="
-                                    flex
-                                    min-w-0
-                                    flex-col
-                                    justify-center
-                                    gap-1.5
-                                  "
-                                >
+                                <div className="min-w-0">
                                   <div
                                     className="
                                       truncate
-                                      text-[14px]
+                                      text-sm
                                       font-semibold
-                                      leading-none
                                       text-slate-700
                                       dark:text-slate-300
                                     "
@@ -975,18 +782,18 @@ export default function EmployeesView({
 
                                   <div
                                     className="
+                                      mt-1
                                       flex
                                       items-center
                                       gap-1.5
-                                      text-[12px]
-                                      leading-none
+                                      text-xs
                                       text-slate-400
                                       dark:text-slate-500
                                     "
                                   >
                                     <Icon
                                       name="phone"
-                                      className="h-[14px] w-[14px] shrink-0"
+                                      className="w-3 h-3"
                                     />
 
                                     <span>
@@ -999,53 +806,40 @@ export default function EmployeesView({
                             </td>
 
                             {/* ACTION */}
-                            <td
-                              className="
-                                px-5
-                                align-middle
-                              "
-                            >
-                              <div
-                                className="
-                                  flex
-                                  items-center
-                                  justify-end
-                                "
-                              >
+                            <td className="px-6 py-[15px]">
+                              <div className="flex items-center justify-end">
                                 <button
                                   type="button"
                                   onClick={() =>
-                                    onEdit(
-                                      employee
-                                    )
+                                    onEdit(employee)
                                   }
                                   aria-label={`${employee.name}: Redaktə et`}
                                   title="Redaktə et"
                                   className="
-                                    flex
-                                    h-10
-                                    w-10
+                                    w-9
+                                    h-9
                                     shrink-0
+                                    flex
                                     items-center
                                     justify-center
                                     rounded-lg
                                     border
                                     border-slate-200
-                                    bg-white
+                                    dark:border-slate-700
                                     text-slate-400
-                                    transition-all
+                                    bg-white
+                                    dark:bg-slate-900
+                                    hover:text-emerald-600
                                     hover:border-emerald-200
                                     hover:bg-emerald-50
-                                    hover:text-emerald-600
-                                    dark:border-slate-700
-                                    dark:bg-slate-900
-                                    dark:hover:border-emerald-500/30
                                     dark:hover:bg-emerald-500/10
+                                    dark:hover:border-emerald-500/30
+                                    transition-all
                                   "
                                 >
                                   <Icon
                                     name="edit"
-                                    className="h-[18px] w-[18px]"
+                                    className="w-[17px] h-[17px]"
                                   />
                                 </button>
                               </div>
@@ -1058,31 +852,31 @@ export default function EmployeesView({
                         <td colSpan="5">
                           <div
                             className="
+                              py-20
                               flex
                               flex-col
                               items-center
                               justify-center
-                              py-20
                               text-center
                             "
                           >
                             <div
                               className="
-                                mb-3
-                                flex
-                                h-12
                                 w-12
-                                items-center
-                                justify-center
+                                h-12
                                 rounded-xl
                                 bg-emerald-50
-                                text-emerald-500
                                 dark:bg-emerald-500/10
+                                flex
+                                items-center
+                                justify-center
+                                text-emerald-500
+                                mb-3
                               "
                             >
                               <Icon
                                 name="search"
-                                className="h-5 w-5"
+                                className="w-5 h-5"
                               />
                             </div>
 
@@ -1099,12 +893,13 @@ export default function EmployeesView({
 
                             <p
                               className="
-                                mt-1
                                 text-sm
                                 text-slate-400
+                                mt-1
                               "
                             >
-                              Axtarış və ya sıralamanı dəyiş
+                              Axtarış və ya sıralamanı
+                              dəyiş
                             </p>
                           </div>
                         </td>
@@ -1115,255 +910,239 @@ export default function EmployeesView({
               </div>
 
               {/* PAGINATION */}
-              {filteredList.length > 0 && (
+              {list.length > 0 && (
                 <div
                   className="
                     flex
-                    min-h-[60px]
                     flex-col
-                    gap-3
-                    border-t
-                    border-slate-200
-                    bg-white
-                    px-5
-                    py-3
                     sm:flex-row
                     sm:items-center
-                    sm:justify-between
+                    justify-between
+                    gap-3
+                    px-5
+                    py-3.5
+                    border-t
+                    border-slate-200
                     dark:border-slate-800
+                    bg-white
                     dark:bg-slate-900
                   "
                 >
                   <div
                     className="
-                      text-[14px]
+                      text-sm
                       font-medium
                       text-slate-500
                       dark:text-slate-400
                     "
                   >
-                    {startItem}-{endItem} /{" "}
-                    {filteredList.length} işçi
+                    {pageStart}-{pageEnd} /{" "}
+                    {list.length} işçi
                   </div>
 
-                  <div
-                    className="
-                      flex
-                      flex-wrap
-                      items-center
-                      justify-end
-                      gap-1.5
-                    "
-                  >
+                  <div className="flex items-center gap-1.5">
+                    {/* FIRST */}
                     <button
                       type="button"
-                      onClick={() =>
-                        setCurrentPage(1)
-                      }
-                      disabled={
-                        currentPage === 1
-                      }
+                      onClick={() => setPage(1)}
+                      disabled={currentPage === 1}
+                      aria-label="İlk səhifə"
+                      title="İlk səhifə"
                       className="
-                        flex
-                        h-9
-                        w-9
+                        w-9 h-9
+                        inline-flex
                         items-center
                         justify-center
                         rounded-lg
                         border
                         border-slate-200
-                        text-slate-400
-                        transition
-                        hover:bg-slate-50
-                        hover:text-slate-700
-                        disabled:pointer-events-none
-                        disabled:opacity-35
                         dark:border-slate-700
+                        text-slate-500
+                        dark:text-slate-400
+                        hover:bg-slate-50
                         dark:hover:bg-slate-800
+                        disabled:opacity-35
+                        disabled:cursor-not-allowed
+                        transition
                       "
                     >
                       «
                     </button>
 
+                    {/* PREVIOUS */}
                     <button
                       type="button"
                       onClick={() =>
-                        setCurrentPage(
-                          (p) =>
-                            Math.max(
-                              1,
-                              p - 1
-                            )
+                        setPage((p) =>
+                          Math.max(1, p - 1)
                         )
                       }
-                      disabled={
-                        currentPage === 1
-                      }
+                      disabled={currentPage === 1}
+                      aria-label="Əvvəlki səhifə"
+                      title="Əvvəlki səhifə"
                       className="
-                        flex
-                        h-9
-                        w-9
+                        w-9 h-9
+                        inline-flex
                         items-center
                         justify-center
                         rounded-lg
                         border
                         border-slate-200
-                        text-slate-400
-                        transition
-                        hover:bg-slate-50
-                        hover:text-slate-700
-                        disabled:pointer-events-none
-                        disabled:opacity-35
                         dark:border-slate-700
+                        text-slate-500
+                        dark:text-slate-400
+                        hover:bg-slate-50
                         dark:hover:bg-slate-800
+                        disabled:opacity-35
+                        disabled:cursor-not-allowed
+                        transition
                       "
                     >
                       ‹
                     </button>
 
+                    {/* PAGE NUMBERS */}
                     {visiblePages.map(
-                      (page) => (
-                        <button
-                          key={page}
-                          type="button"
-                          onClick={() =>
-                            setCurrentPage(
-                              page
-                            )
-                          }
-                          className={`
-                            flex
-                            h-9
-                            min-w-9
-                            items-center
-                            justify-center
-                            rounded-lg
-                            px-2
-                            text-[13px]
-                            font-bold
-                            transition
-                            ${
-                              currentPage ===
-                              page
-                                ? `
-                                    border
-                                    border-emerald-600
-                                    bg-emerald-600
-                                    text-white
-                                    shadow-sm
-                                  `
-                                : `
-                                    border
-                                    border-slate-200
-                                    text-slate-600
-                                    hover:bg-slate-50
-                                    dark:border-slate-700
-                                    dark:text-slate-300
-                                    dark:hover:bg-slate-800
-                                  `
-                            }
-                          `}
+                      (pageNumber, index) => (
+                        <div
+                          key={pageNumber}
+                          className="flex items-center gap-1.5"
                         >
-                          {page}
-                        </button>
+                          {index > 0 &&
+                            pageNumber -
+                              visiblePages[
+                                index - 1
+                              ] >
+                              1 && (
+                              <span className="px-1 text-slate-400">
+                                …
+                              </span>
+                            )}
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setPage(pageNumber)
+                            }
+                            className={`
+                              w-9 h-9
+                              inline-flex
+                              items-center
+                              justify-center
+                              rounded-lg
+                              border
+                              text-sm
+                              font-bold
+                              transition
+                              ${
+                                currentPage ===
+                                pageNumber
+                                  ? "bg-emerald-600 border-emerald-600 text-white shadow-sm"
+                                  : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                              }
+                            `}
+                          >
+                            {pageNumber}
+                          </button>
+                        </div>
                       )
                     )}
 
+                    {/* NEXT */}
                     <button
                       type="button"
                       onClick={() =>
-                        setCurrentPage(
-                          (p) =>
-                            Math.min(
-                              totalPages,
-                              p + 1
-                            )
+                        setPage((p) =>
+                          Math.min(
+                            totalPages,
+                            p + 1
+                          )
                         )
                       }
                       disabled={
-                        currentPage ===
-                        totalPages
+                        currentPage === totalPages
                       }
+                      aria-label="Növbəti səhifə"
+                      title="Növbəti səhifə"
                       className="
-                        flex
-                        h-9
-                        w-9
+                        w-9 h-9
+                        inline-flex
                         items-center
                         justify-center
                         rounded-lg
                         border
                         border-slate-200
-                        text-slate-400
-                        transition
-                        hover:bg-slate-50
-                        hover:text-slate-700
-                        disabled:pointer-events-none
-                        disabled:opacity-35
                         dark:border-slate-700
+                        text-slate-500
+                        dark:text-slate-400
+                        hover:bg-slate-50
                         dark:hover:bg-slate-800
+                        disabled:opacity-35
+                        disabled:cursor-not-allowed
+                        transition
                       "
                     >
                       ›
                     </button>
 
+                    {/* LAST */}
                     <button
                       type="button"
                       onClick={() =>
-                        setCurrentPage(
-                          totalPages
-                        )
+                        setPage(totalPages)
                       }
                       disabled={
-                        currentPage ===
-                        totalPages
+                        currentPage === totalPages
                       }
+                      aria-label="Son səhifə"
+                      title="Son səhifə"
                       className="
-                        flex
-                        h-9
-                        w-9
+                        w-9 h-9
+                        inline-flex
                         items-center
                         justify-center
                         rounded-lg
                         border
                         border-slate-200
-                        text-slate-400
-                        transition
-                        hover:bg-slate-50
-                        hover:text-slate-700
-                        disabled:pointer-events-none
-                        disabled:opacity-35
                         dark:border-slate-700
+                        text-slate-500
+                        dark:text-slate-400
+                        hover:bg-slate-50
                         dark:hover:bg-slate-800
+                        disabled:opacity-35
+                        disabled:cursor-not-allowed
+                        transition
                       "
                     >
                       »
                     </button>
 
+                    {/* PAGE SIZE */}
                     <select
                       value={pageSize}
-                      onChange={(e) =>
+                      onChange={(e) => {
                         setPageSize(
-                          Number(
-                            e.target.value
-                          )
-                        )
-                      }
+                          Number(e.target.value)
+                        );
+                        setPage(1);
+                      }}
+                      aria-label="Səhifədə işçi sayı"
                       className="
-                        ml-1
                         h-9
-                        cursor-pointer
+                        ml-1
+                        px-3
                         rounded-lg
                         border
                         border-slate-200
+                        dark:border-slate-700
                         bg-white
-                        px-3
-                        text-[13px]
+                        dark:bg-slate-900
+                        text-sm
                         font-semibold
                         text-slate-600
-                        outline-none
-                        dark:border-slate-700
-                        dark:bg-slate-900
                         dark:text-slate-300
+                        outline-none
+                        cursor-pointer
                       "
                     >
                       <option value={10}>
@@ -1412,6 +1191,18 @@ export default function EmployeesView({
           }
         }
 
+        @keyframes employeeRowEnter {
+          from {
+            opacity: 0;
+            transform: translateY(5px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         .employees-toolbar-enter {
           animation:
             employeesToolbarEnter
@@ -1429,9 +1220,19 @@ export default function EmployeesView({
             both;
         }
 
+        .employee-row-enter {
+          animation:
+            employeeRowEnter
+            0.25s
+            cubic-bezier(0.22, 1, 0.36, 1)
+            var(--employee-delay)
+            both;
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .employees-toolbar-enter,
-          .employees-table-enter {
+          .employees-table-enter,
+          .employee-row-enter {
             animation: none;
           }
         }

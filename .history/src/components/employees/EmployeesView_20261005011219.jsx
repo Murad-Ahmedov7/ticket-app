@@ -1,74 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import Icon from "../common/Icons.jsx";
-import { getAvatarByGender } from "../groups/avatars.js";
-
-function EmployeeAvatar({ employee }) {
-  const source = getAvatarByGender(employee);
-  const [failedSource, setFailedSource] = useState(null);
-
-  const fallback = getAvatarByGender({
-    id: employee.id,
-    username: employee.username,
-    name: employee.name,
-    gender: "neutral",
-  });
-
-  return (
-    <div
-      className="
-        h-12
-        w-12
-        shrink-0
-        overflow-hidden
-        rounded-xl
-        border
-        border-slate-200
-        bg-slate-100
-        shadow-sm
-        dark:border-slate-700
-        dark:bg-slate-800
-      "
-    >
-      <img
-        src={failedSource === source ? fallback : source}
-        alt={employee.name || ""}
-        loading="lazy"
-        referrerPolicy="no-referrer"
-        onError={() => setFailedSource(source)}
-        className="h-full w-full object-cover"
-      />
-    </div>
-  );
-}
 
 function HeaderLabel({ icon, children, right = false }) {
   return (
     <div
-      className={`
-        flex
-        items-center
-        gap-2.5
-        ${right ? "justify-end" : ""}
-      `}
+      className={`flex items-center gap-2.5 ${
+        right ? "justify-end" : ""
+      }`}
     >
-      <span
-        className="
-          flex
-          h-5
-          w-5
-          shrink-0
-          items-center
-          justify-center
-          text-slate-400
-          dark:text-slate-500
-        "
-      >
+      <span className="flex h-5 w-5 shrink-0 items-center justify-center text-slate-400 dark:text-slate-500">
         {icon}
       </span>
 
-      <span className="leading-none">
-        {children}
-      </span>
+      <span className="leading-none">{children}</span>
     </div>
   );
 }
@@ -78,8 +22,8 @@ function CellIcon({ children }) {
     <span
       className="
         flex
-        h-9
-        w-9
+        h-8
+        w-8
         shrink-0
         items-center
         justify-center
@@ -96,6 +40,16 @@ function CellIcon({ children }) {
       {children}
     </span>
   );
+}
+
+function getInitials(name = "") {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 }
 
 export default function EmployeesView({
@@ -127,28 +81,18 @@ export default function EmployeesView({
     return [...filtered].sort((a, b) => {
       switch (sortOrder) {
         case "name-az":
-          return (a.name || "").localeCompare(
-            b.name || ""
-          );
+          return (a.name || "").localeCompare(b.name || "");
 
         case "name-za":
-          return (b.name || "").localeCompare(
-            a.name || ""
-          );
+          return (b.name || "").localeCompare(a.name || "");
 
         case "active-first":
           if (a.status === b.status) return 0;
-
-          return a.status === "Aktiv"
-            ? -1
-            : 1;
+          return a.status === "Aktiv" ? -1 : 1;
 
         case "waiting-first":
           if (a.status === b.status) return 0;
-
-          return a.status === "Gözləmədə"
-            ? -1
-            : 1;
+          return a.status === "Gözləmədə" ? -1 : 1;
 
         case "position-az":
           return (a.position || "").localeCompare(
@@ -163,9 +107,7 @@ export default function EmployeesView({
 
   const totalPages = Math.max(
     1,
-    Math.ceil(
-      filteredList.length / pageSize
-    )
+    Math.ceil(filteredList.length / pageSize)
   );
 
   useEffect(() => {
@@ -186,18 +128,12 @@ export default function EmployeesView({
       start,
       start + pageSize
     );
-  }, [
-    filteredList,
-    currentPage,
-    pageSize,
-  ]);
+  }, [filteredList, currentPage, pageSize]);
 
   const startItem =
     filteredList.length === 0
       ? 0
-      : (currentPage - 1) *
-          pageSize +
-        1;
+      : (currentPage - 1) * pageSize + 1;
 
   const endItem = Math.min(
     currentPage * pageSize,
@@ -224,19 +160,12 @@ export default function EmployeesView({
       );
     }
 
-    for (
-      let i = start;
-      i <= end;
-      i += 1
-    ) {
+    for (let i = start; i <= end; i += 1) {
       pages.push(i);
     }
 
     return pages;
-  }, [
-    currentPage,
-    totalPages,
-  ]);
+  }, [currentPage, totalPages]);
 
   return (
     <section
@@ -273,7 +202,7 @@ export default function EmployeesView({
         <div>
           <h1
             className="
-              text-[26px]
+              text-2xl
               font-black
               tracking-tight
               text-slate-900
@@ -286,7 +215,7 @@ export default function EmployeesView({
           <p
             className="
               mt-1
-              text-[14px]
+              text-sm
               text-slate-500
               dark:text-slate-400
             "
@@ -306,7 +235,7 @@ export default function EmployeesView({
             bg-emerald-600
             px-5
             py-3
-            text-[14px]
+            text-sm
             font-bold
             text-white
             shadow-sm
@@ -339,7 +268,6 @@ export default function EmployeesView({
         "
       >
         <div className="w-full space-y-4">
-
           {/* TOOLBAR */}
           <div
             className="
@@ -364,7 +292,7 @@ export default function EmployeesView({
                 border-slate-200
                 bg-white
                 px-4
-                py-3
+                py-2.5
                 shadow-[0_2px_10px_rgba(15,23,42,0.04)]
                 dark:border-slate-800
                 dark:bg-slate-900
@@ -374,8 +302,8 @@ export default function EmployeesView({
               <div
                 className="
                   flex
-                  h-10
-                  w-10
+                  h-9
+                  w-9
                   items-center
                   justify-center
                   rounded-lg
@@ -387,20 +315,14 @@ export default function EmployeesView({
               >
                 <Icon
                   name="users"
-                  className="h-[19px] w-[19px]"
+                  className="h-[18px] w-[18px]"
                 />
               </div>
 
-              <div
-                className="
-                  flex
-                  items-baseline
-                  gap-1.5
-                "
-              >
+              <div className="flex items-baseline gap-1.5">
                 <span
                   className="
-                    text-[18px]
+                    text-[17px]
                     font-black
                     text-slate-900
                     dark:text-white
@@ -411,7 +333,7 @@ export default function EmployeesView({
 
                 <span
                   className="
-                    text-[14px]
+                    text-sm
                     font-medium
                     text-slate-500
                     dark:text-slate-400
@@ -422,7 +344,7 @@ export default function EmployeesView({
               </div>
             </div>
 
-            {/* SEARCH + SORT */}
+            {/* SEARCH / SORT */}
             <div
               className="
                 flex
@@ -432,21 +354,15 @@ export default function EmployeesView({
                 sm:items-center
               "
             >
-              <div
-                className="
-                  relative
-                  w-full
-                  sm:w-[370px]
-                "
-              >
+              <div className="relative w-full sm:w-[360px]">
                 <Icon
                   name="search"
                   className="
                     absolute
                     left-3.5
                     top-1/2
-                    h-[17px]
-                    w-[17px]
+                    h-4
+                    w-4
                     -translate-y-1/2
                     text-slate-400
                   "
@@ -455,13 +371,11 @@ export default function EmployeesView({
                 <input
                   value={search}
                   onChange={(e) =>
-                    setSearch(
-                      e.target.value
-                    )
+                    setSearch(e.target.value)
                   }
                   placeholder="Ad, öhdəlik, vəzifə və ya telefon..."
                   className="
-                    h-12
+                    h-11
                     w-full
                     rounded-xl
                     border
@@ -469,7 +383,7 @@ export default function EmployeesView({
                     bg-white
                     pl-10
                     pr-10
-                    text-[14px]
+                    text-sm
                     text-slate-900
                     outline-none
                     transition
@@ -508,19 +422,17 @@ export default function EmployeesView({
               <select
                 value={sortOrder}
                 onChange={(e) =>
-                  setSortOrder(
-                    e.target.value
-                  )
+                  setSortOrder(e.target.value)
                 }
                 className="
-                  h-12
+                  h-11
                   cursor-pointer
                   rounded-xl
                   border
                   border-slate-200
                   bg-white
                   px-4
-                  text-[14px]
+                  text-sm
                   font-semibold
                   text-slate-600
                   outline-none
@@ -573,7 +485,6 @@ export default function EmployeesView({
                 dark:shadow-none
               "
             >
-              {/* TOP ACCENT */}
               <div
                 className="
                   absolute
@@ -592,7 +503,7 @@ export default function EmployeesView({
                 <table
                   className="
                     w-full
-                    min-w-[1150px]
+                    min-w-[1100px]
                     table-fixed
                     border-collapse
                     text-left
@@ -606,11 +517,11 @@ export default function EmployeesView({
                     <col className="w-[11%]" />
                   </colgroup>
 
-                  {/* HEADER */}
+                  {/* TABLE HEADER */}
                   <thead>
                     <tr
                       className="
-                        h-[58px]
+                        h-14
                         border-b
                         border-slate-200
                         bg-slate-50/90
@@ -634,7 +545,7 @@ export default function EmployeesView({
                           icon={
                             <Icon
                               name="user"
-                              className="h-[16px] w-[16px]"
+                              className="h-4 w-4"
                             />
                           }
                         >
@@ -658,7 +569,7 @@ export default function EmployeesView({
                           icon={
                             <Icon
                               name="circleDot"
-                              className="h-[16px] w-[16px]"
+                              className="h-4 w-4"
                             />
                           }
                         >
@@ -681,7 +592,7 @@ export default function EmployeesView({
                         <HeaderLabel
                           icon={
                             <svg
-                              className="h-[16px] w-[16px]"
+                              className="h-4 w-4"
                               fill="none"
                               stroke="currentColor"
                               strokeWidth="1.9"
@@ -715,7 +626,7 @@ export default function EmployeesView({
                           icon={
                             <Icon
                               name="briefcase"
-                              className="h-[16px] w-[16px]"
+                              className="h-4 w-4"
                             />
                           }
                         >
@@ -740,7 +651,7 @@ export default function EmployeesView({
                           icon={
                             <Icon
                               name="edit"
-                              className="h-[16px] w-[16px]"
+                              className="h-4 w-4"
                             />
                           }
                         >
@@ -758,16 +669,13 @@ export default function EmployeesView({
                       dark:divide-slate-800/70
                     "
                   >
-                    {paginatedList.length >
-                    0 ? (
+                    {paginatedList.length > 0 ? (
                       paginatedList.map(
                         (employee) => (
                           <tr
-                            key={
-                              employee.id
-                            }
+                            key={employee.id}
                             className="
-                              h-[78px]
+                              h-[72px]
                               group
                               transition-colors
                               duration-200
@@ -776,12 +684,7 @@ export default function EmployeesView({
                             "
                           >
                             {/* NAME */}
-                            <td
-                              className="
-                                px-5
-                                align-middle
-                              "
-                            >
+                            <td className="px-5 align-middle">
                               <div
                                 className="
                                   flex
@@ -790,11 +693,32 @@ export default function EmployeesView({
                                   gap-3.5
                                 "
                               >
-                                <EmployeeAvatar
-                                  employee={
-                                    employee
-                                  }
-                                />
+                                <div
+                                  className="
+                                    flex
+                                    h-11
+                                    w-11
+                                    shrink-0
+                                    items-center
+                                    justify-center
+                                    rounded-xl
+                                    bg-gradient-to-br
+                                    from-emerald-500
+                                    to-teal-600
+                                    text-[12px]
+                                    font-black
+                                    text-white
+                                    shadow-sm
+                                    shadow-emerald-500/20
+                                    transition-transform
+                                    duration-200
+                                    group-hover:scale-105
+                                  "
+                                >
+                                  {getInitials(
+                                    employee.name
+                                  )}
+                                </div>
 
                                 <span
                                   className="
@@ -806,20 +730,13 @@ export default function EmployeesView({
                                     dark:text-white
                                   "
                                 >
-                                  {
-                                    employee.name
-                                  }
+                                  {employee.name}
                                 </span>
                               </div>
                             </td>
 
                             {/* STATUS */}
-                            <td
-                              className="
-                                px-5
-                                align-middle
-                              "
-                            >
+                            <td className="px-5 align-middle">
                               <span
                                 className={`
                                   inline-flex
@@ -838,21 +755,21 @@ export default function EmployeesView({
                                     employee.status ===
                                     "Aktiv"
                                       ? `
-                                          border-emerald-200
-                                          bg-emerald-50
-                                          text-emerald-700
-                                          dark:border-emerald-500/20
-                                          dark:bg-emerald-500/10
-                                          dark:text-emerald-400
-                                        `
+                                        border-emerald-200
+                                        bg-emerald-50
+                                        text-emerald-700
+                                        dark:border-emerald-500/20
+                                        dark:bg-emerald-500/10
+                                        dark:text-emerald-400
+                                      `
                                       : `
-                                          border-amber-200
-                                          bg-amber-50
-                                          text-amber-700
-                                          dark:border-amber-500/20
-                                          dark:bg-amber-500/10
-                                          dark:text-amber-400
-                                        `
+                                        border-amber-200
+                                        bg-amber-50
+                                        text-amber-700
+                                        dark:border-amber-500/20
+                                        dark:bg-amber-500/10
+                                        dark:text-amber-400
+                                      `
                                   }
                                 `}
                               >
@@ -878,12 +795,7 @@ export default function EmployeesView({
                             </td>
 
                             {/* LIABILITY */}
-                            <td
-                              className="
-                                px-5
-                                align-middle
-                              "
-                            >
+                            <td className="px-5 align-middle">
                               <div
                                 className="
                                   flex
@@ -894,7 +806,7 @@ export default function EmployeesView({
                               >
                                 <CellIcon>
                                   <svg
-                                    className="h-[17px] w-[17px]"
+                                    className="h-4 w-4"
                                     fill="none"
                                     stroke="currentColor"
                                     strokeWidth="1.9"
@@ -929,12 +841,7 @@ export default function EmployeesView({
                             </td>
 
                             {/* POSITION + PHONE */}
-                            <td
-                              className="
-                                px-5
-                                align-middle
-                              "
-                            >
+                            <td className="px-5 align-middle">
                               <div
                                 className="
                                   flex
@@ -946,7 +853,7 @@ export default function EmployeesView({
                                 <CellIcon>
                                   <Icon
                                     name="briefcase"
-                                    className="h-[17px] w-[17px]"
+                                    className="h-4 w-4"
                                   />
                                 </CellIcon>
 
@@ -986,7 +893,7 @@ export default function EmployeesView({
                                   >
                                     <Icon
                                       name="phone"
-                                      className="h-[14px] w-[14px] shrink-0"
+                                      className="h-3.5 w-3.5 shrink-0"
                                     />
 
                                     <span>
@@ -999,12 +906,7 @@ export default function EmployeesView({
                             </td>
 
                             {/* ACTION */}
-                            <td
-                              className="
-                                px-5
-                                align-middle
-                              "
-                            >
+                            <td className="px-5 align-middle">
                               <div
                                 className="
                                   flex
@@ -1015,16 +917,14 @@ export default function EmployeesView({
                                 <button
                                   type="button"
                                   onClick={() =>
-                                    onEdit(
-                                      employee
-                                    )
+                                    onEdit(employee)
                                   }
                                   aria-label={`${employee.name}: Redaktə et`}
                                   title="Redaktə et"
                                   className="
                                     flex
-                                    h-10
-                                    w-10
+                                    h-9
+                                    w-9
                                     shrink-0
                                     items-center
                                     justify-center
@@ -1045,7 +945,7 @@ export default function EmployeesView({
                                 >
                                   <Icon
                                     name="edit"
-                                    className="h-[18px] w-[18px]"
+                                    className="h-[17px] w-[17px]"
                                   />
                                 </button>
                               </div>
@@ -1119,7 +1019,7 @@ export default function EmployeesView({
                 <div
                   className="
                     flex
-                    min-h-[60px]
+                    min-h-[58px]
                     flex-col
                     gap-3
                     border-t
@@ -1188,12 +1088,8 @@ export default function EmployeesView({
                     <button
                       type="button"
                       onClick={() =>
-                        setCurrentPage(
-                          (p) =>
-                            Math.max(
-                              1,
-                              p - 1
-                            )
+                        setCurrentPage((p) =>
+                          Math.max(1, p - 1)
                         )
                       }
                       disabled={
@@ -1227,9 +1123,7 @@ export default function EmployeesView({
                           key={page}
                           type="button"
                           onClick={() =>
-                            setCurrentPage(
-                              page
-                            )
+                            setCurrentPage(page)
                           }
                           className={`
                             flex
@@ -1246,21 +1140,21 @@ export default function EmployeesView({
                               currentPage ===
                               page
                                 ? `
-                                    border
-                                    border-emerald-600
-                                    bg-emerald-600
-                                    text-white
-                                    shadow-sm
-                                  `
+                                  border
+                                  border-emerald-600
+                                  bg-emerald-600
+                                  text-white
+                                  shadow-sm
+                                `
                                 : `
-                                    border
-                                    border-slate-200
-                                    text-slate-600
-                                    hover:bg-slate-50
-                                    dark:border-slate-700
-                                    dark:text-slate-300
-                                    dark:hover:bg-slate-800
-                                  `
+                                  border
+                                  border-slate-200
+                                  text-slate-600
+                                  hover:bg-slate-50
+                                  dark:border-slate-700
+                                  dark:text-slate-300
+                                  dark:hover:bg-slate-800
+                                `
                             }
                           `}
                         >
@@ -1272,17 +1166,15 @@ export default function EmployeesView({
                     <button
                       type="button"
                       onClick={() =>
-                        setCurrentPage(
-                          (p) =>
-                            Math.min(
-                              totalPages,
-                              p + 1
-                            )
+                        setCurrentPage((p) =>
+                          Math.min(
+                            totalPages,
+                            p + 1
+                          )
                         )
                       }
                       disabled={
-                        currentPage ===
-                        totalPages
+                        currentPage === totalPages
                       }
                       className="
                         flex
@@ -1314,8 +1206,7 @@ export default function EmployeesView({
                         )
                       }
                       disabled={
-                        currentPage ===
-                        totalPages
+                        currentPage === totalPages
                       }
                       className="
                         flex
