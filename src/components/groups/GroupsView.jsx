@@ -66,27 +66,28 @@ export default function GroupsView({ groups, users = [], onBulk, onNewUser, onCh
 
   return (
     <section className="groups-page flex h-full min-w-0 flex-1 flex-col overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-      <header className="shrink-0 border-b border-slate-200 bg-white px-4 py-5 sm:px-6 lg:px-8 dark:border-slate-800 dark:bg-slate-900">
+      <header className="relative shrink-0 border-b border-slate-200 bg-white px-4 py-5 sm:px-6 lg:px-8 dark:border-slate-800 dark:bg-slate-900">
         <div className="flex w-full flex-wrap items-center justify-between gap-6">
           <div>
             <h1 className="text-2xl font-bold tracking-tight md:text-[26px]">Qrup və istifadəçilər</h1>
             <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">Departament və layihə işçi qruplarının idarə edilməsi</p>
           </div>
-          <div className="flex flex-wrap gap-2.5">
+          <div className="groups-actions flex flex-wrap gap-2.5">
             <button type="button" onClick={onBulk} className={`${control} inline-flex items-center justify-center gap-2 font-semibold hover:bg-slate-50 dark:hover:bg-slate-800`}><Icon name="addMember" />Qrupa istifadəçi əlavə et</button>
             <button type="button" onClick={onNewUser} className={primary}><Icon name="plus" />Yeni istifadəçi</button>
           </div>
         </div>
-      </header>
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pb-4 pt-3 sm:px-6 sm:pb-6 lg:px-7">
-        <div className="flex w-full shrink-0 flex-col">
-          <div className="mb-3 flex shrink-0 justify-end">
-              <div role="group" aria-label="Görünüş rejimi" className="ml-auto inline-flex h-11 shrink-0 items-stretch rounded-lg border border-slate-300 bg-slate-50 p-0.5 dark:border-slate-700 dark:bg-slate-950/40">
+          <div className="groups-view-switch absolute right-4 top-full z-10 mt-3 flex justify-end sm:right-6 lg:right-8">
+              <div role="group" aria-label="Görünüş rejimi" className="ml-auto inline-flex h-[46px] shrink-0 items-stretch rounded-lg border border-slate-300 bg-slate-50 p-0.5 dark:border-slate-700 dark:bg-slate-950/40">
                 {[["directory", "Siyah\u0131", "directory"], ["accordion", "Akkordeon", "list"]].map(([value, label, icon]) => (
-                  <button key={value} type="button" title={`${label} görünüşü`} aria-pressed={view === value} onClick={() => setView(value)} className={`inline-flex items-center gap-2 rounded-md border px-3 text-sm font-semibold transition-colors duration-150 ${focus} ${view === value ? "border-teal-200 bg-teal-50 text-teal-800 shadow-sm dark:border-teal-500/25 dark:bg-teal-500/10 dark:text-teal-300" : "border-transparent text-slate-500 hover:bg-white hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"}`}><Icon name={icon} />{label}</button>
+                  <button key={value} type="button" title={`${label} görünüşü`} aria-pressed={view === value} onClick={() => setView(value)} className={`inline-flex h-10 items-center gap-2 rounded-md border px-3.5 text-[15px] font-semibold transition-colors duration-150 ${focus} ${view === value ? "border-teal-200 bg-teal-50 text-teal-800 shadow-sm dark:border-teal-500/25 dark:bg-teal-500/10 dark:text-teal-300" : "border-transparent text-slate-500 hover:bg-white hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"}`}><Icon name={icon} className="h-[18px] w-[18px]" />{label}</button>
                 ))}
               </div>
           </div>
+      </header>
+      <div className="groups-scroll flex min-h-0 min-w-0 flex-1 items-start justify-center overflow-y-auto pb-4 pt-3 [scrollbar-gutter:stable_both-edges] sm:pb-6">
+        <div className="groups-content mx-auto flex w-[95%] min-w-0 max-w-none shrink-0 flex-col [&>.grid]:self-center">
+          <div aria-hidden="true" className="groups-switch-spacer mb-3 h-11 shrink-0" />
           {!visibleGroups.length ? (
             <div className="rounded-xl border border-slate-200 bg-white px-6 py-16 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
               <Icon name="search" className="mx-auto mb-4 h-7 w-7 text-slate-400" />
@@ -94,15 +95,15 @@ export default function GroupsView({ groups, users = [], onBulk, onNewUser, onCh
               <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{groups.length ? "Başqa ad axtarın və ya axtarışı təmizləyin." : "Qruplar əlavə edildikdə burada görünəcək."}</p>
             </div>
           ) : view === "directory" ? (
-            <div className="mx-auto grid h-fit w-full shrink-0 lg:min-h-[60vh] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_4px_18px_-8px_rgba(15,23,42,0.16)] [--group-icon-size:52px] [--group-icon-large:56px] [--member-avatar:50px] [--member-row-height:84px] [--member-padding-y:16px] [--member-name-size:16px] lg:grid-cols-[minmax(320px,30%)_minmax(0,1fr)] dark:border-slate-800 dark:bg-slate-900">
+            <div className="groups-directory mt-2 grid h-fit w-[calc(98.5%/0.95)] max-w-none shrink-0 lg:min-h-[60vh] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_4px_18px_-8px_rgba(15,23,42,0.16)] [--group-icon-size:52px] [--group-icon-large:56px] [--member-avatar:50px] [--member-row-height:84px] [--member-padding-y:16px] [--member-name-size:16px] lg:grid-cols-[minmax(320px,30%)_minmax(0,1fr)] dark:border-slate-800 dark:bg-slate-900">
               <nav aria-label="Qruplar" className="relative min-h-0 min-w-0 border-b border-slate-200 bg-slate-50/80 p-3 lg:overflow-y-auto lg:border-b-0 lg:border-r lg:[contain:size] dark:border-slate-800 dark:bg-slate-800/30">
                 <div className="mb-3 flex items-center justify-between px-2 pt-1">
                   <h2 className="text-sm font-bold uppercase tracking-[0.08em] text-slate-600 dark:text-slate-300">Qruplar</h2>
                   <span aria-live="polite" className="text-xs tabular-nums text-slate-400">{visibleGroups.length} / {groups.length}</span>
                 </div>
-                <div className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0">
+                <div className="flex flex-col gap-2 pb-0">
                   {visibleGroups.map(group => (
-                    <button key={group.id} type="button" aria-current={selected.id === group.id ? "true" : undefined} onClick={() => setSelectedId(group.id)} className={`relative flex min-h-[96px] w-80 shrink-0 items-center gap-4 rounded-xl border px-4 py-3 text-left transition-colors duration-150 lg:w-full ${focus} ${selected.id === group.id ? "border-teal-300/70 bg-teal-50/80 shadow-sm dark:border-teal-500/35 dark:bg-teal-500/[0.08]" : "border-transparent hover:border-slate-200 hover:bg-white dark:hover:border-slate-700 dark:hover:bg-slate-800/70"}`}>
+                    <button key={group.id} type="button" aria-current={selected.id === group.id ? "true" : undefined} onClick={() => setSelectedId(group.id)} className={`relative flex min-h-[96px] w-full shrink-0 items-center gap-4 rounded-xl border px-4 py-3 text-left transition-colors duration-150 lg:w-full ${focus} ${selected.id === group.id ? "border-teal-300/70 bg-teal-50/80 shadow-sm dark:border-teal-500/35 dark:bg-teal-500/[0.08]" : "border-transparent hover:border-slate-200 hover:bg-white dark:hover:border-slate-700 dark:hover:bg-slate-800/70"}`}>
                       {selected.id === group.id && <span aria-hidden="true" className="absolute bottom-5 left-0 top-5 w-0.5 rounded-full bg-teal-600 dark:bg-teal-400" />}
                       <CategoryIcon name={group.name} />
                       <span className="min-w-0 flex-1"><span className={`block break-words text-base leading-6 ${selected.id === group.id ? "font-bold text-teal-900 dark:text-teal-200" : "font-semibold"}`}>{group.name}</span><span className="mt-1 block line-clamp-2 text-sm leading-5 font-normal text-slate-500 dark:text-slate-400">{group.description}</span></span>
@@ -143,7 +144,7 @@ export default function GroupsView({ groups, users = [], onBulk, onNewUser, onCh
                       <button id={triggerId} type="button" aria-expanded={open} aria-controls={panelId} onClick={() => toggleGroup(group.id)} className={`flex min-h-[96px] w-full flex-wrap items-center gap-4 px-5 py-4 text-left transition-colors duration-150 sm:flex-nowrap sm:gap-5 sm:px-7 ${open ? "bg-slate-50 text-teal-950 dark:bg-slate-800/60 dark:text-teal-100" : "bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/50"} ${focus} focus-visible:ring-inset`}>
                         <CategoryIcon name={group.name} large />
                         <span className="min-w-0 flex-1"><span className="block text-lg font-bold tracking-tight">{group.name}</span><span className="mt-1 block text-sm font-normal leading-5 text-slate-500 dark:text-slate-400">{group.description}</span></span>
-                        <span className="hidden -space-x-2 md:flex">
+                        <span className="groups-avatar-stack hidden -space-x-2 md:flex">
                           {group.members.slice(0, 4).map(name => <Avatar key={name} name={name} user={usersByName.get(normalize(name))} small />)}
                           {group.members.length > 4 && <span className="relative flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-slate-100 text-[11px] font-medium text-slate-600 dark:border-slate-900 dark:bg-slate-800 dark:text-slate-300">+{group.members.length - 4}</span>}
                         </span>

@@ -302,7 +302,7 @@ export default function App() {
     <div className="app-shell flex min-h-screen w-full overflow-hidden bg-slate-50 dark:bg-slate-950">
       <Sidebar activeView={activeView} onNavigate={setActiveView} taskCount={store.tasks.length} pendingCount={store.operatorApprovals.filter(item => item.status === 'pending').length} dark={dark} onToggleTheme={() => { setDark(!dark); notify(!dark ? 'Gecə rejimi aktivləşdirildi' : 'Gündüz rejimi aktivləşdirildi'); }} notify={notify} />
 
-      <main className="app-main flex min-w-0 flex-1 overflow-hidden">
+      <main className={`app-main flex min-w-0 flex-1 overflow-hidden${activeView === 'groups' ? ' app-main-groups' : ''}`}>
         <div className={activeView === 'chat' ? 'contents' : 'hidden'}>
           <ChatView conversations={store.conversations} messages={store.messages} activeChatId={activeChatId} chatCategory={chatCategory} onCategory={setChatCategory} onSelect={selectConversation} onDelete={deleteConversation} onModal={openModal} onSend={sendMessage} onFile={attachFile} onLocation={() => { appendMessage(newMessage({ text: '📍 Məkan paylaşıldı: Bakı şəhəri, Nizami küç. 45 (HALAL-P Baş Ofis)' })); notify('Məkan göndərildi'); }} onVoice={() => { appendMessage(newMessage({ type: 'voice', duration: '0:05', audioUrl: 'https://test-ticket-back.halal.az/media/application/audio_1789120397635_1545b054.m4a' })); notify('Səsli mesaj göndərildi (0:05)'); }} onReaction={reactToMessage} onVote={voteOnPoll} notify={notify} reply={replyingToMessage} onReply={setReplyingToMessage} onCancelReply={() => setReplyingToMessage(null)} onTaskDetail={taskDetail} />
         </div>

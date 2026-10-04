@@ -171,6 +171,8 @@ body { height: 100dvh; margin: 0; }
 @media (max-width: 767px) {
   .app-shell { display: block; }
   .app-main { width: 100%; min-width: 0; }
+  /* Center Groups & Users in the area beside the fixed navigation rail. */
+  .app-main.app-main-groups { margin-left: 56px; width: calc(100% - 56px); }
   .app-sidebar { position: fixed; inset: 0 auto 0 0; height: 100dvh; width: 56px; padding-inline: 4px; }
   .app-sidebar[data-expanded="true"] { width: min(288px, calc(100vw - 32px)); padding-inline: 14px; }
   .sidebar-backdrop { display: block; position: fixed; inset: 0; z-index: 29; background: rgb(2 6 23 / 0.5); }
