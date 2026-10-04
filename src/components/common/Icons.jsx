@@ -1,6 +1,8 @@
 // The original inline SVG artwork, shared only where the same icon is repeated.
 export default function Icon({ name, className = 'w-4 h-4', strokeWidth = 2 }) {
   const paths = {
+    mail: 'M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Zm-1 2 9 7 9-7',
+    sort: 'M8 4v16m-4-4 4 4 4-4m4-12v16m-4-12 4-4 4 4',
     directory: 'M9 3v18M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z M13 8h4m-4 4h4m-4 4h4',
     reset: 'M3 10a9 9 0 1 1 2.6 8.4M3 4v6h6',
     home: 'm3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M9 22V12h6v10',

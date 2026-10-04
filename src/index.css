@@ -73,6 +73,20 @@
   background-color: var(--canvas-base);
 }
 
+/* Texture stays behind messages, separate from the other chat surfaces. */
+.dark .app-main .chat-panel {
+  --canvas-base: #0f172a;
+}
+.app-main .chat-panel .chat-messages {
+  --chat-dot: rgb(71 115 111 / 0.13);
+  background-image: radial-gradient(circle, var(--chat-dot) 0.8px, transparent 1px);
+  background-size: 24px 24px;
+  background-repeat: repeat;
+}
+.dark .app-main .chat-panel .chat-messages {
+  --chat-dot: rgb(255 255 255 / 0.09);
+}
+
 .app-main > div > section > header,
 .app-main .chat-header {
   background-color: var(--canvas-header);

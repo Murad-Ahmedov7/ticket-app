@@ -42,8 +42,8 @@ export default function EditCompanyModal({
         className="
           relative
           w-full
-          max-w-2xl
-          overflow-hidden
+          max-w-[792px] max-h-[calc(100dvh-2rem)]
+          overflow-y-auto
           rounded-2xl
           bg-white
           dark:bg-slate-900
@@ -70,15 +70,15 @@ export default function EditCompanyModal({
         <div
           className="
             flex items-center justify-between
-            px-6 py-5
+            px-7 py-6
             border-b border-slate-100
             dark:border-slate-800
           "
         >
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3.5">
             <div
               className="
-                w-10 h-10
+                w-12 shrink-0 h-12
                 rounded-xl
                 bg-emerald-50
                 dark:bg-emerald-500/10
@@ -97,7 +97,7 @@ export default function EditCompanyModal({
             <div>
               <h3
                 className="
-                  text-base
+                  text-[19px]
                   font-black
                   text-slate-900
                   dark:text-white
@@ -108,7 +108,7 @@ export default function EditCompanyModal({
 
               <p
                 className="
-                  text-[11px]
+                  text-[13px]
                   text-slate-400
                   mt-0.5
                 "
@@ -123,7 +123,7 @@ export default function EditCompanyModal({
             onClick={onClose}
             title="Bağla"
             className="
-              w-9 h-9
+              w-[42px] shrink-0 h-[42px]
               rounded-lg
               flex items-center justify-center
               text-slate-400
@@ -141,14 +141,14 @@ export default function EditCompanyModal({
         {/* FORM */}
         <form
           onSubmit={handleSubmit}
-          className="p-6 space-y-5"
+          className="p-7 space-y-6"
         >
           {/* NAME + EMAIL */}
           <div
             className="
               grid grid-cols-1
               md:grid-cols-2
-              gap-4
+              gap-[19px]
             "
           >
             <div>
@@ -156,11 +156,11 @@ export default function EditCompanyModal({
                 htmlFor="edit-company-name"
                 className="
                   block
-                  text-xs
+                  text-sm
                   font-bold
                   text-slate-700
                   dark:text-slate-300
-                  mb-1.5
+                  mb-[7px]
                 "
               >
                 Şirkət adı
@@ -174,15 +174,15 @@ export default function EditCompanyModal({
                 placeholder="Məs: Halal-P MMC"
                 className="
                   w-full
-                  h-11
-                  px-3.5
+                  h-[52px]
+                  px-4
                   rounded-xl
                   bg-slate-50
                   dark:bg-slate-800
                   border
                   border-slate-200
                   dark:border-slate-700
-                  text-sm
+                  text-base
                   text-slate-800
                   dark:text-slate-100
                   placeholder:text-slate-400
@@ -200,11 +200,11 @@ export default function EditCompanyModal({
                 htmlFor="edit-company-email"
                 className="
                   block
-                  text-xs
+                  text-sm
                   font-bold
                   text-slate-700
                   dark:text-slate-300
-                  mb-1.5
+                  mb-[7px]
                 "
               >
                 E-mail
@@ -219,15 +219,15 @@ export default function EditCompanyModal({
                 placeholder="info@company.az"
                 className="
                   w-full
-                  h-11
-                  px-3.5
+                  h-[52px]
+                  px-4
                   rounded-xl
                   bg-slate-50
                   dark:bg-slate-800
                   border
                   border-slate-200
                   dark:border-slate-700
-                  text-sm
+                  text-base
                   text-slate-800
                   dark:text-slate-100
                   placeholder:text-slate-400
@@ -246,7 +246,7 @@ export default function EditCompanyModal({
             className="
               grid grid-cols-1
               md:grid-cols-2
-              gap-4
+              gap-[19px]
             "
           >
             <div>
@@ -254,11 +254,11 @@ export default function EditCompanyModal({
                 htmlFor="edit-company-address"
                 className="
                   block
-                  text-xs
+                  text-sm
                   font-bold
                   text-slate-700
                   dark:text-slate-300
-                  mb-1.5
+                  mb-[7px]
                 "
               >
                 Ünvan
@@ -272,15 +272,15 @@ export default function EditCompanyModal({
                 placeholder="Bakı ş., ..."
                 className="
                   w-full
-                  h-11
-                  px-3.5
+                  h-[52px]
+                  px-4
                   rounded-xl
                   bg-slate-50
                   dark:bg-slate-800
                   border
                   border-slate-200
                   dark:border-slate-700
-                  text-sm
+                  text-base
                   text-slate-800
                   dark:text-slate-100
                   placeholder:text-slate-400
@@ -298,11 +298,11 @@ export default function EditCompanyModal({
                 htmlFor="edit-company-phone"
                 className="
                   block
-                  text-xs
+                  text-sm
                   font-bold
                   text-slate-700
                   dark:text-slate-300
-                  mb-1.5
+                  mb-[7px]
                 "
               >
                 Əlaqə nömrəsi
@@ -316,15 +316,15 @@ export default function EditCompanyModal({
                 placeholder="+994 50 000 00 00"
                 className="
                   w-full
-                  h-11
-                  px-3.5
+                  h-[52px]
+                  px-4
                   rounded-xl
                   bg-slate-50
                   dark:bg-slate-800
                   border
                   border-slate-200
                   dark:border-slate-700
-                  text-sm
+                  text-base
                   text-slate-800
                   dark:text-slate-100
                   placeholder:text-slate-400
@@ -341,8 +341,8 @@ export default function EditCompanyModal({
           {/* COMPANY PREVIEW */}
           <div
             className="
-              flex items-center gap-3
-              p-3.5
+              flex items-center gap-3.5
+              p-[17px]
               rounded-xl
               bg-slate-50
               dark:bg-slate-800/60
@@ -353,14 +353,14 @@ export default function EditCompanyModal({
           >
             <div
               className="
-                w-10 h-10
+                w-12 shrink-0 h-12
                 rounded-xl
                 bg-gradient-to-br
                 from-emerald-500
                 to-teal-600
                 flex items-center justify-center
                 text-white
-                text-xs
+                text-sm
                 font-black
                 shadow-sm
                 shadow-emerald-500/20
@@ -372,7 +372,7 @@ export default function EditCompanyModal({
             <div className="min-w-0">
               <p
                 className="
-                  text-xs
+                  text-sm
                   font-bold
                   text-slate-800
                   dark:text-slate-100
@@ -384,7 +384,7 @@ export default function EditCompanyModal({
 
               <p
                 className="
-                  text-[11px]
+                  text-[13px]
                   text-slate-400
                   mt-0.5
                   truncate
@@ -402,8 +402,8 @@ export default function EditCompanyModal({
               sm:flex-row
               sm:items-center
               justify-between
-              gap-3
-              pt-5
+              gap-3.5
+              pt-6
               border-t
               border-slate-100
               dark:border-slate-800
@@ -414,12 +414,12 @@ export default function EditCompanyModal({
               type="button"
               onClick={() => onDelete(company.id)}
               className="
-                h-10
-                px-4
+                h-12
+                px-[19px]
                 rounded-xl
                 inline-flex items-center justify-center
-                gap-2
-                text-xs
+                gap-[9px]
+                text-sm
                 font-bold
                 text-rose-600
                 bg-rose-50
@@ -447,15 +447,15 @@ export default function EditCompanyModal({
             </button>
 
             {/* RIGHT ACTIONS */}
-            <div className="flex items-center justify-end gap-2">
+            <div className="flex items-center justify-end gap-[9px]">
               <button
                 type="button"
                 onClick={onClose}
                 className="
-                  h-10
-                  px-4
+                  h-12
+                  px-[19px]
                   rounded-xl
-                  text-xs
+                  text-sm
                   font-semibold
                   text-slate-500
                   hover:text-slate-700
@@ -471,19 +471,19 @@ export default function EditCompanyModal({
               <button
                 type="submit"
                 className="
-                  h-10
-                  px-5
+                  h-12
+                  px-6
                   rounded-xl
                   bg-emerald-600
                   hover:bg-emerald-700
                   text-white
-                  text-xs
+                  text-sm
                   font-bold
                   shadow-md
                   shadow-emerald-500/20
                   active:scale-[0.97]
                   transition-all
-                  inline-flex items-center gap-2
+                  inline-flex items-center gap-[9px]
                 "
               >
                 <svg

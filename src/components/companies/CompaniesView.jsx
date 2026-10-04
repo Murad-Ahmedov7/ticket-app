@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import Icon from "../common/Icons.jsx";
+import "./CompaniesView.css";
 
 export default function CompaniesView({
   companies,
@@ -31,573 +32,101 @@ export default function CompaniesView({
   }, [companies, search, sortOrder]);
 
   return (
-    <section className="flex-1 flex flex-col h-full bg-slate-50 dark:bg-slate-950 overflow-hidden min-w-0">
-
-      {/* HEADER */}
-      <header
-        className="
-          min-h-20
-          px-6
-          md:px-8
-          border-b
-          border-slate-200/80
-          dark:border-slate-800/80
-          bg-white/95
-          dark:bg-slate-900/95
-          backdrop-blur
-          flex
-          items-center
-          justify-between
-          gap-4
-          shrink-0
-          z-10
-          animate-[fadeDown_0.45s_ease-out]
-        "
-      >
-        <div>
-          <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
-            Şirkətlər Siyahısı
-          </h1>
-
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Platformada qeydiyyatdan keçmiş tərəfdaş və müştəri şirkətlər
-          </p>
+    <section className="companies-page flex h-full min-w-0 flex-1 flex-col overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+      <header className="companies-header">
+        <div className="min-w-0">
+          <h1>Şirkətlər Siyahısı</h1>
+          <p>Platformada qeydiyyatdan keçmiş tərəfdaş və müştəri şirkətlər</p>
         </div>
-
-        <button
-          onClick={onCreate}
-          className="
-            px-6
-            py-3
-            rounded-xl
-            bg-emerald-600
-            hover:bg-emerald-700
-            text-white
-            text-sm
-            font-bold
-            shadow-md
-            shadow-emerald-500/20
-            hover:shadow-lg
-            hover:shadow-emerald-500/25
-            active:scale-[0.97]
-            transition-all
-            duration-200
-            flex
-            items-center
-            gap-2.5
-          "
-        >
-          <Icon
-            name="plus"
-            strokeWidth={2.5}
-            className="w-[18px] h-[18px]"
-          />
-
-          Əlavə et
+        <button type="button" onClick={onCreate} className="companies-create">
+          <Icon name="plus" className="h-[18px] w-[18px]" />Əlavə et
         </button>
       </header>
 
-      {/* CONTENT */}
-      <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
-        <div className="w-full space-y-4">
-
-          {/* TOOLBAR */}
-          <div
-            className="
-              flex
-              flex-col
-              lg:flex-row
-              lg:items-center
-              justify-between
-              gap-3
-              animate-[fadeUp_0.5s_ease-out]
-            "
-          >
-            {/* COMPANY COUNT */}
-            <div
-              className="
-                inline-flex
-                items-center
-                gap-3
-                w-fit
-                px-4
-                py-2.5
-                rounded-xl
-                bg-white
-                dark:bg-slate-900
-                border
-                border-slate-200
-                dark:border-slate-800
-                shadow-sm
-              "
-            >
-              <div
-                className="
-                  w-9
-                  h-9
-                  rounded-lg
-                  bg-emerald-50
-                  dark:bg-emerald-500/10
-                  flex
-                  items-center
-                  justify-center
-                  text-emerald-600
-                  dark:text-emerald-400
-                "
-              >
-                <svg
-                  className="w-[18px] h-[18px]"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1M9 14h1m4 0h1M9 18h1m4 0h1"
-                  />
-                </svg>
-              </div>
-
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-base font-black text-slate-900 dark:text-white">
-                  {filteredCompanies.length}
-                </span>
-
-                <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
-                  şirkət göstərilir
-                </span>
-              </div>
-            </div>
-
-            {/* SEARCH + SORT */}
-            <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-
-              {/* SEARCH */}
-              <div className="relative w-full sm:w-[360px]">
-                <svg
-                  className="
-                    absolute
-                    left-3.5
-                    top-1/2
-                    -translate-y-1/2
-                    w-4
-                    h-4
-                    text-slate-400
-                  "
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-
+      <div className="companies-content">
+        <div className="companies-surface">
+          <div className="companies-toolbar">
+            <p className="companies-count" aria-live="polite" aria-atomic="true">
+              <span className="companies-context-icon"><Icon name="companies" /></span>
+              <span><strong>{filteredCompanies.length}</strong> şirkət göstərilir</span>
+            </p>
+            <div className="companies-controls">
+              <div className="companies-search">
+                <Icon name="search" className="companies-control-icon h-4 w-4" />
                 <input
+                  type="search"
+                  aria-label="Şirkət axtar"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Şirkət axtar..."
-                  className="
-                    w-full
-                    h-11
-                    pl-10
-                    pr-10
-                    rounded-xl
-                    bg-white
-                    dark:bg-slate-900
-                    border
-                    border-slate-200
-                    dark:border-slate-800
-                    text-sm
-                    text-slate-800
-                    dark:text-slate-100
-                    placeholder:text-slate-400
-                    outline-none
-                    focus:border-emerald-400
-                    focus:ring-4
-                    focus:ring-emerald-500/10
-                    transition
-                  "
                 />
-
                 {search && (
-                  <button
-                    type="button"
-                    onClick={() => setSearch("")}
-                    className="
-                      absolute
-                      right-3
-                      top-1/2
-                      -translate-y-1/2
-                      text-slate-400
-                      hover:text-slate-700
-                      dark:hover:text-white
-                      transition
-                    "
-                  >
-                    ×
+                  <button type="button" onClick={() => setSearch("")} aria-label="Axtarışı təmizlə" title="Axtarışı təmizlə" className="companies-clear">
+                    <Icon name="close" />
                   </button>
                 )}
               </div>
-
-              {/* SORT */}
-              <select
-                value={sortOrder}
-                onChange={(e) => setSortOrder(e.target.value)}
-                className="
-                  h-11
-                  px-4
-                  rounded-xl
-                  bg-white
-                  dark:bg-slate-900
-                  border
-                  border-slate-200
-                  dark:border-slate-800
-                  text-sm
-                  font-semibold
-                  text-slate-600
-                  dark:text-slate-300
-                  outline-none
-                  focus:border-emerald-400
-                  focus:ring-4
-                  focus:ring-emerald-500/10
-                  transition
-                  cursor-pointer
-                "
-              >
-                <option value="az">
-                  Ad: A → Z
-                </option>
-
-                <option value="za">
-                  Ad: Z → A
-                </option>
-              </select>
-            </div>
-          </div>
-
-          {/* TABLE */}
-          <div className="animate-[fadeUp_0.7s_ease-out]">
-            <div
-              className="
-                w-full
-                bg-white
-                dark:bg-slate-900
-                rounded-2xl
-                border
-                border-slate-200/80
-                dark:border-slate-800
-                shadow-[0_5px_20px_rgba(15,23,42,0.055)]
-                dark:shadow-none
-                overflow-hidden
-                relative
-              "
-            >
-              {/* GREEN ACCENT */}
-              <div
-                className="
-                  absolute
-                  top-0
-                  left-0
-                  right-0
-                  h-[2px]
-                  bg-gradient-to-r
-                  from-transparent
-                  via-emerald-500/70
-                  to-transparent
-                "
-              />
-
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse min-w-[1050px]">
-
-                  {/* HEAD */}
-                  <thead>
-                    <tr
-                      className="
-                        bg-slate-50/90
-                        dark:bg-slate-800/40
-                        border-b
-                        border-slate-200/70
-                        dark:border-slate-800
-                        text-xs
-                        uppercase
-                        tracking-[0.07em]
-                        font-extrabold
-                        text-slate-500
-                        dark:text-slate-400
-                      "
-                    >
-                      <th className="py-4 px-6 w-[90px]">
-                        Logo
-                      </th>
-
-                      <th className="py-4 px-5">
-                        Şirkət adı
-                      </th>
-
-                      <th className="py-4 px-5">
-                        Ünvan
-                      </th>
-
-                      <th className="py-4 px-5 whitespace-nowrap">
-                        Əlaqə nömrəsi
-                      </th>
-
-                      <th className="py-4 px-5 whitespace-nowrap">
-                        Elektron poçt ünvanı
-                      </th>
-
-                      <th className="py-4 px-6 text-right w-[120px]">
-                        Əməliyyat
-                      </th>
-                    </tr>
-                  </thead>
-
-                  {/* BODY */}
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800/70">
-                    {filteredCompanies.length > 0 ? (
-                      filteredCompanies.map((company, index) => (
-                        <tr
-                          key={company.id}
-                          className="
-                            group
-                            hover:bg-emerald-50/40
-                            dark:hover:bg-emerald-500/[0.04]
-                            transition-all
-                            duration-300
-                            animate-[rowIn_0.45s_ease-out_both]
-                          "
-                          style={{
-                            animationDelay: `${120 + index * 70}ms`,
-                          }}
-                        >
-                          {/* LOGO */}
-                          <td className="py-5 px-6">
-                            <div
-                              className="
-                                w-11
-                                h-11
-                                rounded-xl
-                                bg-gradient-to-br
-                                from-emerald-500
-                                to-teal-600
-                                flex
-                                items-center
-                                justify-center
-                                text-white
-                                font-black
-                                text-sm
-                                shadow-sm
-                                shadow-emerald-500/20
-                                group-hover:scale-105
-                                transition-transform
-                                duration-200
-                              "
-                            >
-                              {company.logo}
-                            </div>
-                          </td>
-
-                          {/* NAME */}
-                          <td className="py-5 px-5">
-                            <div
-                              className="
-                                font-bold
-                                text-[15px]
-                                text-slate-900
-                                dark:text-white
-                              "
-                            >
-                              {company.name}
-                            </div>
-                          </td>
-
-                          {/* ADDRESS */}
-                          <td
-                            className="
-                              py-5
-                              px-5
-                              text-sm
-                              text-slate-500
-                              dark:text-slate-400
-                              max-w-[380px]
-                            "
-                          >
-                            <span className="line-clamp-1">
-                              {company.address}
-                            </span>
-                          </td>
-
-                          {/* PHONE */}
-                          <td
-                            className="
-                              py-5
-                              px-5
-                              text-sm
-                              font-medium
-                              text-slate-600
-                              dark:text-slate-300
-                              whitespace-nowrap
-                            "
-                          >
-                            {company.phone}
-                          </td>
-
-                          {/* EMAIL */}
-                          <td
-                            className="
-                              py-5
-                              px-5
-                              text-sm
-                              font-medium
-                              text-slate-600
-                              dark:text-slate-300
-                              whitespace-nowrap
-                            "
-                          >
-                            {company.email}
-                          </td>
-
-                          {/* ACTION */}
-                          <td className="py-5 px-6 text-right">
-                            <button
-                              type="button"
-                              onClick={() => onEdit(company)}
-                              title="Redaktə et"
-                              className="
-                                inline-flex
-                                items-center
-                                justify-center
-                                w-10
-                                h-10
-                                rounded-lg
-                                text-slate-400
-                                hover:text-emerald-600
-                                hover:bg-emerald-50
-                                dark:hover:bg-emerald-500/10
-                                group-hover:text-emerald-500
-                                transition-all
-                              "
-                            >
-                              <svg
-                                className="w-[18px] h-[18px]"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Z"
-                                />
-                              </svg>
-                            </button>
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan="6">
-                          <div className="py-20 flex flex-col items-center justify-center text-center">
-                            <div
-                              className="
-                                w-12
-                                h-12
-                                rounded-xl
-                                bg-emerald-50
-                                dark:bg-emerald-500/10
-                                flex
-                                items-center
-                                justify-center
-                                mb-3
-                                text-emerald-500
-                              "
-                            >
-                              <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-                                />
-                              </svg>
-                            </div>
-
-                            <p className="text-base font-bold text-slate-700 dark:text-slate-200">
-                              Şirkət tapılmadı
-                            </p>
-
-                            <p className="text-sm text-slate-400 mt-1">
-                              Axtarış kriteriyasını dəyiş
-                            </p>
-                          </div>
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
+              <div className="companies-sort">
+                <Icon name="sort" className="companies-control-icon h-4 w-4" />
+                <select aria-label="Şirkətləri sırala" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                  <option value="az">Ad: A → Z</option>
+                  <option value="za">Ad: Z → A</option>
+                </select>
+                <Icon name="down" className="companies-select-chevron h-3.5 w-3.5" />
               </div>
             </div>
           </div>
+
+          <table className="companies-table" role="table" aria-label="Şirkətlər Siyahısı">
+            <colgroup><col className="company-col-name" /><col className="company-col-address" /><col className="company-col-phone" /><col className="company-col-email" /><col className="company-col-action" /></colgroup>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th scope="col" role="columnheader"><span><Icon name="companies" />Şirkət adı</span></th>
+                <th scope="col" role="columnheader"><span><Icon name="location" />Ünvan</span></th>
+                <th scope="col" role="columnheader"><span><Icon name="phone" />Əlaqə nömrəsi</span></th>
+                <th scope="col" role="columnheader"><span><Icon name="mail" />Elektron poçt ünvanı</span></th>
+                <th scope="col" role="columnheader" className="company-actions-heading">Əməliyyat</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              {filteredCompanies.length > 0 ? filteredCompanies.map((company) => (
+                <tr key={company.id} role="row" className="company-row">
+                  <td role="cell" className="company-identity">
+                    <div className="company-name-cell">
+                      <span className="company-logo">{company.logo}</span>
+                      <span className="company-name">{company.name}</span>
+                    </div>
+                  </td>
+                  <td role="cell" className="company-address">
+                    <div className="company-detail"><span className="companies-context-icon"><Icon name="location" /></span><span><span className="company-mobile-label">Ünvan</span>{company.address}</span></div>
+                  </td>
+                  <td role="cell" className="company-phone">
+                    <div className="company-detail"><span className="companies-context-icon"><Icon name="phone" /></span><span><span className="company-mobile-label">Əlaqə nömrəsi</span>{company.phone}</span></div>
+                  </td>
+                  <td role="cell" className="company-email">
+                    <div className="company-detail"><span className="companies-context-icon"><Icon name="mail" /></span><span><span className="company-mobile-label">Elektron poçt ünvanı</span>{company.email}</span></div>
+                  </td>
+                  <td role="cell" className="company-action">
+                    <button type="button" onClick={() => onEdit(company)} title="Redaktə et" aria-label={`${company.name}: Redaktə et`} className="company-edit">
+                      <Icon name="edit" className="h-4 w-4" />
+                    </button>
+                  </td>
+                </tr>
+              )) : (
+                <tr role="row" className="companies-empty-row">
+                  <td role="cell" colSpan={5}>
+                    <div className="companies-empty">
+                      <span className="companies-context-icon"><Icon name="search" className="h-5 w-5" /></span>
+                      <p>Şirkət tapılmadı</p>
+                      <span>Axtarış kriteriyasını dəyiş</span>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
-
-      {/* ANIMATION */}
-      <style>{`
-        @keyframes fadeDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes fadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(14px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes rowIn {
-          from {
-            opacity: 0;
-            transform: translateX(-8px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            animation-duration: 0.01ms !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

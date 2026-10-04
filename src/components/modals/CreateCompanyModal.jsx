@@ -62,8 +62,8 @@ export default function CreateCompanyModal({
         className="
           relative
           w-full
-          max-w-2xl
-          overflow-hidden
+          max-w-[752px] max-h-[calc(100dvh-2rem)]
+          overflow-y-auto
           rounded-2xl
           bg-white
           dark:bg-slate-900
@@ -90,15 +90,15 @@ export default function CreateCompanyModal({
         <div
           className="
             flex items-center justify-between
-            px-6 py-5
+            px-[27px] py-[22px]
             border-b border-slate-100
             dark:border-slate-800
           "
         >
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-[13.5px]">
             <div
               className="
-                w-10 h-10
+                w-11 h-11
                 rounded-xl
                 bg-emerald-50
                 dark:bg-emerald-500/10
@@ -117,7 +117,7 @@ export default function CreateCompanyModal({
             <div>
               <h3
                 className="
-                  text-base
+                  text-[18px]
                   font-black
                   text-slate-900
                   dark:text-white
@@ -128,7 +128,7 @@ export default function CreateCompanyModal({
 
               <p
                 className="
-                  text-[11px]
+                  text-[12.5px]
                   text-slate-400
                   mt-0.5
                 "
@@ -143,7 +143,7 @@ export default function CreateCompanyModal({
             onClick={onClose}
             title="Bağla"
             className="
-              w-9 h-9
+              w-10 h-10
               rounded-lg
               flex items-center justify-center
               text-slate-400
@@ -164,25 +164,25 @@ export default function CreateCompanyModal({
         {/* FORM */}
         <form
           onSubmit={submit}
-          className="p-6 space-y-5"
+          className="p-[27px] space-y-[22px]"
         >
 
           {/* NAME + EMAIL */}
           <div className="
             grid grid-cols-1
             md:grid-cols-2
-            gap-4
+            gap-[18px]
           ">
             <div>
               <label
                 htmlFor="company-name"
                 className="
                   block
-                  text-xs
+                  text-[13.5px]
                   font-bold
                   text-slate-700
                   dark:text-slate-300
-                  mb-1.5
+                  mb-[7px]
                 "
               >
                 Şirkət adı
@@ -196,15 +196,15 @@ export default function CreateCompanyModal({
                 onChange={(e) => setName(e.target.value)}
                 className="
                   w-full
-                  h-11
-                  px-3.5
+                  h-12
+                  px-4
                   rounded-xl
                   bg-slate-50
                   dark:bg-slate-800
                   border
                   border-slate-200
                   dark:border-slate-700
-                  text-sm
+                  text-[15.5px]
                   text-slate-800
                   dark:text-slate-100
                   placeholder:text-slate-400
@@ -222,11 +222,11 @@ export default function CreateCompanyModal({
                 htmlFor="company-email"
                 className="
                   block
-                  text-xs
+                  text-[13.5px]
                   font-bold
                   text-slate-700
                   dark:text-slate-300
-                  mb-1.5
+                  mb-[7px]
                 "
               >
                 E-mail
@@ -241,15 +241,15 @@ export default function CreateCompanyModal({
                 onChange={(e) => setEmail(e.target.value)}
                 className="
                   w-full
-                  h-11
-                  px-3.5
+                  h-12
+                  px-4
                   rounded-xl
                   bg-slate-50
                   dark:bg-slate-800
                   border
                   border-slate-200
                   dark:border-slate-700
-                  text-sm
+                  text-[15.5px]
                   text-slate-800
                   dark:text-slate-100
                   placeholder:text-slate-400
@@ -267,18 +267,18 @@ export default function CreateCompanyModal({
           <div className="
             grid grid-cols-1
             md:grid-cols-2
-            gap-4
+            gap-[18px]
           ">
             <div>
               <label
                 htmlFor="company-address"
                 className="
                   block
-                  text-xs
+                  text-[13.5px]
                   font-bold
                   text-slate-700
                   dark:text-slate-300
-                  mb-1.5
+                  mb-[7px]
                 "
               >
                 Ünvan
@@ -292,15 +292,15 @@ export default function CreateCompanyModal({
                 onChange={(e) => setAddress(e.target.value)}
                 className="
                   w-full
-                  h-11
-                  px-3.5
+                  h-12
+                  px-4
                   rounded-xl
                   bg-slate-50
                   dark:bg-slate-800
                   border
                   border-slate-200
                   dark:border-slate-700
-                  text-sm
+                  text-[15.5px]
                   text-slate-800
                   dark:text-slate-100
                   placeholder:text-slate-400
@@ -318,11 +318,11 @@ export default function CreateCompanyModal({
                 htmlFor="company-phone"
                 className="
                   block
-                  text-xs
+                  text-[13.5px]
                   font-bold
                   text-slate-700
                   dark:text-slate-300
-                  mb-1.5
+                  mb-[7px]
                 "
               >
                 Əlaqə nömrəsi
@@ -336,15 +336,15 @@ export default function CreateCompanyModal({
                 onChange={(e) => setPhone(e.target.value)}
                 className="
                   w-full
-                  h-11
-                  px-3.5
+                  h-12
+                  px-4
                   rounded-xl
                   bg-slate-50
                   dark:bg-slate-800
                   border
                   border-slate-200
                   dark:border-slate-700
-                  text-sm
+                  text-[15.5px]
                   text-slate-800
                   dark:text-slate-100
                   placeholder:text-slate-400
@@ -363,11 +363,11 @@ export default function CreateCompanyModal({
             <label
               className="
                 block
-                text-xs
+                text-[13.5px]
                 font-bold
                 text-slate-700
                 dark:text-slate-300
-                mb-1.5
+                mb-[7px]
               "
             >
               Şirkət loqosu
@@ -376,7 +376,7 @@ export default function CreateCompanyModal({
             <label
               className={`
                 group
-                min-h-[100px]
+                min-h-[112px]
                 w-full
                 rounded-xl
                 border
@@ -384,8 +384,8 @@ export default function CreateCompanyModal({
                 flex
                 items-center
                 justify-between
-                gap-4
-                px-4
+                gap-[18px]
+                px-[18px]
                 cursor-pointer
                 transition-all
 
@@ -409,10 +409,10 @@ export default function CreateCompanyModal({
                 }
               `}
             >
-              <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-center gap-[13.5px] min-w-0">
                 <div
                   className="
-                    w-11 h-11
+                    w-12 h-12
                     shrink-0
                     rounded-xl
                     bg-emerald-50
@@ -442,7 +442,7 @@ export default function CreateCompanyModal({
                 <div className="min-w-0">
                   <p
                     className="
-                      text-xs
+                      text-[13.5px]
                       font-bold
                       text-slate-700
                       dark:text-slate-200
@@ -455,7 +455,7 @@ export default function CreateCompanyModal({
 
                   <p
                     className="
-                      text-[11px]
+                      text-[12.5px]
                       text-slate-400
                       mt-1
                       truncate
@@ -471,14 +471,14 @@ export default function CreateCompanyModal({
               <div
                 className="
                   shrink-0
-                  px-3.5 py-2
+                  px-4 py-[9px]
                   rounded-lg
                   bg-white
                   dark:bg-slate-900
                   border
                   border-slate-200
                   dark:border-slate-700
-                  text-[11px]
+                  text-[12.5px]
                   font-bold
                   text-slate-600
                   dark:text-slate-300
@@ -502,7 +502,7 @@ export default function CreateCompanyModal({
               <p
                 className="
                   text-rose-500
-                  text-[11px]
+                  text-[12.5px]
                   font-semibold
                   mt-1.5
                 "
@@ -518,8 +518,8 @@ export default function CreateCompanyModal({
               flex
               items-center
               justify-end
-              gap-2
-              pt-5
+              gap-[9px]
+              pt-[22px]
               border-t
               border-slate-100
               dark:border-slate-800
@@ -529,10 +529,10 @@ export default function CreateCompanyModal({
               type="button"
               onClick={onClose}
               className="
-                h-10
-                px-4
+                h-11
+                px-[18px]
                 rounded-xl
-                text-xs
+                text-[13.5px]
                 font-semibold
                 text-slate-500
                 hover:text-slate-700
@@ -548,19 +548,19 @@ export default function CreateCompanyModal({
             <button
               type="submit"
               className="
-                h-10
-                px-5
+                h-11
+                px-[22px]
                 rounded-xl
                 bg-emerald-600
                 hover:bg-emerald-700
                 text-white
-                text-xs
+                text-[13.5px]
                 font-bold
                 shadow-md
                 shadow-emerald-500/20
                 active:scale-[0.97]
                 transition-all
-                flex items-center gap-2
+                flex items-center gap-[9px]
               "
             >
               <svg

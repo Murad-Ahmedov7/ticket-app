@@ -495,6 +495,7 @@ export default function TasksView({
 
               {/* RESET */}
               <button
+                type="button"
                 onClick={() => {
                   setSearch("");
                   setStatus("");
@@ -504,19 +505,43 @@ export default function TasksView({
                   );
                 }}
                 className="
+                  inline-flex
                   h-10
+                  shrink-0
+                  items-center
+                  justify-center
+                  gap-2
                   rounded-xl
+                  border
+                  border-slate-200
+                  bg-slate-50
                   px-4
                   text-sm
-                  font-semibold
-                  text-slate-500
-                  transition
+                  font-medium
+                  text-slate-700
+                  transition-colors
+                  duration-150
+                  hover:border-slate-300
                   hover:bg-slate-100
                   hover:text-slate-800
-                  dark:hover:bg-slate-800
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-emerald-500/20
+                  focus-visible:border-emerald-400
+                  dark:border-slate-700
+                  dark:bg-slate-800
+                  dark:text-slate-200
+                  dark:hover:border-slate-600
+                  dark:hover:bg-slate-700
                   dark:hover:text-slate-200
                 "
               >
+                <svg aria-hidden="true" className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                  <path d="M21 3v5h-5" />
+                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                  <path d="M8 16H3v5" />
+                </svg>
                 Sıfırla
               </button>
             </div>
